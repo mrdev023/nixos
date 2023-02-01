@@ -2,6 +2,8 @@
 
 ## Installation
 
+**!!! Inutile si on utilise Flakes et que l'on install home-manager avec**
+
 *sudo si l'on souhaite utiliser le module NixOS depuis /etc/nixos/configuration.nix*
 ```bash
 nix-channel --add https://github.com/nix-community/home-manager/archive/master.tar.gz home-manager
@@ -22,6 +24,8 @@ Relancer la session pour reload les channels pour le user courant.
 ```bash
 nix-shell '<home-manager>' -A install
 ```
+
+## Configuration
 
 $HOME/.config/nixpkgs/home.nix
 

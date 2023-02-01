@@ -104,7 +104,7 @@ in
     vim
     git
     vscode
-  #  wget
+    wget
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
@@ -134,4 +134,10 @@ in
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "23.05"; # Did you read the comment?
 
+  # BEGIN: Add flake feature TODO: Remove when not experimental
+  nix = {
+    package = pkgs.nixFlakes;
+    extraOptions = "experimental-features = nix-command flakes";
+  };
+  # END: Add flake feature
 }
