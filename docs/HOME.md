@@ -19,3 +19,7 @@ Reconstruire depuis la configuration [flake](./flake/HOME.md)
 ```bash
 nixos-rebuild switch --flake flake_path_directory#hostname
 ```
+
+# Resource utile
+
+- https://nixos.wiki/wiki/Overlays | Modifie ou ajoute des packets
