@@ -13,3 +13,12 @@ Build and switch
 ```bash
 nixos-rebuild switch --flake .#<hostname>
 ```
+
+Build script to activate in current shell
+```bash
+nix build .#hmConfig.<hostname>.activationPackage
+```
+with
+```bash
+./result/activate
+```
