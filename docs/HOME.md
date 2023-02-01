@@ -13,7 +13,25 @@ Je suis encore en train de découvrir son fonctionnement donc si la documentatio
 >
 > Contient l'ensemble des infos du packet vscode version 1.74.3
 
+- **nix-channel**
+
+> Un peu comme les repos sous Arch comme le repo multilib, docker, ...
+
+- [**Home-Manager**](./home_manager/HOME.md)
+
+> Permet d'installer des paquets uniquement pour un utilisateur spécifique
+> 
+> Permet de gérer les dotfiles
+
 # Commande utiles
+
+```bash
+nixos-version 
+```
+
+```bash
+nix-channel [--list/remove/add] url name
+```
 
 ## nixos-rebuild
 
