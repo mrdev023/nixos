@@ -81,3 +81,4 @@ nix-collect-garbage -d
 # Resource utile
 
 - https://nixos.wiki/wiki/Overlays | Modifie ou ajoute des packets
+- https://github.com/MatthiasBenaets/nixos-config
