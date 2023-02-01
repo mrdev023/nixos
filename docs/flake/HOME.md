@@ -75,12 +75,59 @@ outputs = { self, nixpkgs }:
         lib = nixpkgs.lib;
     in {
         nixosConfigurations = {
-            # <hostname> specified with
-            # `nixos-rebuild [build/switch] --flake .#<hostname>`
-            <hostname> = lib.nixosSystem {
+            # <hostname or user> specified with
+            # `nixos-rebuild [build/switch] --flake .#<hostname or user>`
+            <hostname or user> = lib.nixosSystem {
                 inherit system;
                 modules = [ ./configuration.nix ];
             };
         };
     };
+```
+
+### Installation
+
+`<hostname or user>` is default to `hostname or user` command but it can be overwritten
+
+Build only
+
+```bash
+nixos-rebuild build --flake .#<hostname or user>
+```
+
+Build and switch
+
+```bash
+nixos-rebuild switch --flake .#<hostname or user>
+```
+
+Build script to activate in current shell
+```bash
+nix build .#hmConfig.<hostname or user>.activationPackage
+```
+with
+```bash
+./result/activate
+```
+
+### Updating
+
+```bash
+nix flake update #--recreate-lock-file
+```
+
+### Flake sur une installation vierge
+
+Démarrage depuis l'ISO
+
+```bash
+sudo su
+nix-env -iA nixos.git
+git clone <repo url> /mnt/<path>
+nixos-install --flake .#<host>
+reboot
+/* login */
+# Car parfois, nixos peut compiler la version par défaut
+sudo rm -r /etc/nixos/configuration.nix
+/* move build to desired location */
 ```
