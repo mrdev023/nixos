@@ -1,3 +1,8 @@
+# Important
+
+Cette documentation est un résumé de ce que j'ai compris sur le fonctionnement derrière NixOS.
+Je suis encore en train de découvrir son fonctionnement donc si la documentation contient des erreurs merci de me les communiquer.
+
 # Commande utiles
 
 Reconstruire depuis /etc/nixos/configuration.nix
