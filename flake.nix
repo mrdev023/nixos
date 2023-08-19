@@ -1,43 +1,22 @@
 {
-  description = "System config";
+  description = "MrDev023's NixOS Flake";
 
   inputs = {
-    nixpkgs.url = "nixpkgs/nixos-unstable";
-
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     home-manager = {
-      url = "github:nix-community/home-manager";
+      url = "github:nix-community/home-manager/release-23.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 
-  outputs = { nixpkgs, home-manager, ...}@inputs:
-  let
-    inherit (nixpkgs) lib;
-
-    util = import ./lib {
-      inherit system pkgs home-manager lib; overlays = (pkgs.overlays);
-    };
-
-    inherit (util) user;
-    inherit (util) host;
-
-    pkgs = import nixpkgs {
-      inherit system;
-      config.allowUnfree = true;
-      overlays = [];
-    };
-
-    system = "x86_64-linux";
-  in {
-    homeManagerConfigurations = {
-      jq = user.mkHMUser {
-
-      };
-    };
-
+  outputs = { self, nixpkgs, ... }@inputs: {
     nixosConfigurations = {
-      laptop = host.mkHost {
+      "nixos-test" = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
 
+        modules = [
+          ./configuration.nix
+        ];
       };
     };
   };
