@@ -1,27 +1,37 @@
 {
-  description = "MrDev023's NixOS Flake";
+  description = "NixOS configuration of MrDev023";
 
-  inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-    home-manager = {
-      url = "github:nix-community/home-manager/release-23.05";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+  nixConfig = {
+    experimental-features = [ "nix-command" "flakes" ];
   };
 
-  outputs = inputs@{ nixpkgs, home-manager, ... }: {
+  inputs = {
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    home-manager.url = "github:nix-community/home-manager";
+    home-manager.inputs.nixpkgs.follows = "nixpkgs";
+  };
+
+  outputs = inputs@{
+      self,
+      nixpkgs,
+      home-manager,
+      nix-vscode-extensions,
+      ...
+  }: {
     nixosConfigurations = {
       nixos-test = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
+
         modules = [
-          ./configuration.nix
+          ./hosts/nixos-test
 
           home-manager.nixosModules.home-manager
           {
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
 
-            home-manager.users.florian = import ./home.nix;
+            home-manager.extraSpecialArgs = inputs;
+            home-manager.users.florian = import ./home;
           }
         ];
       };
