@@ -4,4 +4,7 @@
 nixos-rebuild switch --flake flake_path_directory#hostname
 ```
 
-https://github.com/ryan4yin/nix-config/tree/v0.0.2
+# Sources
+
+- https://github.com/ryan4yin/nix-config/tree/v0.0.2
+- https://github.com/LudovicoPiero/dotfiles
