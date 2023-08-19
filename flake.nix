@@ -15,7 +15,6 @@
       self,
       nixpkgs,
       home-manager,
-      nix-vscode-extensions,
       ...
   }: {
     nixosConfigurations = {
