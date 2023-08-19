@@ -37,12 +37,6 @@
     git
   ];
 
-  programs.git = {
-    enable = true;
-    userName = "Florian RICHER";
-    userEmail = "florian.richer@protonmail.com";
-  };
-
   users.users.florian = {
     isNormalUser = true;
     description = "florian";
