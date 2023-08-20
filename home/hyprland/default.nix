@@ -1,13 +1,12 @@
-{
-  pkgs,
-  inputs,
-  ...
-} @ args: {
-  home.packages = [];
+{ pkgs, ... }: {
+  
+  xdg.configFile."hypr/set-bg" = {
+    executable = true;
+    text = ''
+      #!/usr/bin/env bash
 
-  wayland.windowManager.hyprland = {
-    enable = true;
-    package = inputs.hyprland.packages.${pkgs.system}.default;
-    # settings = import ./settings.nix args;
+      echo "Salut"
+    '';
   };
+
 }

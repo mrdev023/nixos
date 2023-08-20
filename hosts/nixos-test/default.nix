@@ -9,7 +9,8 @@
     [
       ../../modules/system.nix
       ../../modules/pipewire.nix
-      
+      ../../modules/hyprland.nix
+  
       # Include the results of the hardware scan.
       ./hardware-configuration.nix
     ];
