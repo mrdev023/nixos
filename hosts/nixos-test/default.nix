@@ -8,6 +8,7 @@
   imports =
     [
       ../../modules/system.nix
+      ../../modules/pipewire.nix
       
       # Include the results of the hardware scan.
       ./hardware-configuration.nix
