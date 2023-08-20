@@ -1,5 +1,4 @@
-{ config, sound, pkgs, ... }:
-
+{ pkgs, ... }:
 {
   services = {
     pipewire = {
