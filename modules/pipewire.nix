@@ -1,7 +1,6 @@
-{ config, pkgs, ... }:
+{ config, sound, pkgs, ... }:
 
 {
-  sound.enabled = true;
   services = {
     pipewire = {
       enable = true;
