@@ -39,6 +39,11 @@
       firefox
       kate
       emacs
+      vscode nixd vscode-extensions.bbenoist.nix
+      slack
+      skypeforlinux
+      discord
+      google-chrome
     #  thunderbird
     ];
   };
