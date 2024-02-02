@@ -8,6 +8,8 @@
   imports =
     [
       ../../modules/system.nix
+      ../../modules/network.nix
+      ../../modules/plasma.nix
       ../../modules/keymaps/fr.nix
       ../../modules/pipewire.nix
 
@@ -19,21 +21,5 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  networking.hostName = "nixos"; # Define your hostname.
-  # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
-
-  # Configure network proxy if necessary
-  # networking.proxy.default = "http://user:password@proxy:port/";
-  # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
-
-  # Enable networking
-  networking.networkmanager.enable = true;
-
-  # Enable the X11 windowing system.
-  services.xserver.enable = true;
-
-  # Enable the KDE Plasma Desktop Environment.
-  services.xserver.displayManager.sddm.enable = true;
-  services.xserver.desktopManager.plasma5.enable = true;
-
+  networking.hostName = "nixos-laptop-perso"; # Define your hostname.
 }
