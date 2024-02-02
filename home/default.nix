@@ -2,7 +2,7 @@
 
 {
   imports = [
-    ./hyprland
+#    ./hyprland
     ./programs
   ];
 
@@ -10,7 +10,7 @@
     username = "florian";
     homeDirectory = "/home/florian";
 
-    stateVersion = "23.05";
+    stateVersion = "23.11";
   };
 
   programs.home-manager.enable = true;
