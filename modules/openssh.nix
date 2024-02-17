@@ -10,7 +10,7 @@
       }
     ];
 
-    settings {
+    settings = {
       PasswordAuthentication = true;
     };
   };
