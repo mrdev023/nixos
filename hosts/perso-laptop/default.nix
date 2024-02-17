@@ -13,6 +13,7 @@
       ../../modules/plasma.nix
       ../../modules/keymaps/fr.nix
       ../../modules/pipewire.nix
+      ../../modules/openssh.nix
       ../../modules/openvscode-server.nix
 
       # Include the results of the hardware scan.
