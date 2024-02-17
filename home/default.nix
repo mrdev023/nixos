@@ -2,8 +2,8 @@
 
 {
   imports = [
-#    ./hyprland
-    ./programs
+    ./programs/git.nix
+    ./programs/emacs.nix
   ];
 
   home = {
