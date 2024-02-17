@@ -6,6 +6,7 @@
     ./programs/emacs.nix
     ./programs/vscode.nix
     ./programs/mise.nix
+    ./programs/chromium.nix
   ];
 
   home = {

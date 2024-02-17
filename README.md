@@ -8,6 +8,10 @@ nixos-rebuild switch --flake flake_path_directory#hostname
 nix flake update --extra-experimental-features "nix-command flakes"
 ```
 
+# Usefull link
+
+- https://api.github.com/rate_limit
+
 # Sources
 
 - https://github.com/ryan4yin/nix-config/tree/v0.0.2

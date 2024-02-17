@@ -5,5 +5,7 @@
     enable = true;
     userName = "Florian RICHER";
     userEmail = "florian.richer@protonmail.com";
+
+    # signing.signByDefault = true;
   };
 }

@@ -19,14 +19,12 @@
     LC_TIME = "fr_FR.UTF-8";
   };
 
-
   nixpkgs.config.allowUnfree = true;
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
     vim
-    git
   ];
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
@@ -41,7 +39,6 @@
       slack
       skypeforlinux
       discord
-      google-chrome
     #  thunderbird
     ];
   };
