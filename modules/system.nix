@@ -32,15 +32,7 @@
     isNormalUser = true;
     description = "florian";
     extraGroups = [ "networkmanager" "wheel" ];
-    packages = with pkgs; [
-      firefox
-      kate
-      nixd
-      slack
-      skypeforlinux
-      discord
-    #  thunderbird
-    ];
+    packages = with pkgs; [nixd];
   };
 
   # Enable CUPS to print documents.

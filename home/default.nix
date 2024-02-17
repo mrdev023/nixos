@@ -7,6 +7,10 @@
     ./programs/vscode.nix
     ./programs/mise.nix
     ./programs/chromium.nix
+    ./programs/discord.nix
+    ./programs/skype.nix
+    ./programs/slack.nix
+    ./programs/thunderbird.nix
   ];
 
   home = {
