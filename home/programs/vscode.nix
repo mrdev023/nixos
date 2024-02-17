@@ -4,9 +4,32 @@
   programs.vscode = {
     enable = true;
     enableUpdateCheck = false;
+    enableExtensionUpdateCheck = false;
 
-    extensions = with pkgs; [
-      vscode-extensions.bbenoist.nix
+    userSettings = {
+      "files.autoSave" = "onFocusChange";
+      "emmet.includeLanguages" = {
+        "phoenix-heex" = "html";
+      };
+    };
+
+    userTasks = {};
+
+    extensions = with pkgs; with vscode-extensions; [
+      # Nix
+      bbenoist.nix
+
+      # Rust
+      rust-lang.rust-analyzer
+      serayuzgur.crates
+      tamasfe.even-better-toml
+
+      # Phoenix
+      phoenixframework.phoenix
+      elixir-lsp.vscode-elixir-ls
+
+      # Ruby
+      rebornix.ruby # nixpkgs#unstable -> Migrate to shopify.ruby-lsp
     ];
   };
 }
