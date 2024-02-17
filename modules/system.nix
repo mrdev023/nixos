@@ -37,7 +37,7 @@
     packages = with pkgs; [
       firefox
       kate
-      vscode nixd
+      nixd
       slack
       skypeforlinux
       discord
