@@ -29,7 +29,7 @@
       elixir-lsp.vscode-elixir-ls
 
       # Ruby
-      rebornix.ruby # nixpkgs#unstable -> Migrate to shopify.ruby-lsp
+      shopify.ruby-lsp
     ];
   };
 }

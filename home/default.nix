@@ -5,6 +5,7 @@
     ./programs/git.nix
     ./programs/emacs.nix
     ./programs/vscode.nix
+    ./programs/mise.nix
   ];
 
   home = {
