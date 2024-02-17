@@ -7,24 +7,7 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-
-    home-manager = {
-      url = "github:nix-community/home-manager";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    stylix = {
-      url = "github:danth/stylix";
-      inputs = {
-        nixpkgs.follows = "nixpkgs";
-        home-manager.follows = "home-manager";
-      };
-    };
-
-    hyprland = {
-      url = "github:hyprwm/hyprland";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    home-manager.url = "github:nix-community/home-manager";
   };
 
   outputs = inputs@{
@@ -41,13 +24,7 @@
           ./hosts/nixos-test
 
           home-manager.nixosModules.home-manager
-          {
-            home-manager.useGlobalPkgs = true;
-            home-manager.useUserPackages = true;
-
-            home-manager.extraSpecialArgs = inputs;
-            home-manager.users.florian = import ./home;
-          }
+          (import ./home/common-home-manager.nix { inherit inputs; })
         ];
       };
 
@@ -58,13 +35,7 @@
           ./hosts/perso-laptop
 
           home-manager.nixosModules.home-manager
-          {
-            home-manager.useGlobalPkgs = true;
-            home-manager.useUserPackages = true;
-
-            home-manager.extraSpecialArgs = inputs;
-            home-manager.users.florian = import ./home;
-          }
+          (import ./home/common-home-manager.nix { inherit inputs; })
         ];
       };
     };
