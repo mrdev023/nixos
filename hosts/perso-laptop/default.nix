@@ -7,6 +7,7 @@
 {
   imports =
     [
+      ../../modules/linux_gaming.nix
       ../../modules/system.nix
       ../../modules/network.nix
       ../../modules/nvidia.nix
