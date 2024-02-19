@@ -11,6 +11,7 @@
       "emmet.includeLanguages" = {
         "phoenix-heex" = "html";
       };
+      "git.autofetch" = true;
     };
 
     userTasks = {};
