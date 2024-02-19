@@ -42,6 +42,17 @@
           (import ./home/common-home-manager.nix { inherit inputs; })
         ];
       };
+
+      perso-desktop = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+
+        modules = [
+          ./hosts/perso-desktop
+
+          home-manager.nixosModules.home-manager
+          (import ./home/common-home-manager.nix { inherit inputs; })
+        ];
+      };
     };
   };
 }
