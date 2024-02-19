@@ -12,6 +12,7 @@
       ../../modules/nvidia.nix
       ../../modules/plasma.nix
       ../../modules/keymaps/fr.nix
+      ../../modules/bluetooth.nix
       ../../modules/pipewire.nix
       ../../modules/openssh.nix
       ../../modules/openvscode-server.nix

@@ -12,6 +12,7 @@
       ../../modules/nvidia.nix
       ../../modules/plasma.nix
       ../../modules/keymaps/us.nix
+      ../../modules/bluetooth.nix
       ../../modules/pipewire.nix
 
       # Include the results of the hardware scan.
