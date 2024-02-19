@@ -9,6 +9,7 @@
       { id = "nngceckbapebfimnlniiiahkandclblb"; } # Bitwarden
       { id = "fnaicdffflnofjppbagibeoednhnbjhg"; } # Floccus Bookmark manager
       { id = "fihnjjcciajhdojfnbdddfaoknhalnja"; } # I don't care about cookies
+      { id = "cimiefiiaegbelhefglklhhakcgmhkai"; } # Plasma Integration
     ];
   };
 }

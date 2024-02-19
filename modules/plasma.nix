@@ -7,4 +7,8 @@
   services.xserver.displayManager.sddm.enable = true;
   services.xserver.displayManager.defaultSession = "plasmawayland";
   services.xserver.desktopManager.plasma5.enable = true;
+
+  environment.systemPackages = with pkgs; [
+    libsForQt5.plasma-browser-integration
+  ];
 }
