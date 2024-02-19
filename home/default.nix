@@ -4,7 +4,7 @@
   imports = [
     ./programs/git.nix
 #    ./programs/emacs.nix
-#    ./programs/vscode.nix
+    ./programs/vscode.nix
     ./programs/mise.nix
     ./programs/chromium.nix
     ./programs/flatpak.nix
