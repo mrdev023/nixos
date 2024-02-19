@@ -12,6 +12,7 @@
       # Gaming
       { appId = "com.discordapp.Discord"; origin = "flathub";  }
       { appId = "com.valvesoftware.Steam"; origin = "flathub";  }
+      { appId = "net.lutris.Lutris"; origin = "flathub";  }
 
       # Pro
       { appId = "com.slack.Slack"; origin = "flathub";  }
