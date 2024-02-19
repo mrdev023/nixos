@@ -12,12 +12,15 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    nix-flatpak.url = "github:gmodena/nix-flatpak/?ref=v0.3.0";
   };
 
   outputs = inputs@{
       self,
       nixpkgs,
       home-manager,
+      nix-flatpak,
       ...
   }: {
     nixosConfigurations = {
@@ -26,7 +29,6 @@
 
         modules = [
           ./hosts/nixos-test
-
           home-manager.nixosModules.home-manager
           (import ./home/common-home-manager.nix { inherit inputs; })
         ];
@@ -37,7 +39,6 @@
 
         modules = [
           ./hosts/perso-laptop
-
           home-manager.nixosModules.home-manager
           (import ./home/common-home-manager.nix { inherit inputs; })
         ];
@@ -48,7 +49,6 @@
 
         modules = [
           ./hosts/perso-desktop
-
           home-manager.nixosModules.home-manager
           (import ./home/common-home-manager.nix { inherit inputs; })
         ];
