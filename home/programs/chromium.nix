@@ -4,8 +4,6 @@
   programs.chromium = {
     enable = true;
 
-    enablePlasmaBrowserIntegration = true;
-
     extensions = [
       { id = "cjpalhdlnbpafiamejdnhcphjbkeiagm"; } # Ublock Origin
       { id = "nngceckbapebfimnlniiiahkandclblb"; } # Bitwarden
