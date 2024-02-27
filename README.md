@@ -12,6 +12,23 @@ nix flake update --extra-experimental-features "nix-command flakes"
 
 - https://api.github.com/rate_limit
 
+# Clean system
+
+List all profiles
+```bash
+nix profile history --profile /nix/var/nix/profiles/system
+```
+
+Remove all profiles older than 7 days
+```bash
+sudo nix profile wipe-history --older-than 7d --profile /nix/var/nix/profiles/system
+```
+
+Clean up all useless store from old profiles
+```bash
+sudo nix store gc --debug
+```
+
 # Sources
 
 - https://github.com/ryan4yin/nix-config/tree/v0.0.2
