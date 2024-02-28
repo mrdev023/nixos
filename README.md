@@ -1,4 +1,7 @@
-# Configure
+
+# Usefull commands
+
+## Configure
 
 ```bash
 nixos-rebuild switch --flake flake_path_directory#hostname
@@ -8,11 +11,7 @@ nixos-rebuild switch --flake flake_path_directory#hostname
 nix flake update --extra-experimental-features "nix-command flakes"
 ```
 
-# Usefull link
-
-- https://api.github.com/rate_limit
-
-# Clean system
+## Clean system
 
 List all profiles
 ```bash
@@ -28,6 +27,13 @@ Clean up all useless store from old profiles
 ```bash
 sudo nix store gc --debug
 ```
+
+# Usefull links
+
+- https://api.github.com/rate_limit
+- https://hydra.nixos.org/job/nixos/trunk-combined/tested#tabs-constituents
+- https://nixpk.gs/pr-tracker.html
+- https://mobile.nixos.org/
 
 # Sources
 
