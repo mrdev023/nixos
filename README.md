@@ -11,6 +11,10 @@ nixos-rebuild switch --flake flake_path_directory#hostname
 nix flake update --extra-experimental-features "nix-command flakes"
 ```
 
+```bash
+nix store diff-closures /nix/var/nix/profiles/system-rev1-link /nix/var/nix/profiles/system-rev2-link
+```
+
 ## Clean system
 
 List all profiles
