@@ -24,6 +24,8 @@
       # Loisir
       { appId = "com.spotify.Client"; origin = "flathub"; }
       { appId = "io.gitlab.news_flash.NewsFlash"; origin = "flathub"; }
+      { appId = "org.videolan.VLC"; origin = "flathub"; }
+      { appId = "com.obsproject.Studio"; origin = "flathub"; }
     ];
   };
 }
