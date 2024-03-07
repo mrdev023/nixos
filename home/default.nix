@@ -2,6 +2,7 @@
 
 {
   imports = [
+    ./programs/shell.nix
     ./programs/git.nix
 #    ./programs/emacs.nix
     ./programs/jetbrains-toolbox.nix
