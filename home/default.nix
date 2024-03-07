@@ -6,7 +6,7 @@
 #    ./programs/emacs.nix
     ./programs/jetbrains-toolbox.nix
     ./programs/vscode.nix
-    ./programs/mise.nix
+    ./programs/direnv.nix
     ./programs/chromium.nix
     ./programs/flatpak.nix
   ];
