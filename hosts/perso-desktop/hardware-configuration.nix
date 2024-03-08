@@ -34,12 +34,6 @@
   # networking.interfaces.wlp10s0.useDHCP = lib.mkDefault true;
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
-  # https://nixos.wiki/wiki/Build_flags
-  # nixpkgs.hostPlatform = {
-  #   gcc.arch = "x86-64-v3";
-  #   gcc.tune = "x86-64-v3";
-  #   system = "x86_64-linux";
-  # };
 
   hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 }

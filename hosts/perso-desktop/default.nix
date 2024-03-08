@@ -26,4 +26,11 @@
   boot.loader.efi.canTouchEfiVariables = true;
 
   networking.hostName = "nixos-desktop-perso"; # Define your hostname.
+
+  # https://nixos.wiki/wiki/Build_flags
+  # nixpkgs.hostPlatform = {
+  #   gcc.arch = "x86-64-v3";
+  #   gcc.tune = "x86-64-v3";
+  #   system = "x86_64-linux";
+  # };
 }
