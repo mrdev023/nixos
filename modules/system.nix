@@ -32,7 +32,6 @@
     isNormalUser = true;
     description = "florian";
     extraGroups = [ "networkmanager" "wheel" ];
-    packages = with pkgs; [nixd];
   };
 
   services.flatpak.enable = true;
