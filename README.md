@@ -1,4 +1,3 @@
-
 # Usefull commands
 
 ## Configure
@@ -37,6 +36,11 @@ sudo nix profile wipe-history --older-than 7d --profile /nix/var/nix/profiles/sy
 Clean up all useless store from old profiles
 ```bash
 sudo nix store gc --debug
+```
+
+error: cached failure of attribute 'nixosConfigurations.perso-desktop.config.system.build.toplevel'
+```bash
+sudo rm -fr /root/.cache/nix/
 ```
 
 # Usefull links
