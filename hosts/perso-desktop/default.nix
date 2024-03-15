@@ -15,7 +15,6 @@
       ../../modules/keymaps/us.nix
       ../../modules/bluetooth.nix
       ../../modules/pipewire.nix
-      ../../modules/docker.nix
 
       # Include the results of the hardware scan.
       ./hardware-configuration.nix
