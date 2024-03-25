@@ -11,7 +11,7 @@
       ../../modules/network.nix
       ../../modules/keymaps/us.nix
       ../../modules/pipewire.nix
-      ../../modules/hyprland.nix
+      ../../modules/plasma.nix
   
       # Include the results of the hardware scan.
       ./hardware-configuration.nix
