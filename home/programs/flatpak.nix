@@ -28,6 +28,7 @@
       { appId = "io.gitlab.news_flash.NewsFlash"; origin = "flathub"; }
       { appId = "org.videolan.VLC"; origin = "flathub"; }
       { appId = "com.obsproject.Studio"; origin = "flathub"; }
+      { appId = "io.github.achetagames.epic_asset_manager"; origin = "flathub"; }
     ];
   };
 }
