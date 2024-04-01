@@ -29,6 +29,9 @@
       { appId = "org.videolan.VLC"; origin = "flathub"; }
       { appId = "com.obsproject.Studio"; origin = "flathub"; }
       { appId = "io.github.achetagames.epic_asset_manager"; origin = "flathub"; }
+
+      # Autres
+      { appId = "com.github.debauchee.barrier"; origin = "flathub"; }
     ];
   };
 }
