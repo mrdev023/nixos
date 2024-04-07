@@ -18,36 +18,30 @@
       home-manager,
       nix-flatpak,
       ...
-  }: {
+  }:
+  let
+    common-modules = [
+      home-manager.nixosModules.home-manager
+      (import ./home/common-home-manager.nix { inherit inputs; })
+    ];
+  in {
     nixosConfigurations = {
       nixos-test = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
 
-        modules = [
-          ./hosts/nixos-test
-          home-manager.nixosModules.home-manager
-          (import ./home/common-home-manager.nix { inherit inputs; })
-        ];
+        modules = [ ./hosts/nixos-test ] ++ common-modules;
       };
 
       perso-laptop = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
 
-        modules = [
-          ./hosts/perso-laptop
-          home-manager.nixosModules.home-manager
-          (import ./home/common-home-manager.nix { inherit inputs; })
-        ];
+        modules = [ ./hosts/perso-laptop ] ++ common-modules;
       };
 
       perso-desktop = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
 
-        modules = [
-          ./hosts/perso-desktop
-          home-manager.nixosModules.home-manager
-          (import ./home/common-home-manager.nix { inherit inputs; })
-        ];
+        modules = [ ./hosts/perso-desktop ] ++ common-modules;
       };
     };
   };
