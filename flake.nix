@@ -9,6 +9,12 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    agenix = {
+      url = "github:ryantm/agenix";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.home-manager.follows = "home-manager";
+    };
+
     nix-flatpak.url = "github:gmodena/nix-flatpak/?ref=v0.4.1";
   };
 
@@ -16,6 +22,7 @@
       self,
       nixpkgs,
       home-manager,
+      agenix,
       nix-flatpak,
       ...
   }:
@@ -33,6 +40,7 @@
             modules = [
               ./hosts/${s.name}
               home-manager.nixosModules.home-manager
+              agenix.nixosModules.default
               (import ./home/common-home-manager.nix { inherit inputs; })
             ];
           };

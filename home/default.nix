@@ -2,6 +2,7 @@
 
 {
   imports = [
+    ./programs/agenix.nix
     ./programs/shell.nix
     ./programs/git.nix
 #    ./programs/emacs.nix
