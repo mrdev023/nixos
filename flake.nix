@@ -29,7 +29,7 @@
     nixosConfigurations = nixpkgs.lib.foldl (c: s:
        c // {
           ${s.name} = nixpkgs.lib.nixosSystem {
-            system = s.system;
+            inherit (s) system;
             modules = [
               ./hosts/${s.name}
               home-manager.nixosModules.home-manager
