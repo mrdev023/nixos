@@ -20,29 +20,22 @@
       ...
   }:
   let
-    common-modules = [
-      home-manager.nixosModules.home-manager
-      (import ./home/common-home-manager.nix { inherit inputs; })
+    systems = [
+      { name = "nixos-test"; system = "x86_64-linux"; }
+      { name = "perso-laptop"; system = "x86_64-linux"; }
+      { name = "perso-desktop"; system = "x86_64-linux"; }
     ];
   in {
-    nixosConfigurations = {
-      nixos-test = nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
-
-        modules = [ ./hosts/nixos-test ] ++ common-modules;
-      };
-
-      perso-laptop = nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
-
-        modules = [ ./hosts/perso-laptop ] ++ common-modules;
-      };
-
-      perso-desktop = nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
-
-        modules = [ ./hosts/perso-desktop ] ++ common-modules;
-      };
-    };
+    nixosConfigurations = nixpkgs.lib.foldl (c: s:
+       c // {
+          ${s.name} = nixpkgs.lib.nixosSystem {
+            system = s.system;
+            modules = [
+              ./hosts/${s.name}
+              home-manager.nixosModules.home-manager
+              (import ./home/common-home-manager.nix { inherit inputs; })
+            ];
+          };
+        }) {} systems;
   };
 }
