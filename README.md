@@ -33,6 +33,10 @@ Remove all profiles older than 7 days
 sudo nix profile wipe-history --older-than 7d --profile /nix/var/nix/profiles/system
 ```
 
+```bash
+nix profile wipe-history --older-than 7d --profile ~/.local/state/nix/profiles/home-manager
+```
+
 Clean up all useless store from old profiles
 ```bash
 sudo nix store gc --debug
