@@ -11,7 +11,6 @@
     ./programs/direnv.nix
     ./programs/chromium.nix
     ./programs/flatpak.nix
-    ./programs/plandex.nix
   ];
 
   home = {
