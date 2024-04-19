@@ -16,4 +16,8 @@
     krfb # Use by kdeconnect for virtualmonitorplugin "krfb-virtualmonitor"
     discover
   ];
+
+  nixpkgs.overlays = [
+    (import ../overlays/kwin)
+  ];
 }
