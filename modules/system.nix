@@ -25,6 +25,7 @@
   # $ nix search wget
   environment.systemPackages = with pkgs; [
     vim
+    nixd
   ];
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
