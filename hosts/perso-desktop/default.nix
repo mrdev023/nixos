@@ -15,6 +15,7 @@
       ../../modules/keymaps/us.nix
       ../../modules/bluetooth.nix
       ../../modules/pipewire.nix
+      ../../modules/nix-ld.nix
 
       # Include the results of the hardware scan.
       ./hardware-configuration.nix
