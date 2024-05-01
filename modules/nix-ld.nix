@@ -24,5 +24,28 @@
     icu
     nss
     expat
+
+    # For UE5
+    glibc
+    libdrm
+    libgcc
+    vulkan-loader
+    vulkan-tools
+    vulkan-extension-layer
+    vulkan-validation-layers
+    SDL2.dev
+    libGL
+    xorg.libX11
+    xorg.libXScrnSaver
+    xorg.libXau
+    xorg.libXcursor
+    xorg.libXext
+    xorg.libXfixes
+    xorg.libXi
+    xorg.libXrandr
+    xorg.libXrender
+    xorg.libXxf86vm
+    xorg.libxcb
+    python311
   ];
 }
