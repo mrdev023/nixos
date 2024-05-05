@@ -43,7 +43,7 @@
     extraGroups = [ "networkmanager" "wheel" ];
   };
 
-  services.flatpak.enable = true;
+  services.flatpak.enable = true; # Important can't be enabled from home-manager
 
   # Enable CUPS to print documents.
   services.printing.enable = true;
