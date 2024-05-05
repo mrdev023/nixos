@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, users, ... }:
 
 {
   programs.zsh = {
@@ -23,9 +23,4 @@
       }
     ];
   };
-
-  home.packages = with pkgs; [
-    fira-code-nerdfont
-  ];
-
 }
