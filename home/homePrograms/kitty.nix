@@ -2,13 +2,23 @@
 with lib;
 {
   options.homePrograms.kitty = {
-    enable = mkEnableOption ''
-      Enable kitty with my custom configurations
-    '';
+    enable = mkOption {
+      default = config.homePrograms.hyprland.enable; # Enable by default with hyprland to ensure kitty is installed with hyprland
+      example = true;
+      description = ''
+        Enable kitty with my custom configurations
+      '';
+      type = types.bool;
+    };
 
-    enableBlur = mkEnableOption ''
-      Enable blur (Usefull to disable with hyprland)
-    '';
+    enableBlur = mkOption {
+      default = !config.homePrograms.hyprland.enable; # Disable by default if hyprland is enabled (Hyprland enable own blur)
+      example = true;
+      description = ''
+        Enable blur (Usefull to disable with hyprland)
+      '';
+      type = types.bool;
+    };
   };
   config =
     let
@@ -25,7 +35,6 @@ with lib;
 
           settings = lib.mkMerge [
             {
-              shell = "zsh";
               disable_ligatures = "never";
               sync_to_monitor = "yes"; # Avoid to update a lot
               confirm_os_window_close = 0; # Disable close confirmation
@@ -34,6 +43,7 @@ with lib;
             }
 
             (lib.mkIf cfg.enableBlur { background_blur = "1"; })
+            (lib.mkIf config.programs.zsh.enable { shell = "zsh"; })
           ];
         };
       };
