@@ -9,8 +9,15 @@ with lib;
   config =
     let
       cfg = config.homePrograms.hyprland;
+
+      set_volume = pkgs.writeScriptBin "set_volume.sh" ''
+        #!${pkgs.runtimeShell}
+        pactl set-sink-volume @DEFAULT_SINK@ $1 && $send_volume_notif notify-send "Volume" -h int:value:"$(pactl get-sink-volume @DEFAULT_SINK@ | cut -d ' ' -f6 | cut -d '%' -f1)"
+      '';
     in
       mkIf cfg.enable {
+        homePrograms.kitty.enable = true; # Required
+
         wayland.windowManager.hyprland = {
           enable = true;
 
@@ -126,7 +133,7 @@ with lib;
               "SUPERSHIFT,U,hyprload,update"
 
               # Example binds, see https://wiki.hyprland.org/Configuring/Binds/ for more
-              "$mainMod, RETURN, exec, kitty -c ~/.config/hypr/kitty.conf"
+              "$mainMod, RETURN, exec, kitty"
               "$mainMod, C, killactive,"
               "$mainMod SHIFT, C, exec, hyprpicker -a -f hex"
               "$mainMod SHIFT, Q, exit,"
@@ -182,10 +189,9 @@ with lib;
             ];
 
             bindm = [
-              # mouse movements
-              "$mod, mouse:272, movewindow"
-              "$mod, mouse:273, resizewindow"
-              "$mod ALT, mouse:272, resizewindow"
+              # Move/resize windows with mainMod + LMB/RMB and dragging
+              "$mainMod, mouse:272, movewindow"
+              "$mainMod, mouse:273, resizewindow"
             ];
 
             binde = [
@@ -193,6 +199,25 @@ with lib;
               "$mainMod CTRL_L, l, resizeactive, 50 0"
               "$mainMod CTRL_L, j, resizeactive, 0 -50"
               "$mainMod CTRL_L, k, resizeactive, 0 50"
+
+              # Use pactl to adjust volume in PulseAudio.
+              ", XF86AudioRaiseVolume, exec, ${set_volume} \"+5%\""
+              ", XF86AudioLowerVolume, exec, ${set_volume} \"-5%\""
+            ];
+
+            bindl = [
+              ", XF86AudioMute, exec, pactl set-sink-mute @DEFAULT_SINK@ toggle"
+              ", XF86AudioMicMute, exec, pactl set-source-mute @DEFAULT_SOURCE@ toggle"
+
+              # Media player controls
+              ", XF86AudioPlay, exec, playerctl play-pause"
+              ", XF86AudioPause, exec, playerctl play-pause"
+              ", XF86AudioPrev, exec, playerctl previous"
+              ", XF86AudioNext, exec, playerctl next"
+
+              # Screen brightness controls
+              ", XF86MonBrightnessUp, exec, xbacklight -inc 5"
+              ", XF86MonBrightnessDown, exec, xbacklight -dec 5"
             ];
           };
         };

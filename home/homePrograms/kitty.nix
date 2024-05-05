@@ -2,14 +2,9 @@
 with lib;
 {
   options.homePrograms.kitty = {
-    enable = mkOption {
-      default = config.homePrograms.hyprland.enable; # Enable by default with hyprland to ensure kitty is installed with hyprland
-      example = true;
-      description = ''
-        Enable kitty with my custom configurations
-      '';
-      type = types.bool;
-    };
+    enable = mkEnableOption ''
+      Enable kitty with my custom configurations
+    '';
 
     enableBlur = mkOption {
       default = !config.homePrograms.hyprland.enable; # Disable by default if hyprland is enabled (Hyprland enable own blur)
