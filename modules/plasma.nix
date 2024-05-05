@@ -14,7 +14,5 @@
 
   environment.systemPackages = with pkgs; with kdePackages; [
     krfb # Use by kdeconnect for virtualmonitorplugin "krfb-virtualmonitor"
-    kdenetwork-filesharing # Use to share with samba from dolphin
-    samba4Full # Required for kdenetwork-filesharing
   ];
 }
