@@ -7,11 +7,12 @@
     ./programs/git.nix
 #    ./programs/emacs.nix
     ./programs/jetbrains-toolbox.nix
-    ./programs/kitty.nix
     ./programs/vscode.nix
     ./programs/direnv.nix
     ./programs/chromium.nix
     ./programs/flatpak.nix
+
+    ./homePrograms
   ];
 
   home = {
@@ -24,4 +25,6 @@
   programs.home-manager.enable = true;
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
+
+  homePrograms.kitty.enable = true;
 }
