@@ -41,5 +41,5 @@
     nvidiaBusId = "PCI:1:0:0";
   };
 
-  customModules.gpuPassthrough.enable = true;
+#   customModules.gpuPassthrough.enable = true;
 }
