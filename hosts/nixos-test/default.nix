@@ -12,6 +12,7 @@
       ../../modules/keymaps/us.nix
       ../../modules/pipewire.nix
       ../../modules/plasma.nix
+      ../../modules/plymouth.nix
 
       ../../modules # Import optional configuration
   

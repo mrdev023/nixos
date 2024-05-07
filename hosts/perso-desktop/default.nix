@@ -15,6 +15,7 @@
       ../../modules/keymaps/us.nix
       ../../modules/bluetooth.nix
       ../../modules/pipewire.nix
+      ../../modules/plymouth.nix
 
       ../../modules # Import optional configuration
 
