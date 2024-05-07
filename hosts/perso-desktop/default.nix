@@ -16,6 +16,8 @@
       ../../modules/bluetooth.nix
       ../../modules/pipewire.nix
 
+      ../../modules # Import optional configuration
+
       # Include the results of the hardware scan.
       ./hardware-configuration.nix
     ];

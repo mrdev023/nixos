@@ -16,6 +16,8 @@
       ../../modules/bluetooth.nix
       ../../modules/pipewire.nix
 
+      ../../modules # Import optional configuration
+
       # Include the results of the hardware scan.
       ./hardware-configuration.nix
     ];
@@ -38,4 +40,6 @@
     # information bus: pci@0000:01:00.0
     nvidiaBusId = "PCI:1:0:0";
   };
+
+  customModules.gpuPassthrough.enable = true;
 }

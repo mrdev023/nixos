@@ -12,6 +12,8 @@
       ../../modules/keymaps/us.nix
       ../../modules/pipewire.nix
       ../../modules/plasma.nix
+
+      ../../modules # Import optional configuration
   
       # Include the results of the hardware scan.
       ./hardware-configuration.nix

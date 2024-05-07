@@ -1,0 +1,247 @@
+<domain xmlns:qemu="http://libvirt.org/schemas/domain/qemu/1.0" type="kvm">
+  <name>win10</name>
+  <uuid>b3d036ee-75ff-43fe-be76-b8c5494f5dd7</uuid>
+  <metadata>
+    <libosinfo:libosinfo xmlns:libosinfo="http://libosinfo.org/xmlns/libvirt/domain/1.0">
+      <libosinfo:os id="http://microsoft.com/win/10"/>
+    </libosinfo:libosinfo>
+  </metadata>
+  <memory unit="KiB">25165824</memory>
+  <currentMemory unit="KiB">25165824</currentMemory>
+  <memoryBacking>
+    <hugepages/>
+  </memoryBacking>
+  <vcpu placement="static">32</vcpu>
+  <iothreads>1</iothreads>
+  <cputune>
+    <vcpupin vcpu="0" cpuset="0"/>
+    <vcpupin vcpu="1" cpuset="1"/>
+    <vcpupin vcpu="2" cpuset="2"/>
+    <vcpupin vcpu="3" cpuset="3"/>
+    <vcpupin vcpu="4" cpuset="4"/>
+    <vcpupin vcpu="5" cpuset="5"/>
+    <vcpupin vcpu="6" cpuset="6"/>
+    <vcpupin vcpu="7" cpuset="7"/>
+    <vcpupin vcpu="8" cpuset="8"/>
+    <vcpupin vcpu="9" cpuset="9"/>
+    <vcpupin vcpu="10" cpuset="10"/>
+    <vcpupin vcpu="11" cpuset="11"/>
+    <vcpupin vcpu="12" cpuset="12"/>
+    <vcpupin vcpu="13" cpuset="13"/>
+    <vcpupin vcpu="14" cpuset="14"/>
+    <vcpupin vcpu="15" cpuset="15"/>
+    <vcpupin vcpu="16" cpuset="16"/>
+    <vcpupin vcpu="17" cpuset="17"/>
+    <vcpupin vcpu="18" cpuset="18"/>
+    <vcpupin vcpu="19" cpuset="19"/>
+    <vcpupin vcpu="20" cpuset="20"/>
+    <vcpupin vcpu="21" cpuset="21"/>
+    <vcpupin vcpu="22" cpuset="22"/>
+    <vcpupin vcpu="23" cpuset="23"/>
+    <vcpupin vcpu="24" cpuset="24"/>
+    <vcpupin vcpu="25" cpuset="25"/>
+    <vcpupin vcpu="26" cpuset="26"/>
+    <vcpupin vcpu="27" cpuset="27"/>
+    <vcpupin vcpu="28" cpuset="28"/>
+    <vcpupin vcpu="29" cpuset="29"/>
+    <vcpupin vcpu="30" cpuset="30"/>
+    <vcpupin vcpu="31" cpuset="31"/>
+    <emulatorpin cpuset="32-63"/>
+    <iothreadpin iothread="1" cpuset="32-63"/>
+  </cputune>
+  <os>
+    <type arch="x86_64" machine="pc-q35-6.2">hvm</type>
+    <loader readonly="yes" type="pflash">/usr/share/edk2-ovmf/x64/OVMF_CODE.fd</loader>
+    <nvram>/var/lib/libvirt/qemu/nvram/win10_VARS.fd</nvram>
+  </os>
+  <features>
+    <acpi/>
+    <apic/>
+    <hyperv mode="custom">
+      <relaxed state="on"/>
+      <vapic state="on"/>
+      <spinlocks state="on" retries="8191"/>
+      <vendor_id state="on" value="buttplug"/>
+    </hyperv>
+    <kvm>
+      <hidden state="on"/>
+    </kvm>
+    <vmport state="off"/>
+    <ioapic driver="kvm"/>
+  </features>
+  <cpu mode="host-passthrough" check="none" migratable="on">
+    <topology sockets="1" dies="2" cores="8" threads="2"/>
+    <cache mode="passthrough"/>
+    <feature policy="require" name="topoext"/>
+  </cpu>
+  <clock offset="localtime">
+    <timer name="rtc" tickpolicy="catchup"/>
+    <timer name="pit" tickpolicy="delay"/>
+    <timer name="hpet" present="no"/>
+    <timer name="hypervclock" present="yes"/>
+  </clock>
+  <on_poweroff>destroy</on_poweroff>
+  <on_reboot>restart</on_reboot>
+  <on_crash>destroy</on_crash>
+  <pm>
+    <suspend-to-mem enabled="no"/>
+    <suspend-to-disk enabled="no"/>
+  </pm>
+  <devices>
+    <emulator>/usr/bin/qemu-system-x86_64</emulator>
+    <disk type="file" device="disk">
+      <driver name="qemu" type="raw" cache="none" io="threads" discard="unmap" iothread="1" queues="32"/>
+      <source file="/home/florian/kvm/win10.img"/>
+      <target dev="vda" bus="virtio"/>
+      <boot order="1"/>
+      <address type="pci" domain="0x0000" bus="0x04" slot="0x00" function="0x0"/>
+    </disk>
+    <disk type="file" device="cdrom">
+      <driver name="qemu" type="raw"/>
+      <source file="/home/florian/T&#xE9;l&#xE9;chargements/Win10_21H2_French_x64.iso"/>
+      <target dev="sdb" bus="sata"/>
+      <readonly/>
+      <address type="drive" controller="0" bus="0" target="0" unit="1"/>
+    </disk>
+    <disk type="file" device="cdrom">
+      <driver name="qemu" type="raw"/>
+      <source file="/home/florian/T&#xE9;l&#xE9;chargements/virtio-win-0.1.215.iso"/>
+      <target dev="sdc" bus="sata"/>
+      <readonly/>
+      <address type="drive" controller="0" bus="0" target="0" unit="2"/>
+    </disk>
+    <controller type="usb" index="0" model="qemu-xhci" ports="15">
+     <address type="pci" domain="0x0000" bus="0x02" slot="0x00" function="0x0"/>
+    </controller>
+    <controller type="sata" index="0">
+      <address type="pci" domain="0x0000" bus="0x00" slot="0x1f" function="0x2"/>
+    </controller>
+    <controller type="pci" index="0" model="pcie-root"/>
+    <controller type="pci" index="1" model="pcie-root-port">
+      <model name="pcie-root-port"/>
+      <target chassis="1" port="0x10"/>
+      <address type="pci" domain="0x0000" bus="0x00" slot="0x02" function="0x0" multifunction="on"/>
+    </controller>
+    <controller type="pci" index="2" model="pcie-root-port">
+      <model name="pcie-root-port"/>
+      <target chassis="2" port="0x11"/>
+      <address type="pci" domain="0x0000" bus="0x00" slot="0x02" function="0x1"/>
+    </controller>
+    <controller type="pci" index="3" model="pcie-root-port">
+      <model name="pcie-root-port"/>
+      <target chassis="3" port="0x12"/>
+      <address type="pci" domain="0x0000" bus="0x00" slot="0x02" function="0x2"/>
+    </controller>
+    <controller type="pci" index="4" model="pcie-root-port">
+      <model name="pcie-root-port"/>
+      <target chassis="4" port="0x13"/>
+      <address type="pci" domain="0x0000" bus="0x00" slot="0x02" function="0x3"/>
+    </controller>
+    <controller type="pci" index="5" model="pcie-root-port">
+      <model name="pcie-root-port"/>
+      <target chassis="5" port="0x14"/>
+      <address type="pci" domain="0x0000" bus="0x00" slot="0x02" function="0x4"/>
+    </controller>
+    <controller type="pci" index="6" model="pcie-root-port">
+      <model name="pcie-root-port"/>
+      <target chassis="6" port="0x15"/>
+      <address type="pci" domain="0x0000" bus="0x00" slot="0x02" function="0x5"/>
+    </controller>
+    <controller type="pci" index="7" model="pcie-root-port">
+      <model name="pcie-root-port"/>
+      <target chassis="7" port="0x16"/>
+      <address type="pci" domain="0x0000" bus="0x00" slot="0x02" function="0x6"/>
+    </controller>
+    <controller type="pci" index="8" model="pcie-root-port">
+      <model name="pcie-root-port"/>
+      <target chassis="8" port="0x17"/>
+      <address type="pci" domain="0x0000" bus="0x00" slot="0x02" function="0x7"/>
+    </controller>
+    <controller type="pci" index="9" model="pcie-root-port">
+      <model name="pcie-root-port"/>
+      <target chassis="9" port="0x18"/>
+      <address type="pci" domain="0x0000" bus="0x00" slot="0x03" function="0x0" multifunction="on"/>
+    </controller>
+    <controller type="pci" index="10" model="pcie-root-port">
+      <model name="pcie-root-port"/>
+      <target chassis="10" port="0x19"/>
+      <address type="pci" domain="0x0000" bus="0x00" slot="0x03" function="0x1"/>
+    </controller>
+    <controller type="virtio-serial" index="0">
+      <address type="pci" domain="0x0000" bus="0x03" slot="0x00" function="0x0"/>
+    </controller>
+    <interface type="network">
+      <mac address="52:54:00:83:f9:1a"/>
+      <source network="default"/>
+      <model type="virtio"/>
+      <address type="pci" domain="0x0000" bus="0x01" slot="0x00" function="0x0"/>
+    </interface>
+    <input type="mouse" bus="ps2"/>
+    <input type="keyboard" bus="ps2"/>
+    <audio id="1" type="none"/>
+    <hostdev mode="subsystem" type="pci" managed="yes">
+      <source>
+        <address domain="0x0000" bus="0x42" slot="0x00" function="0x0"/>
+      </source>
+      <rom file="/home/florian/kvm/patched-vbios.rom"/>
+      <address type="pci" domain="0x0000" bus="0x06" slot="0x00" function="0x0"/>
+    </hostdev>
+    <hostdev mode="subsystem" type="pci" managed="yes">
+      <source>
+        <address domain="0x0000" bus="0x42" slot="0x00" function="0x1"/>
+      </source>
+      <address type="pci" domain="0x0000" bus="0x07" slot="0x00" function="0x0"/>
+    </hostdev>
+    <hostdev mode="subsystem" type="pci" managed="yes">
+      <source>
+        <address domain="0x0000" bus="0x42" slot="0x00" function="0x2"/>
+      </source>
+      <address type="pci" domain="0x0000" bus="0x08" slot="0x00" function="0x0"/>
+    </hostdev>
+    <hostdev mode="subsystem" type="pci" managed="yes">
+      <source>
+        <address domain="0x0000" bus="0x42" slot="0x00" function="0x3"/>
+      </source>
+      <address type="pci" domain="0x0000" bus="0x09" slot="0x00" function="0x0"/>
+    </hostdev>
+    <hostdev mode="subsystem" type="usb" managed="yes">
+      <source>
+        <vendor id="0x0b05"/>
+        <product id="0x193e"/>
+      </source>
+      <address type="usb" bus="0" port="4"/>
+    </hostdev>
+    <hostdev mode="subsystem" type="usb" managed="yes">
+      <source>
+        <vendor id="0xb58e"/>
+        <product id="0x9e84"/>
+      </source>
+      <address type="usb" bus="0" port="5"/>
+    </hostdev>
+    <hostdev mode="subsystem" type="usb" managed="yes">
+      <source>
+        <vendor id="0x8087"/>
+        <product id="0x0a2b"/>
+      </source>
+      <address type="usb" bus="0" port="6"/>
+    </hostdev>
+    <hostdev mode="subsystem" type="usb" managed="yes">
+      <source>
+        <vendor id="0x1b1c"/>
+        <product id="0x1b5a"/>
+      </source>
+      <address type="usb" bus="0" port="2"/>
+    </hostdev>
+    <memballoon model="virtio">
+      <address type="pci" domain="0x0000" bus="0x05" slot="0x00" function="0x0"/>
+    </memballoon>
+  </devices>
+  <qemu:commandline>
+    <qemu:arg value="-device"/>
+    <qemu:arg value="intel-hda"/>
+    <qemu:arg value="-rtc"/>
+    <qemu:arg value="base=localtime"/>
+    <qemu:arg value="-cpu"/>
+    <qemu:arg value="host,host-cache-info=on,kvm=off,l3-cache=on,kvm-hint-dedicated=on,migratable=no,hv_relaxed,hv_spinlocks=0x1fff,hv_vapic,hv_time,hv_vendor_id=buttplug,+invtsc,+topoext"/>
+  </qemu:commandline>
+</domain>
