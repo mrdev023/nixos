@@ -16,13 +16,11 @@ with lib;
         virtualisation.libvirtd = {
           enable = true;
 
-          # hooks.qemu = {
-          #   win10 = {
-          #     prepare.begin = {
-
-          #     };
-          #   };
-          # };
+          hooks.qemu = {
+            is_working = "${pkgs.writeShellScript "testHook.sh" ''
++            touch /tmp/qemu_hook_is_working
++          ''}";
+          };
         };
       };
 }
