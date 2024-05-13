@@ -32,8 +32,6 @@
     wayland-utils # For wayland-info command
     glxinfo
     clinfo
-
-    steam-run
   ];
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
