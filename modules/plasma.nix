@@ -14,5 +14,6 @@
 
   environment.systemPackages = with pkgs; with kdePackages; [
     krfb # Use by kdeconnect for virtualmonitorplugin "krfb-virtualmonitor"
+    discover
   ];
 }
