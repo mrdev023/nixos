@@ -4,6 +4,10 @@
   programs.chromium = {
     enable = true;
 
+    package = pkgs.chromium.override {
+     enableWideVine = true; # Enable DRM
+    };
+
     extensions = [
       { id = "cjpalhdlnbpafiamejdnhcphjbkeiagm"; } # Ublock Origin
       { id = "nngceckbapebfimnlniiiahkandclblb"; } # Bitwarden
