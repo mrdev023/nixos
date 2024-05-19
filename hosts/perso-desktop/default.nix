@@ -16,6 +16,8 @@
       ../../modules/bluetooth.nix
       ../../modules/pipewire.nix
       ../../modules/plymouth.nix
+      ../../modules/docker.nix
+      ../../modules/waydroid.nix
 
       ../../modules # Import optional configuration
 
