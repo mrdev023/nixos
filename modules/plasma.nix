@@ -17,7 +17,8 @@
     discover
   ];
 
-  nixpkgs.overlays = [
-    (import ../overlays/kwin)
-  ];
+  # Uncomment when kwin is available in nixpkgs and NVIDIA 555
+  # nixpkgs.overlays = [
+  #   (import ../overlays/kwin)
+  # ];
 }
