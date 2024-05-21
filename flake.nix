@@ -31,6 +31,7 @@
       { name = "nixos-test"; system = "x86_64-linux"; }
       { name = "perso-laptop"; system = "x86_64-linux"; }
       { name = "perso-desktop"; system = "x86_64-linux"; }
+      { name = "pro-laptop"; system = "x86_64-linux"; }
     ];
   in {
     nixosConfigurations = nixpkgs.lib.foldl (c: s:
