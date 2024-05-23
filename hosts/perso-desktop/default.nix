@@ -37,4 +37,8 @@
   #   gcc.tune = "x86-64-v3";
   #   system = "x86_64-linux";
   # };
+
+  environment.variables = {
+    NIX_BUILD_CORES = 16;
+  };
 }
