@@ -4,6 +4,7 @@
   imports = [
     ./programs/agenix.nix
     ./programs/shell.nix
+    ./programs/atuin.nix
     ./programs/git.nix
 #    ./programs/emacs.nix
     ./programs/jetbrains-toolbox.nix
