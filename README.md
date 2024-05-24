@@ -109,6 +109,7 @@ nixd is not up to date and require nix 2.16.2
 - https://hydra.nixos.org/job/nixos/trunk-combined/tested#tabs-constituents
 - https://nixpk.gs/pr-tracker.html
 - https://mobile.nixos.org/
+- https://nixos.wiki/wiki/Build_flags
 
 # Sources
 
