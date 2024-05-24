@@ -18,8 +18,8 @@ with lib;
 
           hooks.qemu = {
             is_working = "${pkgs.writeShellScript "testHook.sh" ''
-+            touch /tmp/qemu_hook_is_working
-+          ''}";
+              touch /tmp/qemu_hook_is_working
+            ''}";
           };
         };
       };
