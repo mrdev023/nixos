@@ -5,9 +5,12 @@ on:
     branches: [ main ]
 
 jobs:
-  docker:
+  check:
     runs-on: ubuntu-latest
     steps:
       - uses: https://github.com/actions/checkout@v4
       - uses: https://github.com/cachix/install-nix-action@v27
+        with:
+          enable_kvm: false
+          install_options: --no-daemon
       - run: nix flake check .
