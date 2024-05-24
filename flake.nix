@@ -19,11 +19,9 @@
   };
 
   outputs = inputs@{
-      self,
       nixpkgs,
       home-manager,
       agenix,
-      nix-flatpak,
       ...
   }:
   let
