@@ -103,6 +103,12 @@ Result:
 
 nixd is not up to date and require nix 2.16.2
 
+## To limit resources use during build
+
+```bash
+nixos-rebuild build-vm --cores 16 --max-jobs 1 --flake .#nixos-test
+```
+
 # Usefull links
 
 - https://api.github.com/rate_limit
