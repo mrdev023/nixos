@@ -30,5 +30,15 @@
     };
   };
 
+  # Configure for testing in vm
+  users.users.florian.initialPassword = "test";
+  virtualisation.vmVariant = {
+    # following configuration is added only when building VM with build-vm
+    virtualisation = {
+      memorySize = 8192; # Use 8192MiB memory.
+      cores = 8;         
+    };
+  };
+
   networking.hostName = "nixos-vm"; # Define your hostname.
 }
