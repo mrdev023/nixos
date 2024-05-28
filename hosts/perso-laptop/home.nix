@@ -11,6 +11,9 @@
       flatpak.enable = true;
       jetbrainsToolbox.enable = true;
       kitty.enable = true;
+    };
+
+    editors = {
       vscode.enable = true;
     };
 

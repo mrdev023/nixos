@@ -3,6 +3,7 @@
 {
   imports = [
     ./apps
+    ./editors
     ./desktop
     ./shell
   ];

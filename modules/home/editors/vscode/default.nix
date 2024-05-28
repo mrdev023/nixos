@@ -2,10 +2,10 @@
 
 with lib;
 let
-  cfg = config.modules.home.apps.vscode;
+  cfg = config.modules.home.editors.vscode;
 in
 {
-  options.modules.home.apps.vscode = {
+  options.modules.home.editors.vscode = {
     enable = mkEnableOption ''
       Enable vscode with my custom configurations
     '';

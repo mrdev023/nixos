@@ -6,6 +6,5 @@
     ./flatpak
     ./jetbrainsToolbox
     ./kitty
-    ./vscode
   ];
 }
