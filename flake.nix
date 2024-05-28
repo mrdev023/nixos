@@ -19,10 +19,10 @@
   };
 
   outputs = inputs@{
-      nixpkgs,
-      home-manager,
-      agenix,
-      ...
+    nixpkgs,
+    home-manager,
+    agenix,
+    ...
   }:
   let
     systems = [
@@ -37,10 +37,15 @@
           ${s.name} = nixpkgs.lib.nixosSystem {
             inherit (s) system;
             modules = [
-              ./hosts/${s.name}
+              ./hosts/${s.name}/configuration.nix
               home-manager.nixosModules.home-manager
               agenix.nixosModules.default
-              (import ./home/common-home-manager.nix { inherit inputs; })
+              {
+                home-manager.useGlobalPkgs = true;
+                home-manager.useUserPackages = true;
+                home-manager.extraSpecialArgs = inputs;
+                home-manager.users.florian = import ./hosts/${s.name}/home.nix;
+              }
             ];
           };
         }) {} systems;
