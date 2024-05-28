@@ -16,6 +16,21 @@
     };
 
     nix-flatpak.url = "github:gmodena/nix-flatpak/?ref=v0.4.1";
+
+    # Follow nix-doom-emacs completely when this is merged or fixed
+    # - https://github.com/nix-community/nix-doom-emacs/issues/409
+    # - https://github.com/nix-community/nix-straight.el/pull/4
+    nix-straight = {
+      url = "github:codingkoi/nix-straight.el?ref=codingkoi/apply-librephoenixs-fix";
+      flake = false;
+    };
+    nix-doom-emacs = {
+      url = "github:nix-community/nix-doom-emacs";
+      inputs = {
+        nix-straight.follows = "nix-straight";
+        nixpkgs.follows = "nixpkgs";
+      };
+    };
   };
 
   outputs = inputs@{
@@ -23,6 +38,7 @@
     home-manager,
     agenix,
     nix-flatpak,
+    nix-doom-emacs,
     ...
   }:
   let
@@ -47,6 +63,8 @@
                 home-manager.extraSpecialArgs = inputs;
                 home-manager.users.florian.imports = [
                   nix-flatpak.homeManagerModules.nix-flatpak
+                  nix-doom-emacs.hmModule
+                  
                   ./hosts/${s.name}/home.nix
                 ];
               }
