@@ -1,12 +1,10 @@
-{ config, pkgs, lib, nix-flatpak, ... }:
+{ config, lib, ... }:
 
 with lib;
 let
   cfg = config.modules.home.apps.flatpak;
 in
 {
-  imports = [ nix-flatpak.homeManagerModules.nix-flatpak ];
-
   options.modules.home.apps.flatpak = {
     enable = mkEnableOption ''
       Enable flatpak with my custom configurations

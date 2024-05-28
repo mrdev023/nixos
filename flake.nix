@@ -22,6 +22,7 @@
     nixpkgs,
     home-manager,
     agenix,
+    nix-flatpak,
     ...
   }:
   let
@@ -44,7 +45,10 @@
                 home-manager.useGlobalPkgs = true;
                 home-manager.useUserPackages = true;
                 home-manager.extraSpecialArgs = inputs;
-                home-manager.users.florian = import ./hosts/${s.name}/home.nix;
+                home-manager.users.florian.imports = [
+                  nix-flatpak.homeManagerModules.nix-flatpak
+                  ./hosts/${s.name}/home.nix
+                ];
               }
             ];
           };
