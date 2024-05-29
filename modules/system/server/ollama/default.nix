@@ -15,7 +15,7 @@ in
     services.ollama = {
       enable = true;
 
-      acceleration = if config.modules.system.hardware.nvidia.enable then "cuda" else null;
+      acceleration = if nvidiaEnabled then "cuda" else null;
     };
   };
 }
