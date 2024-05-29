@@ -3,6 +3,7 @@
 {
   imports = [
     ./docker
+    ./ollama
     ./openssh
   ];
 }
