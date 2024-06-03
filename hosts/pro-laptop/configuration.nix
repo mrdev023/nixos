@@ -19,16 +19,6 @@
 
   networking.hostName = "nixos-laptop-pro"; # Define your hostname.
 
-  hardware.nvidia.prime = {
-    sync.enable = true;
-
-    # Make sure to use the correct Bus ID values for your system!
-    # information bus: pci@0000:00:02.0
-    intelBusId = "PCI:0:2:0";
-    # information bus: pci@0000:01:00.0
-    nvidiaBusId = "PCI:1:0:0";
-  };
-
   modules.system = {
     desktop = {
       plasma.enable = true;
