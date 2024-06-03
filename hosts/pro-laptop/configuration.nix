@@ -20,10 +20,7 @@
   networking.hostName = "nixos-laptop-pro"; # Define your hostname.
 
   hardware.nvidia.prime = {
-    offload = {
-      enable = true;
-      enableOffloadCmd = true;
-    };
+    sync.enable = true;
 
     # Make sure to use the correct Bus ID values for your system!
     # information bus: pci@0000:00:02.0
@@ -46,10 +43,6 @@
       plymouth.enable = true;
       printing.enable = true;
       waydroid.enable = true;
-    };
-
-    server = {
-      ollama.enable = true;
     };
   };
 }
