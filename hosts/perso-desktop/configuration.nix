@@ -34,9 +34,5 @@
       printing.enable = true;
       waydroid.enable = true;
     };
-
-    server = {
-      ollama.enable = true;
-    };
   };
 }
