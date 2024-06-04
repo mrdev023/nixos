@@ -13,10 +13,6 @@
       kitty.enable = true;
     };
 
-    editors = {
-      vscode.enable = true;
-    };
-
     shell = {
       zsh.enable = true;
       atuin.enable = true;
