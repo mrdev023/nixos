@@ -32,6 +32,7 @@ in
       wayland-utils # For wayland-info command
       glxinfo
       clinfo
+      aha
     ];
   };
 }
