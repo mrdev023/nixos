@@ -28,7 +28,7 @@
     nixd
   ];
 
-  systemd.packages = with pkgs; [ fwupd ];
+  services.fwupd.enable = true;
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.florian = {
