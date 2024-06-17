@@ -3,36 +3,6 @@
 with pkgs; [
   # From https://invent.kde.org/sysadmin/repo-metadata/-/blob/6ddda1e450fdbc093ca0138cf1c850e7b7e75044/distro-dependencies/arch.ini
 
-  # .. gnu
-  autoconf
-  automake
-  bison
-  flex
-  gcc
-  gperf
-  gnumake
-  texinfo
-
-  # .. llvm
-  clang
-  cmake
-
-  # .. build systems
-  meson
-  ninja
-
-  # .. rust
-  corrosion
-
-  # .. others
-  boost
-  docbook_xsl
-  doxygen
-  gi-docgen
-  git
-  intltool
-  pkg-config
-
   # Qt-related
   kdePackages.accounts-qt
 
@@ -137,4 +107,4 @@ with pkgs; [
 
   # kpipewire
   pipewire
-]
+] ++ (import ./programs.nix { inherit pkgs; })

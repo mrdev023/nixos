@@ -22,10 +22,10 @@ in
 
     programs.nix-ld.libraries = [
       # Empty for now but used for default packages
-    ] ++ lib.optionals cfg.enableKdeDevelopmentEnvironment (import ./kde-dev-packages.nix { inherit pkgs; });
+    ] ++ lib.optionals cfg.enableKdeDevelopmentEnvironment (import ./kde/libs.nix { inherit pkgs; });
   } // mkIf cfg.enableKdeDevelopmentEnvironment {
     environment.systemPackages = [
       (import ../../../../pkgs/kde-builder.nix { inherit pkgs; })
-    ];
+    ] ++ (import ./kde/programs.nix { inherit pkgs; });
   };
 }
