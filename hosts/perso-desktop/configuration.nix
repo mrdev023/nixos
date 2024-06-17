@@ -33,6 +33,11 @@
       plymouth.enable = true;
       printing.enable = true;
       waydroid.enable = true;
+
+      nix-ld = {
+        enable = true;
+        enableKdeDevelopmentEnvironment = true;
+      };
     };
 
     server = {

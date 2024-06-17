@@ -5,6 +5,7 @@
     ./bluetooth
     ./gamingKernel
     ./keymaps
+    ./nix-ld
     ./nvidia
     ./pipewire
     ./plymouth
