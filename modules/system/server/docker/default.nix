@@ -15,5 +15,7 @@ in
       enable = true;
       enableNvidia = config.modules.system.hardware.nvidia.enable;
     };
+
+    users.users.florian.extraGroups = [ "docker" ];
   };
 }
