@@ -13,6 +13,8 @@ in
   config = mkIf cfg.enable {
     programs.git = {
       enable = true;
+      lfs.enable = true;
+
       userName = "Florian RICHER";
       userEmail = "florian.richer@protonmail.com";
 
