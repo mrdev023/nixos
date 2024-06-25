@@ -3,6 +3,7 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    nur.url = github:nix-community/NUR;
 
     home-manager = {
       url = "github:nix-community/home-manager";
@@ -20,6 +21,7 @@
 
   outputs = inputs@{
     nixpkgs,
+    nur,
     home-manager,
     agenix,
     nix-flatpak,
@@ -41,6 +43,7 @@
               ./hosts/${s.name}/configuration.nix
               home-manager.nixosModules.home-manager
               agenix.nixosModules.default
+              { nixpkgs.overlays = [ nur.overlay ]; }
               {
                 home-manager.useGlobalPkgs = true;
                 home-manager.useUserPackages = true;
