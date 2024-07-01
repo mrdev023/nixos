@@ -1,5 +1,6 @@
 # Example for ollama
 
+```nix
 { config, pkgs, lib, ... }:
 
 with lib;
@@ -32,3 +33,4 @@ in
     };
   };
 }
+```
