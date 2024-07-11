@@ -51,5 +51,9 @@ in
         package = config.boot.kernelPackages.nvidiaPackages.latest;
       };
     };
+
+    # boot.extraModprobeConfig = ''
+    #   options nvidia NVreg_EnableGpuFirmware=0
+    # '';
   };
 }
