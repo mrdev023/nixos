@@ -21,6 +21,14 @@
 
   nixpkgs.config.allowUnfree = true;
 
+  services.udev.packages = [ pkgs.yubikey-personalization ];
+  services.pcscd.enable = true;
+
+  programs.gnupg.agent = {
+    enable = true;
+    enableSSHSupport = true;
+  };
+
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
@@ -31,6 +39,8 @@
     gdb
     lldb
     gammaray # QT Inspector
+
+    yubikey-manager
 
     # Usefull for automatic informations collect software like KDE
     vulkan-tools # For vulkaninfo command
