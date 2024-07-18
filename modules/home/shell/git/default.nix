@@ -18,11 +18,14 @@ in
       userName = "Florian RICHER";
       userEmail = "florian.richer@protonmail.com";
 
-      # signing.signByDefault = true;
+      signing = {
+        signByDefault = true;
+        key = "B19E3F4A2D806AB4793FDF2FC73D37CBED7BFC77";
+      };
 
       extraConfig = {
-         url."https://invent.kde.org/".insteadOf = "kde:";
-         url."ssh://git@invent.kde.org/".pushInsteadOf = "kde:";
+        url."https://invent.kde.org/".insteadOf = "kde:";
+        url."ssh://git@invent.kde.org/".pushInsteadOf = "kde:";
       };
     };
   };
