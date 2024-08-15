@@ -13,7 +13,6 @@ in
   config = mkIf cfg.enable {
     virtualisation.docker = {
       enable = true;
-      enableNvidia = config.modules.system.hardware.nvidia.enable;
     };
 
     users.users.florian.extraGroups = [ "docker" ];
