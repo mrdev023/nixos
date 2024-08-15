@@ -11,6 +11,6 @@ in
     '';
   };
   config = mkIf cfg.enable {
-    home.packages = with pkgs; [jetbrains-toolbox];
+    home.packages = with pkgs; [jetbrains-toolbox graalvm-ce];
   };
 }
