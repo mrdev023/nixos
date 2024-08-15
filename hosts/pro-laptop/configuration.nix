@@ -49,7 +49,6 @@
     };
 
     server = {
-      ollama.enable = true;
       distrobox.enable = true;
     };
   };
