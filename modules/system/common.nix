@@ -1,6 +1,10 @@
 { pkgs, ... }:
 
 {
+  imports = [
+    ../common.nix
+  ];
+
   # Set your time zone.
   time.timeZone = "Europe/Paris";
 

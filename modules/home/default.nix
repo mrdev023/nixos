@@ -2,6 +2,7 @@
 
 {
   imports = [
+    ../common.nix
     ./apps
     ./desktop
     ./shell
@@ -15,6 +16,5 @@
   };
 
   programs.home-manager.enable = true;
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
 }
 
