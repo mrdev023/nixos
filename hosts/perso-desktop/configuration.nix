@@ -20,6 +20,10 @@
   networking.hostName = "nixos-desktop-perso"; # Define your hostname.
 
   modules.system = {
+    apps = {
+      steam.enable = true;
+    };
+
     desktop = {
       plasma.enable = true;
     };

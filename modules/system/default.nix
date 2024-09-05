@@ -2,6 +2,7 @@
 
 {
   imports = [
+    ./apps
     ./desktop
     ./hardware
     ./server
