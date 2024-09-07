@@ -1,0 +1,24 @@
+# Required for kde-builder command
+if [[ $PATH != *".local/bin"* ]]; then
+  export PATH="$HOME/.local/bin:$PATH"
+fi
+
+# Workaround for NixOS
+# ENVs have nix store references and made conflict during build or run of KDE Apps, Shells, Frameworks
+alias new_shell="env -u PATH -u QML2_IMPORT_PATH -u QT_PLUGIN_PATH -u NIXPKGS_QT6_QML_IMPORT_PATH -u XDG_CONFIG_DIRS bash -l"
+
+alias build_plasma_mobile="kde-builder plasma-mobile plasma-settings plasma-desktop kactivitymanagerd"
+
+function run_mobile() {
+  source "$HOME/kde/build/plasma-mobile/prefix.sh"
+
+  QT_QPA_PLATFORM=offscreen plasma-mobile-envmanager --apply-settings
+
+  # Environment variables
+  export QT_WAYLAND_DISABLE_WINDOWDECORATION=1
+  export QT_QUICK_CONTROLS_MOBILE=1
+  export PLASMA_PLATFORM=phone:handheld
+  export QT_QUICK_CONTROLS_STYLE=org.kde.breeze
+
+  QT_QPA_PLATFORM=wayland dbus-run-session kwin_wayland --xwayland "plasmashell -p org.kde.plasma.mobileshell" --width 360 --height 720
+}
