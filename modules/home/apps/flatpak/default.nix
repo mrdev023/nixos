@@ -29,7 +29,6 @@ in
         { appId = "org.mozilla.Thunderbird"; origin = "flathub"; }
         { appId = "ch.protonmail.protonmail-bridge"; origin = "flathub";  }
         { appId = "org.kde.neochat"; origin = "flathub"; }
-        { appId = "com.visualstudio.code"; origin = "flathub"; }
 
         # Loisir
         { appId = "com.spotify.Client"; origin = "flathub"; }
