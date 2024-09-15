@@ -26,6 +26,7 @@ in
 
       userTasks = {};
 
+      # Waiting https://github.com/nix-community/home-manager/pull/5640 to support multi-profiles support
       extensions = with pkgs; with vscode-extensions; [
         # Nix
         bbenoist.nix
