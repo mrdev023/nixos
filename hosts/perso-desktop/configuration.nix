@@ -25,7 +25,10 @@
     };
 
     desktop = {
-      plasma.enable = true;
+      plasma = {
+        enable = true;
+        enableWallpaperEngine = true;
+      };
     };
 
     hardware = {

@@ -13,6 +13,10 @@ in
     enable = mkEnableOption ''
       Enable plasma with my custom configurations
     '';
+
+    enableWallpaperEngine = mkEnableOption ''
+      Enable wallpaper engine plugin for plasma
+    '';
   };
   config = mkIf cfg.enable {
     # Enable the X11 windowing system.
@@ -32,7 +36,7 @@ in
       discover
       kgpg
       yakuake
-
+    ] ++ lib.optionals cfg.enableWallpaperEngine [
       ### wallpaper-engine-plugin
       (callPackage "${nixpkgsPr}/pkgs/kde/third-party/wallpaper-engine-plugin/default.nix" {})
       qtmultimedia
