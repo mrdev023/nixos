@@ -14,6 +14,11 @@
       kitty.enable = true;
     };
 
+    editors = {
+      emacs.enable = true;
+      vscode.enable = true;
+    };
+
     shell = {
       zsh.enable = true;
       atuin.enable = true;
