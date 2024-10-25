@@ -54,6 +54,12 @@ sudo rm -fr /root/.cache/nix/
 nixos-rebuild build-vm --cores 16 --max-jobs 1 --flake .#nixos-test
 ```
 
+Or without NixOS
+
+```
+nix build .#nixosConfigurations.nixos-test.config.system.build.vm
+```
+
 # Usefull links
 
 - https://api.github.com/rate_limit
