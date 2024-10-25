@@ -33,6 +33,10 @@
   };
 
   modules.system = {
+    apps = {
+      flatpak.enable = true;
+    };
+
     desktop = {
       plasma.enable = true;
     };
