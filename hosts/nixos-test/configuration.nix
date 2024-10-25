@@ -36,23 +36,31 @@
   };
 
   modules.system = {
-    desktop = {
-      plasma.enable = true;
-    };
-
     server = {
       docker.enable = true;
       openssh.enable = true;
     };
 
     hardware = {
-      bluetooth.enable = true;
-      gamingKernel.enable = true;
       keymaps.layout = "us";
-      pipewire.enable = true;
-      plymouth.enable = true;
-      printing.enable = true;
-      waydroid.enable = true;
+    };
+  };
+
+  # Run containers
+  virtualisation.oci-containers.containers."hello" = {
+    image = "docker.io/nginxdemos/hello:latest";
+
+    ports = [
+      "9000:80/tcp"
+    ];
+  };
+
+  services.nginx = {
+    enable = true;
+    virtualHosts."hello.local" = {
+      locations."/" = {
+        proxyPass = "http://127.0.0.1:9000";
+      };
     };
   };
 }
