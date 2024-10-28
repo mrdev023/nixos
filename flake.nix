@@ -3,6 +3,7 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    flake-utils.url = "github:numtide/flake-utils";
     nur.url = "github:nix-community/NUR";
 
     home-manager = {
@@ -30,17 +31,29 @@
       inputs = {
         nix-straight.follows = "nix-straight";
         nixpkgs.follows = "nixpkgs";
+        flake-utils.follows = "flake-utils";
+      };
+    };
+
+    # To use nixos program on others distros
+    nixgl = {
+      url = "github:nix-community/nixGL";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        flake-utils.follows = "flake-utils";
       };
     };
   };
 
   outputs = inputs@{
     nixpkgs,
+    flake-utils,
     nur,
     home-manager,
     agenix,
     nix-flatpak,
     nix-doom-emacs,
+    nixgl,
     ...
   }:
   let
@@ -54,6 +67,11 @@
       nix-flatpak.homeManagerModules.nix-flatpak
       nix-doom-emacs.hmModule
     ];
+
+    overlays = [
+      nur.overlay
+      nixgl.overlay
+    ];
   in {
     nixosConfigurations = nixpkgs.lib.foldl (c: s:
        c // {
@@ -63,7 +81,7 @@
               ./hosts/${s.name}/configuration.nix
               home-manager.nixosModules.home-manager
               agenix.nixosModules.default
-              { nixpkgs.overlays = [ nur.overlay ]; }
+              { nixpkgs.overlays = overlays; }
               {
                 home-manager.useGlobalPkgs = true;
                 home-manager.useUserPackages = true;
@@ -78,7 +96,7 @@
 
     homeConfigurations = {
       perso-home = home-manager.lib.homeManagerConfiguration rec {
-        pkgs = import nixpkgs { system = "x86_64-linux"; };
+        pkgs = import nixpkgs { system = "x86_64-linux"; inherit overlays; };
 
         modules = home-modules ++ [ 
           { nix.package = pkgs.nix; }
