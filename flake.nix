@@ -49,6 +49,11 @@
       { name = "perso-laptop"; system = "x86_64-linux"; }
       { name = "perso-desktop"; system = "x86_64-linux"; }
     ];
+
+    home-modules = [
+      nix-flatpak.homeManagerModules.nix-flatpak
+      nix-doom-emacs.hmModule
+    ];
   in {
     nixosConfigurations = nixpkgs.lib.foldl (c: s:
        c // {
@@ -63,15 +68,23 @@
                 home-manager.useGlobalPkgs = true;
                 home-manager.useUserPackages = true;
                 home-manager.extraSpecialArgs = inputs;
-                home-manager.users.florian.imports = [
-                  nix-flatpak.homeManagerModules.nix-flatpak
-                  nix-doom-emacs.hmModule
-                  
+                home-manager.users.florian.imports = home-modules ++ [
                   ./hosts/${s.name}/home.nix
                 ];
               }
             ];
           };
         }) {} systems;
+
+    homeConfigurations = {
+      perso-home = home-manager.lib.homeManagerConfiguration rec {
+        pkgs = import nixpkgs { system = "x86_64-linux"; };
+
+        modules = home-modules ++ [ 
+          { nix.package = pkgs.nix; }
+          ./hosts/perso-home/home.nix
+        ];
+      };
+    };
   };
 }
