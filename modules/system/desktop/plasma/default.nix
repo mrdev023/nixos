@@ -17,6 +17,12 @@ in
     enableWallpaperEngine = mkEnableOption ''
       Enable wallpaper engine plugin for plasma
     '';
+
+    enableSddm = mkOption {
+      type = types.bool;
+      description = "Enable sddm with custom plasma";
+      default = true;
+    };
   };
   config = mkIf cfg.enable {
     # Enable the X11 windowing system.
@@ -24,7 +30,7 @@ in
 
     # Enable the KDE Plasma Desktop Environment.
     services.displayManager = {
-      sddm.enable = true;
+      sddm.enable = cfg.enableSddm;
       defaultSession = "plasma";
     };
     services.desktopManager.plasma6.enable = true;
