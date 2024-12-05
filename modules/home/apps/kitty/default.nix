@@ -25,7 +25,7 @@ in
 
       font = {
         name = "FiraCode Nerd Font";
-        package = pkgs.fira-code-nerdfont;
+        package = pkgs.nerd-fonts.fira-code;
       };
 
       settings = lib.mkMerge [
