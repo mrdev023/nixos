@@ -28,7 +28,6 @@
     desktop = {
       plasma = {
         enable = true;
-        enableWallpaperEngine = true;
       };
     };
 
