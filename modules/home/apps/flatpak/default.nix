@@ -27,6 +27,7 @@ in
         { appId = "org.kde.neochat"; origin = "flathub"; }
 
         # Loisir
+        { appId = "io.github.zen_browser.zen"; origin = "flathub"; }
         { appId = "com.spotify.Client"; origin = "flathub"; }
         { appId = "org.videolan.VLC"; origin = "flathub"; }
       ];

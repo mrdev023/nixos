@@ -7,8 +7,6 @@
 
   modules.home = {
     apps = {
-      chromium.enable = true;
-      firefox.enable = true;
       flatpak.enable = true;
       jetbrainsToolbox.enable = true;
       kitty.enable = true;
