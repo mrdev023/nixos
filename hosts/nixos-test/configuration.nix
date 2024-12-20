@@ -35,6 +35,12 @@
       forwardPorts = [
         { from = "host"; host.port = 8888; guest.port = 80; }
       ];
+      sharedDirectories = {
+        home = {
+          source = "/home/florian";
+          target = "/mnt/shared_home";
+        };
+      };
     };
   };
 
@@ -42,6 +48,12 @@
     server = {
       docker.enable = true;
       openssh.enable = true;
+    };
+
+    desktop = {
+      plasma = {
+        enable = true;
+      };
     };
 
     hardware = {
