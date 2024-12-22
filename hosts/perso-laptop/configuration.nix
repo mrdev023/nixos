@@ -34,6 +34,7 @@
 
   modules.system = {
     apps = {
+      steam.enable = true;
       flatpak.enable = true;
     };
 
