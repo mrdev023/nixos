@@ -39,6 +39,9 @@
     vim
     nixd
 
+    # For debugging and troubleshooting Secure Boot.
+    sbctl
+
     # Usefull tools to debug
     gdb
     lldb

@@ -2,7 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ ... }:
+{ lib, ... }:
 
 {
   imports =
@@ -14,13 +14,16 @@
     ];
 
   # Bootloader.
-  boot.loader.systemd-boot = {
+  # For lanzaboote see https://github.com/nix-community/lanzaboote/blob/master/docs/QUICK_START.md
+  boot.loader.systemd-boot.enable = lib.mkForce false;
+  boot.lanzaboote = {
     enable = true;
-    windows = {
-      "11-pro" = {
-        title = "Windows 11 Pro";
-        efiDeviceHandle = "HD1b";
-      };
+    pkiBundle = "/var/lib/sbctl";
+  };
+  boot.loader.systemd-boot.windows = {
+    "11-pro" = {
+      title = "Windows 11 Pro";
+      efiDeviceHandle = "HD1b";
     };
   };
   boot.loader.efi.canTouchEfiVariables = true;

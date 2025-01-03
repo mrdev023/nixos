@@ -47,6 +47,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.flake-utils.follows = "flake-utils";
     };
+
+    lanzaboote = {
+      url = "github:nix-community/lanzaboote/v0.4.1";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = inputs@{
@@ -54,6 +59,7 @@
     flake-utils,
     home-manager,
     agenix,
+    lanzaboote,
     ...
   }:
   let
@@ -86,6 +92,7 @@
               ./hosts/${s.name}/configuration.nix
               home-manager.nixosModules.home-manager
               agenix.nixosModules.default
+              lanzaboote.nixosModules.lanzaboote
               { nixpkgs.overlays = overlays; }
               {
                 home-manager.useGlobalPkgs = true;
