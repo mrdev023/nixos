@@ -14,7 +14,15 @@
     ];
 
   # Bootloader.
-  boot.loader.systemd-boot.enable = true;
+  boot.loader.systemd-boot = {
+    enable = true;
+    windows = {
+      "11-pro" = {
+        title = "Windows 11 Pro";
+        efiDeviceHandle = "HD1b";
+      };
+    };
+  };
   boot.loader.efi.canTouchEfiVariables = true;
 
   networking.hostName = "nixos-desktop-perso"; # Define your hostname.
