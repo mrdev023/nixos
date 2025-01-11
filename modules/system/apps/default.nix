@@ -3,6 +3,7 @@
 {
   imports = [
     ./flatpak
+    ./qemu
     ./steam
   ];
 }
