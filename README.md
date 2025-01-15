@@ -42,6 +42,11 @@ Clean up all useless store from old profiles
 sudo nix store gc --debug
 ```
 
+Optimize Store
+```bash
+nix-store --optimise
+```
+
 error: cached failure of attribute 'nixosConfigurations.perso-desktop.config.system.build.toplevel'
 ```bash
 sudo rm -fr /root/.cache/nix/
