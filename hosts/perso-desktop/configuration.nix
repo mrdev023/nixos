@@ -28,6 +28,10 @@
   };
   boot.loader.efi.canTouchEfiVariables = true;
 
+  # Limit the number of generations to keep
+  boot.loader.systemd-boot.configurationLimit = 10;
+  # boot.loader.grub.configurationLimit = 10;
+
   networking.hostName = "nixos-desktop-perso"; # Define your hostname.
 
   modules.system = {
