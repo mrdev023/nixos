@@ -2,9 +2,9 @@
 
 {
   imports = [
-    ./atuin
-    ./direnv
-    ./git
+    ./atuin.nix
+    ./direnv.nix
+    ./git.nix
     ./zsh
   ];
 }

@@ -2,8 +2,8 @@
 
 {
   imports = [
-    ./flatpak
-    ./qemu
-    ./steam
+    ./flatpak.nix
+    ./qemu.nix
+    ./steam.nix
   ];
 }

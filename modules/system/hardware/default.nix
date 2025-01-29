@@ -2,13 +2,13 @@
 
 {
   imports = [
-    ./bluetooth
-    ./gamingKernel
+    ./bluetooth.nix
+    ./gaming-kernel.nix
     ./keymaps
-    ./nvidia
-    ./pipewire
-    ./plymouth
-    ./printing
-    ./waydroid
+    ./nvidia.nix
+    ./pipewire.nix
+    ./plymouth.nix
+    ./printing.nix
+    ./waydroid.nix
   ];
 }

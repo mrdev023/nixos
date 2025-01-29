@@ -2,10 +2,10 @@
 
 {
   imports = [
-    ./chromium
-    ./firefox
-    ./flatpak
-    ./jetbrainsToolbox
-    ./kitty
+    ./chromium.nix
+    ./firefox.nix
+    ./flatpak.nix
+    ./jetbrains-toolbox.nix
+    ./kitty.nix
   ];
 }

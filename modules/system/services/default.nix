@@ -2,9 +2,9 @@
 
 {
   imports = [
-    ./distrobox
-    ./docker
-    ./ollama
-    ./openssh
+    ./distrobox.nix
+    ./docker.nix
+    ./ollama.nix
+    ./openssh.nix
   ];
 }
