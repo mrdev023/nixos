@@ -2,10 +2,10 @@
 
 with lib;
 let
-  cfg = config.modules.system.hardware.plymouth;
+  cfg = config.modules.system.boot.plymouth;
 in
 {
-  options.modules.system.hardware.plymouth = {
+  options.modules.system.boot.plymouth = {
     enable = mkEnableOption ''
       Enable plymouth with my custom configurations
     '';

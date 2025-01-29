@@ -3,6 +3,7 @@
 {
   imports = [
     ./apps
+    ./boot
     ./desktop
     ./hardware
     ./services

@@ -2,12 +2,11 @@
 
 {
   imports = [
+    ./audio
     ./bluetooth.nix
     ./gaming-kernel.nix
     ./keymaps
-    ./nvidia.nix
-    ./pipewire.nix
-    ./plymouth.nix
+    ./graphics
     ./printing.nix
     ./waydroid.nix
   ];

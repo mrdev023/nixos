@@ -42,6 +42,8 @@
       flatpak.enable = true;
     };
 
+    boot.plymouth.enable = true;
+
     desktop = {
       plasma.enable = true;
     };
@@ -50,9 +52,8 @@
       bluetooth.enable = true;
       gamingKernel.enable = true;
       keymaps.layout = "fr";
-      nvidia.enable = true;
-      pipewire.enable = true;
-      plymouth.enable = true;
+      graphics.nvidia.enable = true;
+      audio.pipewire.enable = true;
       printing.enable = true;
       waydroid.enable = true;
     };

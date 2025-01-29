@@ -2,10 +2,10 @@
 
 with lib;
 let
-  cfg = config.modules.system.hardware.pipewire;
+  cfg = config.modules.system.hardware.audio.pipewire;
 in
 {
-  options.modules.system.hardware.pipewire = {
+  options.modules.system.hardware.audio.pipewire = {
     enable = mkEnableOption ''
       Enable pipewire with my custom configurations
     '';

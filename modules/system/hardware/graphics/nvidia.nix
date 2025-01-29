@@ -2,10 +2,10 @@
 
 with lib;
 let
-  cfg = config.modules.system.hardware.nvidia;
+  cfg = config.modules.system.hardware.graphics.nvidia;
 in
 {
-  options.modules.system.hardware.nvidia = {
+  options.modules.system.hardware.graphics.nvidia = {
     enable = mkEnableOption ''
       Enable nvidia with my custom configurations
     '';
