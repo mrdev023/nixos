@@ -2,10 +2,10 @@
 
 with lib;
 let
-  cfg = config.modules.system.server.openssh;
+  cfg = config.modules.system.services.openssh;
 in
 {
-  options.modules.system.server.openssh = {
+  options.modules.system.services.openssh = {
     enable = mkEnableOption ''
       Enable openssh with my custom configurations
     '';

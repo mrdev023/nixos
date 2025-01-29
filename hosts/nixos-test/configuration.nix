@@ -49,7 +49,7 @@
   };
 
   modules.system = {
-    server = {
+    services = {
       docker.enable = true;
       openssh.enable = true;
     };

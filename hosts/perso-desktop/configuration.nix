@@ -58,7 +58,7 @@
       waydroid.enable = true;
     };
 
-    server = {
+    services = {
       distrobox.enable = true;
     };
   };

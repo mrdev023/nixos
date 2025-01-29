@@ -2,10 +2,10 @@
 
 with lib;
 let
-  cfg = config.modules.system.server.docker;
+  cfg = config.modules.system.services.docker;
 in
 {
-  options.modules.system.server.docker = {
+  options.modules.system.services.docker = {
     enable = mkEnableOption ''
       Enable docker with my custom configurations
     '';

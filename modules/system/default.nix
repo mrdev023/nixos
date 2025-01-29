@@ -5,7 +5,7 @@
     ./apps
     ./desktop
     ./hardware
-    ./server
+    ./services
 
     # Common configuration
     ./common.nix
