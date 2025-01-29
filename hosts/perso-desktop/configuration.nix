@@ -11,21 +11,11 @@
 
       # Include the results of the hardware scan.
       ./hardware-configuration.nix
+      ./disko-config.nix
     ];
 
   # Bootloader.
-  # For lanzaboote see https://github.com/nix-community/lanzaboote/blob/master/docs/QUICK_START.md
-  boot.loader.systemd-boot.enable = lib.mkForce false;
-  boot.lanzaboote = {
-    enable = true;
-    pkiBundle = "/var/lib/sbctl";
-  };
-  boot.loader.systemd-boot.windows = {
-    "11-pro" = {
-      title = "Windows 11 Pro";
-      efiDeviceHandle = "HD1b";
-    };
-  };
+  boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
   # Limit the number of generations to keep

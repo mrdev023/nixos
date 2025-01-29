@@ -52,6 +52,11 @@
       url = "github:nix-community/lanzaboote/v0.4.2";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    disko = {
+      url = "github:nix-community/disko";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = inputs@{
@@ -60,6 +65,7 @@
     home-manager,
     agenix,
     lanzaboote,
+    disko,
     ...
   }:
   let
@@ -93,6 +99,7 @@
               home-manager.nixosModules.home-manager
               agenix.nixosModules.default
               lanzaboote.nixosModules.lanzaboote
+              disko.nixosModules.disko
               { nixpkgs.overlays = overlays; }
               {
                 home-manager.useGlobalPkgs = true;

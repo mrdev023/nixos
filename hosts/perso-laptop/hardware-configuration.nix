@@ -13,19 +13,8 @@
   boot.kernelModules = [ "kvm-intel" ];
   boot.extraModulePackages = [ ];
 
-  fileSystems."/" =
-    { device = "/dev/disk/by-uuid/e0c9f32c-0a05-4fec-a3d5-5507b9c0b3c2";
-      fsType = "ext4";
-    };
-
-  fileSystems."/boot" =
-    { device = "/dev/disk/by-uuid/3F81-54F0";
-      fsType = "vfat";
-      options = [ "fmask=0077" "dmask=0077" ];
-    };
-
   swapDevices =
-    [ { device = "/dev/disk/by-uuid/b0aedbe7-9ffe-4039-9151-4d64a13b133d"; }
+    [ { device = "/var/lib/swapfile"; size = 8*1024; }
     ];
 
   # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
