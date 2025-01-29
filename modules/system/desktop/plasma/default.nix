@@ -29,10 +29,7 @@ in
     services.xserver.enable = true;
 
     # Enable the KDE Plasma Desktop Environment.
-    services.displayManager = {
-      sddm.enable = cfg.enableSddm;
-      defaultSession = "plasma";
-    };
+    services.displayManager.sddm.enable = cfg.enableSddm;
     services.desktopManager.plasma6.enable = true;
 
     programs.kdeconnect.enable = true;
