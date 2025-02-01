@@ -7,5 +7,6 @@
     ./flatpak.nix
     ./jetbrains-toolbox.nix
     ./kitty.nix
+    ./minecraft.nix
   ];
 }

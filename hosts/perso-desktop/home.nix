@@ -10,6 +10,7 @@
       flatpak.enable = true;
       jetbrainsToolbox.enable = true;
       kitty.enable = true;
+      minecraft.enable = true;
     };
 
     shell = {
