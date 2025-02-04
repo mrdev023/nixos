@@ -69,12 +69,6 @@
     ...
   }:
   let
-    systems = [
-      { name = "nixos-test"; system = "x86_64-linux"; }
-      { name = "perso-laptop"; system = "x86_64-linux"; }
-      { name = "perso-desktop"; system = "x86_64-linux"; }
-    ];
-
     home-modules = with inputs; [
       nix-flatpak.homeManagerModules.nix-flatpak
       nix-doom-emacs.hmModule
@@ -84,34 +78,37 @@
       nur.overlays.default
       nixgl.overlay
     ];
+
+    customNixosSystem = { name, system, extraModules ? [] }: nixpkgs.lib.nixosSystem {
+      inherit system;
+      modules = [
+        ./hosts/${name}/configuration.nix
+        home-manager.nixosModules.home-manager
+        agenix.nixosModules.default
+        lanzaboote.nixosModules.lanzaboote
+        disko.nixosModules.disko
+        { nixpkgs.overlays = overlays; }
+        {
+          home-manager.useGlobalPkgs = true;
+          home-manager.useUserPackages = true;
+          home-manager.extraSpecialArgs = inputs;
+          home-manager.users.florian.imports = home-modules ++ [
+            ./hosts/${name}/home.nix
+          ];
+        }
+      ] ++ extraModules;
+    };
   in {
     #####################################################################
     #####################################################################
     # Configure all nixos configurations
     #####################################################################
     #####################################################################
-    nixosConfigurations = nixpkgs.lib.foldl (c: s:
-       c // {
-          ${s.name} = nixpkgs.lib.nixosSystem {
-            inherit (s) system;
-            modules = [
-              ./hosts/${s.name}/configuration.nix
-              home-manager.nixosModules.home-manager
-              agenix.nixosModules.default
-              lanzaboote.nixosModules.lanzaboote
-              disko.nixosModules.disko
-              { nixpkgs.overlays = overlays; }
-              {
-                home-manager.useGlobalPkgs = true;
-                home-manager.useUserPackages = true;
-                home-manager.extraSpecialArgs = inputs;
-                home-manager.users.florian.imports = home-modules ++ [
-                  ./hosts/${s.name}/home.nix
-                ];
-              }
-            ];
-          };
-        }) {} systems;
+    nixosConfigurations = {
+      nixos-test = customNixosSystem { name = "nixos-test"; system = "x86_64-linux"; };
+      perso-laptop = customNixosSystem { name = "perso-laptop"; system = "x86_64-linux"; };
+      perso-desktop = customNixosSystem { name = "perso-desktop"; system = "x86_64-linux"; };
+    };
 
     #####################################################################
     #####################################################################
