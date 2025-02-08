@@ -28,12 +28,14 @@ in
 
       # Waiting https://github.com/nix-community/home-manager/pull/5640 to support multi-profiles support
       extensions = with pkgs; with vscode-extensions; [
+        # Direnv to automatically Load Dev Env
+        mkhl.direnv
+
         # Nix
         bbenoist.nix
 
         # Rust
         rust-lang.rust-analyzer
-        serayuzgur.crates
         tamasfe.even-better-toml
 
         # Phoenix
@@ -42,6 +44,15 @@ in
 
         # Ruby
         shopify.ruby-lsp
+
+        # C/C++ Support
+        ms-vscode.cpptools
+
+        # Improve error display
+        usernamehw.errorlens
+
+        # TS Error
+        yoavbls.pretty-ts-errors
       ];
     };
   };

@@ -6,6 +6,8 @@
   ];
 
   modules.home = {
+    editors.vscode.enable = true;
+
     apps = {
       flatpak.enable = true;
       jetbrainsToolbox.enable = true;
