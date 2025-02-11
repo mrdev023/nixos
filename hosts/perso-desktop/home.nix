@@ -15,6 +15,10 @@
       minecraft.enable = true;
     };
 
+    editors = {
+      neovim.enable = true;
+    };
+
     shell = {
       zsh.enable = true;
       atuin.enable = true;
