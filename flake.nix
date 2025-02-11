@@ -57,21 +57,27 @@
       url = "github:nix-community/disko";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    nvf = {
+      url = "github:notashelf/nvf/v0.7";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = inputs@{
+  outputs = inputs @ {
     nixpkgs,
     flake-utils,
     home-manager,
     agenix,
     lanzaboote,
     disko,
+    nvf,
     ...
-  }:
-  let
+  }: let
     home-modules = with inputs; [
       nix-flatpak.homeManagerModules.nix-flatpak
       nix-doom-emacs.hmModule
+      nvf.homeManagerModules.default
     ];
 
     overlays = with inputs; [
@@ -79,69 +85,90 @@
       nixgl.overlay
     ];
 
-    customNixosSystem = { name, system, extraModules ? [] }: nixpkgs.lib.nixosSystem {
-      inherit system;
-      modules = [
-        ./hosts/${name}/configuration.nix
-        home-manager.nixosModules.home-manager
-        agenix.nixosModules.default
-        lanzaboote.nixosModules.lanzaboote
-        disko.nixosModules.disko
-        { nixpkgs.overlays = overlays; }
-        {
-          home-manager.useGlobalPkgs = true;
-          home-manager.useUserPackages = true;
-          home-manager.extraSpecialArgs = inputs;
-          home-manager.users.florian.imports = home-modules ++ [
-            ./hosts/${name}/home.nix
-          ];
-        }
-      ] ++ extraModules;
-    };
-  in {
-    #####################################################################
-    #####################################################################
-    # Configure all nixos configurations
-    #####################################################################
-    #####################################################################
-    nixosConfigurations = {
-      nixos-test = customNixosSystem { name = "nixos-test"; system = "x86_64-linux"; };
-      perso-laptop = customNixosSystem { name = "perso-laptop"; system = "x86_64-linux"; };
-      perso-desktop = customNixosSystem { name = "perso-desktop"; system = "x86_64-linux"; };
-    };
-
-    #####################################################################
-    #####################################################################
-    # Configure home configuration for all others systems like Arch Linux
-    #####################################################################
-    #####################################################################
-    homeConfigurations = {
-      perso-home = home-manager.lib.homeManagerConfiguration rec {
-        pkgs = import nixpkgs { system = "x86_64-linux"; inherit overlays; };
-
-        modules = home-modules ++ [ 
-          { nix.package = pkgs.nix; }
-          ./hosts/perso-home/home.nix
-        ];
+    customNixosSystem = {
+      name,
+      system,
+      extraModules ? [],
+    }:
+      nixpkgs.lib.nixosSystem {
+        inherit system;
+        modules =
+          [
+            ./hosts/${name}/configuration.nix
+            home-manager.nixosModules.home-manager
+            agenix.nixosModules.default
+            lanzaboote.nixosModules.lanzaboote
+            disko.nixosModules.disko
+            {nixpkgs.overlays = overlays;}
+            {
+              home-manager.useGlobalPkgs = true;
+              home-manager.useUserPackages = true;
+              home-manager.extraSpecialArgs = inputs;
+              home-manager.users.florian.imports =
+                home-modules
+                ++ [
+                  ./hosts/${name}/home.nix
+                ];
+            }
+          ]
+          ++ extraModules;
       };
-    };
-  }
-
-  #####################################################################
-  #####################################################################
-  # Configure development shell for all systems and merge with all
-  # previous configurations with //
-  #####################################################################
-  #####################################################################
-  // flake-utils.lib.eachSystem flake-utils.lib.allSystems (system:
-    let
-      pkgs = import nixpkgs { inherit system; };
-    in
+  in
     {
+      #####################################################################
+      #####################################################################
+      # Configure all nixos configurations
+      #####################################################################
+      #####################################################################
+      nixosConfigurations = {
+        nixos-test = customNixosSystem {
+          name = "nixos-test";
+          system = "x86_64-linux";
+        };
+        perso-laptop = customNixosSystem {
+          name = "perso-laptop";
+          system = "x86_64-linux";
+        };
+        perso-desktop = customNixosSystem {
+          name = "perso-desktop";
+          system = "x86_64-linux";
+        };
+      };
+
+      #####################################################################
+      #####################################################################
+      # Configure home configuration for all others systems like Arch Linux
+      #####################################################################
+      #####################################################################
+      homeConfigurations = {
+        perso-home = home-manager.lib.homeManagerConfiguration rec {
+          pkgs = import nixpkgs {
+            system = "x86_64-linux";
+            inherit overlays;
+          };
+
+          modules =
+            home-modules
+            ++ [
+              {nix.package = pkgs.nix;}
+              ./hosts/perso-home/home.nix
+            ];
+        };
+      };
+    }
+    #####################################################################
+    #####################################################################
+    # Configure development shell for all systems and merge with all
+    # previous configurations with //
+    #####################################################################
+    #####################################################################
+    // flake-utils.lib.eachSystem flake-utils.lib.allSystems (system: let
+      pkgs = import nixpkgs {inherit system;};
+    in {
       devShells = {
         default = pkgs.mkShell {
           packages = with pkgs; [
-            nixd
+            nil
           ];
         };
       };
