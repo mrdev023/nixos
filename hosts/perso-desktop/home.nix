@@ -4,8 +4,6 @@
   ];
 
   modules.home = {
-    editors.vscode.enable = true;
-
     apps = {
       flatpak.enable = true;
       jetbrainsToolbox.enable = true;
@@ -15,6 +13,7 @@
 
     editors = {
       # neovim.enable = true; TODO: Not stable yet
+      vscode.enable = true;
     };
 
     shell = {
