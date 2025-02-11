@@ -1,6 +1,4 @@
-{ ... }:
-
-{
+{...}: {
   imports = [
     ../../modules/home
   ];
@@ -16,7 +14,7 @@
     };
 
     editors = {
-      neovim.enable = true;
+      # neovim.enable = true; TODO: Not stable yet
     };
 
     shell = {
@@ -27,4 +25,3 @@
     };
   };
 }
-
