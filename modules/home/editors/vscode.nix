@@ -11,49 +11,77 @@ in
     '';
   };
   config = mkIf cfg.enable {
+    # Inspired by https://github.com/khaneliman/khanelinix/blob/1cc1ff0435671804666cdc732a0b792178441e2f/modules/home/programs/graphical/editors/vscode/default.nix
     programs.vscode = {
       enable = true;
-      enableUpdateCheck = false;
-      enableExtensionUpdateCheck = false;
 
-      userSettings = {
-        "files.autoSave" = "onFocusChange";
-        "emmet.includeLanguages" = {
-          "phoenix-heex" = "html";
+      profiles =
+        let
+          commonExtensions = with pkgs.vscode-extensions; [
+            # Direnv to automatically Load Dev Env
+            mkhl.direnv
+
+            # Nix
+            bbenoist.nix
+
+            # Improve error display
+            usernamehw.errorlens
+          ];
+
+          commonSettings = {
+            "files.autoSave" = "onFocusChange";
+            "git.autofetch" = true;
+          };
+        in
+        {
+          default = {
+            extensions = commonExtensions;
+            enableUpdateCheck = false;
+            enableExtensionUpdateCheck = false;
+            userSettings = commonSettings;
+          };
+
+          C_CPP = {
+            extensions =
+              with pkgs.vscode-extensions;
+              commonExtensions
+                ++ [ ms-vscode.cpptools ];
+          };
+
+          Phoenix = {
+            extensions =
+              with pkgs.vscode-extensions;
+              commonExtensions
+                ++ [ phoenixframework.phoenix elixir-lsp.vscode-elixir-ls ];
+
+            userSettings = commonSettings // {
+              "emmet.includeLanguages" = {
+                "phoenix-heex" = "html";
+              };
+            };
+          };
+
+          Ruby = {
+            extensions =
+              with pkgs.vscode-extensions;
+              commonExtensions
+                ++ [ shopify.ruby-lsp ];
+          };
+
+          Rust = {
+            extensions =
+              with pkgs.vscode-extensions;
+              commonExtensions
+                ++ [ tamasfe.even-better-toml ]; # rust-lang.rust-analyzer not compile for now
+          };
+
+          Typescript = {
+            extensions =
+              with pkgs.vscode-extensions;
+              commonExtensions
+                ++ [ yoavbls.pretty-ts-errors ];
+          };
         };
-        "git.autofetch" = true;
-      };
-
-      userTasks = {};
-
-      # Waiting https://github.com/nix-community/home-manager/pull/5640 to support multi-profiles support
-      extensions = with pkgs; with vscode-extensions; [
-        # Direnv to automatically Load Dev Env
-        mkhl.direnv
-
-        # Nix
-        bbenoist.nix
-
-        # Rust
-        rust-lang.rust-analyzer
-        tamasfe.even-better-toml
-
-        # Phoenix
-        phoenixframework.phoenix
-        elixir-lsp.vscode-elixir-ls
-
-        # Ruby
-        shopify.ruby-lsp
-
-        # C/C++ Support
-        ms-vscode.cpptools
-
-        # Improve error display
-        usernamehw.errorlens
-
-        # TS Error
-        yoavbls.pretty-ts-errors
-      ];
     };
   };
 }
