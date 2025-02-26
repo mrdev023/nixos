@@ -72,7 +72,7 @@ in
             extensions =
               with pkgs.vscode-extensions;
               commonExtensions
-                ++ [ tamasfe.even-better-toml ]; # rust-lang.rust-analyzer not compile for now
+                ++ [ tamasfe.even-better-toml rust-lang.rust-analyzer ];
           };
 
           Typescript = {
