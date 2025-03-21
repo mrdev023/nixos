@@ -2,7 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ lib, ... }:
+{ pkgs, lib, ... }:
 
 {
   imports =
@@ -51,5 +51,10 @@
       audio.pipewire.enable = true;
       printing.enable = true;
     };
+  };
+
+  services.hardware.openrgb = {
+    enable = true;
+    package = pkgs.openrgb-with-all-plugins;
   };
 }
