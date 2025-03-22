@@ -47,7 +47,7 @@
       bluetooth.enable = true;
       gamingKernel.enable = true;
       keymaps.layout = "us";
-      graphics.nvidia.enable = true;
+      graphics.amdgpu.enable = true;
       audio.pipewire.enable = true;
       printing.enable = true;
     };
