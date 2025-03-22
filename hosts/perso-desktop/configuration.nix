@@ -45,7 +45,7 @@
 
     hardware = {
       bluetooth.enable = true;
-      gamingKernel.enable = true;
+      # gamingKernel.enable = true; # Temporary disable to use latest linux kernel (amdgpu fixes)
       keymaps.layout = "us";
       graphics.amdgpu.enable = true;
       audio.pipewire.enable = true;
@@ -57,4 +57,7 @@
     enable = true;
     package = pkgs.openrgb-with-all-plugins;
   };
+
+  chaotic.mesa-git.enable = true;
+  boot.kernelPackages = pkgs.linuxPackages_cachyos-rc;
 }

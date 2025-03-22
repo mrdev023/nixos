@@ -65,6 +65,12 @@
       url = "github:notashelf/nvf/v0.7";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    chaotic = {
+      url = "github:chaotic-cx/nyx/nyxpkgs-unstable";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.home-manager.follows = "home-manager";
+    };
   };
 
   outputs = inputs @ {
@@ -75,6 +81,7 @@
     lanzaboote,
     disko,
     nvf,
+    chaotic,
     ...
   }: let
     home-modules = with inputs; [
@@ -102,7 +109,8 @@
             agenix.nixosModules.default
             lanzaboote.nixosModules.lanzaboote
             disko.nixosModules.disko
-            {nixpkgs.overlays = overlays;}
+            chaotic.nixosModules.default
+            { nixpkgs.overlays = overlays; }
             {
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
