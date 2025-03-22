@@ -20,7 +20,6 @@ in
       packages = [
         # Gaming
         { appId = "com.discordapp.Discord"; origin = "flathub";  }
-        { appId = "net.lutris.Lutris"; origin = "flathub";  }
 
         # Pro
         { appId = "ch.protonmail.protonmail-bridge"; origin = "flathub";  }
