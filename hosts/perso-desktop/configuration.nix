@@ -52,6 +52,8 @@
       audio.pipewire.enable = true;
       printing.enable = true;
     };
+
+    services.docker.enable = true;
   };
 
   services.hardware.openrgb = {
