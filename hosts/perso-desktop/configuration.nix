@@ -59,6 +59,11 @@
     package = pkgs.openrgb-with-all-plugins;
   };
 
-  chaotic.mesa-git.enable = true;
+  # Revert to RADV when this https://gitlab.freedesktop.org/mesa/mesa/-/issues/12865 is resolved
+  chaotic.mesa-git = {
+    enable = true;
+    extraPackages = with pkgs; [ rocmPackages.clr.icd amdvlk ];
+    extraPackages32 = with pkgs; [ driversi686Linux.amdvlk ];
+  };
   boot.kernelPackages = pkgs.linuxPackages_cachyos-rc;
 }
