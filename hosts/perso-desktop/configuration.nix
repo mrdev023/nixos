@@ -46,7 +46,7 @@
 
     hardware = {
       bluetooth.enable = true;
-      # gamingKernel.enable = true; # Temporary disable to use latest linux kernel (amdgpu fixes)
+      gamingKernel.enable = true;
       keymaps.layout = "us";
       graphics.amdgpu.enable = true;
       audio.pipewire.enable = true;
@@ -67,5 +67,4 @@
     extraPackages = with pkgs; [ rocmPackages.clr.icd amdvlk ];
     extraPackages32 = with pkgs; [ driversi686Linux.amdvlk ];
   };
-  boot.kernelPackages = pkgs.linuxPackages_cachyos-rc;
 }
