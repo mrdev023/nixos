@@ -71,6 +71,8 @@
     aha
     usbutils
     pciutils
+
+    appimage-run
   ];
 
   services.fwupd.enable = true;
