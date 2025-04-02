@@ -12,6 +12,10 @@ in
   };
   config = mkIf cfg.enable {
     boot.initrd.kernelModules = [ "amdgpu" ];
+
+    # Set acceleration to rocm
+    services.ollama.acceleration = "rocm";
+
     # Load amdgpu driver for Xorg and Wayland
     services.xserver = {
       enable = true;
