@@ -53,7 +53,10 @@
       printing.enable = true;
     };
 
-    services.docker.enable = true;
+    services = {
+      docker.enable = true;
+      ollama.enable = true;
+    };
   };
 
   services.hardware.openrgb = {
