@@ -59,11 +59,6 @@
     };
   };
 
-  services.hardware.openrgb = {
-    enable = true;
-    package = pkgs.openrgb-with-all-plugins;
-  };
-
   # Revert to RADV when this https://gitlab.freedesktop.org/mesa/mesa/-/issues/12865 is resolved
   chaotic.mesa-git = {
     enable = true;
