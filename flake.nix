@@ -28,7 +28,7 @@
       inputs.systems.follows = "systems";
     };
 
-    nix-flatpak.url = "github:gmodena/nix-flatpak/?ref=v0.4.1";
+    nix-flatpak.url = "github:gmodena/nix-flatpak";
 
     # Follow nix-doom-emacs completely when this is merged or fixed
     # - https://github.com/nix-community/nix-doom-emacs/issues/409
@@ -52,7 +52,7 @@
     };
 
     lanzaboote = {
-      url = "github:nix-community/lanzaboote/v0.4.2";
+      url = "github:nix-community/lanzaboote";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -62,7 +62,7 @@
     };
 
     nvf = {
-      url = "github:notashelf/nvf/v0.7";
+      url = "github:notashelf/nvf";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
