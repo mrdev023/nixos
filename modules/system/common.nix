@@ -59,7 +59,8 @@
     # Usefull tools to debug
     gdb
     lldb
-    gammaray # QT Inspector
+    # FIXME: Uncomment when build is fixed
+    # gammaray # QT Inspector
 
     yubikey-manager
 
