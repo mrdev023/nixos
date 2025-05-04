@@ -32,8 +32,7 @@ in
             "files.autoSave" = "onFocusChange";
             "git.autofetch" = true;
           };
-        in
-        {
+        in rec {
           default = {
             extensions = commonExtensions;
             enableUpdateCheck = false;
@@ -41,25 +40,26 @@ in
             userSettings = commonSettings;
           };
 
-          "C/C++" = {
+          C_CPP = {
             extensions =
               with pkgs.vscode-extensions;
               commonExtensions
-                ++ [ ms-vscode.cpptools ];
+                ++ [ ms-vscode.cpptools ms-vscode.cmake-tools ms-vscode.cpptools-extension-pack ];
           };
 
-          "C#" = {
+          C_Sharp = {
             extensions =
               with pkgs.vscode-extensions;
               commonExtensions
-                ++ [ ms-dotnettools.csdevkit ];
+                ++ [ ms-dotnettools.csdevkit ms-dotnettools.csharp ms-dotnettools.vscode-dotnet-runtime ];
           };
 
-          "Unreal Engine" = {
+          UnrealEngine = {
             extensions =
               with pkgs.vscode-extensions;
               commonExtensions
-                ++ [ ms-vscode.cpptools ms-dotnettools.csdevkit ];
+                ++ C_CPP.extensions
+                ++ C_Sharp.extensions;
           };
 
           Phoenix = {
