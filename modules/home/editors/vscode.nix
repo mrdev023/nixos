@@ -41,11 +41,25 @@ in
             userSettings = commonSettings;
           };
 
-          C_CPP = {
+          "C/C++" = {
             extensions =
               with pkgs.vscode-extensions;
               commonExtensions
                 ++ [ ms-vscode.cpptools ];
+          };
+
+          "C#" = {
+            extensions =
+              with pkgs.vscode-extensions;
+              commonExtensions
+                ++ [ ms-dotnettools.csdevkit ];
+          };
+
+          "Unreal Engine" = {
+            extensions =
+              with pkgs.vscode-extensions;
+              commonExtensions
+                ++ [ ms-vscode.cpptools ms-dotnettools.csdevkit ];
           };
 
           Phoenix = {
