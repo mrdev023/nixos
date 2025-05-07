@@ -56,7 +56,6 @@ in
 
           UnrealEngine = {
             extensions =
-              with pkgs.vscode-extensions;
               commonExtensions
                 ++ C_CPP.extensions
                 ++ C_Sharp.extensions;
