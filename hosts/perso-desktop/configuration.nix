@@ -52,11 +52,6 @@
       audio.pipewire.enable = true;
       printing.enable = true;
     };
-
-    services = {
-      docker.enable = true;
-      ollama.enable = true;
-    };
   };
 
   # Revert to RADV when this https://gitlab.freedesktop.org/mesa/mesa/-/issues/12865 is resolved
