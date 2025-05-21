@@ -8,6 +8,7 @@ let
     extraLibraries = pkgs: with pkgs; [
       # For Unreal Engine Fab Plugin
       nspr
+      xorg.libXdamage
     ];
   };
 in
