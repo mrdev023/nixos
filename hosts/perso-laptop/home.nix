@@ -8,8 +8,12 @@
   modules.home = {
     apps = {
       flatpak.enable = true;
-      jetbrainsToolbox.enable = true;
       kitty.enable = true;
+    };
+
+    editors = {
+      # neovim.enable = true; TODO: Not stable yet
+      vscode.enable = true;
     };
 
     shell = {
