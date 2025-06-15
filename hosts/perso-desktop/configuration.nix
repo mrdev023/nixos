@@ -61,5 +61,12 @@
     extraPackages32 = with pkgs; [ driversi686Linux.amdvlk ];
   };
 
-  networking.interfaces.enp16s0.wakeOnLan.enable = true;
+  networking.interfaces.enp17s0.wakeOnLan.enable = true;
+  services.openssh = {
+    enable = true;
+    settings = {
+      PermitRootLogin = "no";
+      PasswordAuthentication = false;
+    };
+  };
 }
