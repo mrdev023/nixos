@@ -8,6 +8,7 @@
     ./keymaps
     ./graphics
     ./printing.nix
+    ./steering-wheel.nix
     ./waydroid.nix
   ];
 }
