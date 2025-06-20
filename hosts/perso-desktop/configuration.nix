@@ -58,7 +58,9 @@
   # Revert to RADV when this https://gitlab.freedesktop.org/mesa/mesa/-/issues/12865 is resolved
   chaotic.mesa-git = {
     enable = true;
-    extraPackages = with pkgs; [ rocmPackages.clr.icd amdvlk ];
+    # NOTE: Fixed when https://github.com/NixOS/nixpkgs/pull/418461 is available
+    # rocmPackages.clr.icd 
+    extraPackages = with pkgs; [ amdvlk ];
     extraPackages32 = with pkgs; [ driversi686Linux.amdvlk ];
   };
 

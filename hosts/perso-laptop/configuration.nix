@@ -60,7 +60,9 @@
       graphics.nvidia.enable = true;
       audio.pipewire.enable = true;
       printing.enable = true;
-      waydroid.enable = true;
+      # waydroid.enable = true; Broken
     };
   };
+
+  warnings = [ "waydroid disabled for now because it's broken" ];
 }
