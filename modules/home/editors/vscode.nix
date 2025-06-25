@@ -11,8 +11,6 @@ in
     '';
   };
   config = mkIf cfg.enable {
-    warnings = [ "home(editors.vscode): C# support disabled for now. Can be re-enabled when this issue is resolved https://github.com/NixOS/nixpkgs/issues/418521" ];
-
     # Inspired by https://github.com/khaneliman/khanelinix/blob/1cc1ff0435671804666cdc732a0b792178441e2f/modules/home/programs/graphical/editors/vscode/default.nix
     programs.vscode = {
       enable = true;
@@ -49,20 +47,19 @@ in
                 ++ [ ms-vscode.cpptools ms-vscode.cmake-tools ms-vscode.cpptools-extension-pack ];
           };
 
-          # NOTE: Don't compile, missing libxml2 ? See https://github.com/NixOS/nixpkgs/issues/418521
-          # C_Sharp = {
-          #   extensions =
-          #     with pkgs.vscode-extensions;
-          #     commonExtensions
-          #       ++ [ ms-dotnettools.csdevkit ms-dotnettools.csharp ms-dotnettools.vscode-dotnet-runtime ];
-          # };
-          #
-          # UnrealEngine = {
-          #   extensions =
-          #     commonExtensions
-          #       ++ C_CPP.extensions
-          #       ++ C_Sharp.extensions;
-          # };
+          C_Sharp = {
+            extensions =
+              with pkgs.vscode-extensions;
+              commonExtensions
+                ++ [ ms-dotnettools.csdevkit ms-dotnettools.csharp ms-dotnettools.vscode-dotnet-runtime ];
+          };
+          
+          UnrealEngine = {
+            extensions =
+              commonExtensions
+                ++ C_CPP.extensions
+                ++ C_Sharp.extensions;
+          };
 
           Phoenix = {
             extensions =
