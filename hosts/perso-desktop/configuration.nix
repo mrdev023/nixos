@@ -72,4 +72,21 @@
       PasswordAuthentication = false;
     };
   };
+
+  nixpkgs.overlays = [
+    (self: super: {
+      linux-firmware = super.linux-firmware.overrideAttrs (old: rec {
+        pname = "linux-firmware";
+        version = "20250625";
+        src = super.fetchFromGitLab {
+          owner = "kernel-firmware";
+          repo = "linux-firmware";
+          rev = "cbbce56d6dcc1ec8fb485dfb92c68cb9acd51410";
+          hash = "sha256-7XN2g4cnHLnICs/ynt8dCpTJbbBkbOdtRm3by/XrDps=";
+        };
+      });
+    })
+  ];
+
+  warnings = [ "linux-firmware pinned to 20250625. Remove it when https://github.com/NixOS/nixpkgs/issues/419838 is fixed." ];
 }
