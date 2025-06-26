@@ -132,6 +132,9 @@ in {
         filetree = {
           neo-tree = {
             enable = true;
+            setupOpts = {
+              git_status_async = true;
+            };
           };
         };
 
@@ -182,6 +185,7 @@ in {
           motion = {
             hop.enable = true;
             leap.enable = true;
+            flash-nvim.enable = true;
             precognition.enable = false; # VIM help
           };
 
