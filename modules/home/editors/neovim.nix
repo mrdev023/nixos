@@ -255,8 +255,5 @@ in {
         };
       };
     };
-    # Source : https://www.lazyvim.org/
-    modules.home.apps.kitty.enable = lib.mkDefault true;
-    modules.home.shell.git.enable = lib.mkDefault true;
   };
 }
