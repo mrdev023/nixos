@@ -124,6 +124,22 @@
           ]
           ++ extraModules;
       };
+
+    customHomeManagerConfiguration = {
+      name,
+      system
+    }: home-manager.lib.homeManagerConfiguration rec {
+      pkgs = import nixpkgs {
+        inherit overlays system;
+      };
+
+      modules =
+        home-modules
+        ++ [
+          { nix.package = pkgs.nix; }
+          ./hosts/${name}/home.nix
+        ];
+    };
   in
     {
       #####################################################################
@@ -152,19 +168,8 @@
       #####################################################################
       #####################################################################
       homeConfigurations = {
-        perso-home = home-manager.lib.homeManagerConfiguration rec {
-          pkgs = import nixpkgs {
-            system = "x86_64-linux";
-            inherit overlays;
-          };
-
-          modules =
-            home-modules
-            ++ [
-              {nix.package = pkgs.nix;}
-              ./hosts/perso-home/home.nix
-            ];
-        };
+        perso-home = customHomeManagerConfiguration { name = "perso-home"; system = "x86_64-linux"; };
+        pro-home = customHomeManagerConfiguration { name = "pro-home"; system = "x86_64-linux"; };
       };
     }
     #####################################################################

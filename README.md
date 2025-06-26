@@ -2,12 +2,21 @@
 
 ## Configure
 
+### NixOS
+
 ```bash
 nixos-rebuild switch --flake flake_path_directory#hostname
 ```
 
 ```bash
 nix flake update --extra-experimental-features "nix-command flakes"
+```
+
+### Home manager on standalone Linux
+
+```
+nix run nixpkgs#home-manager -- switch --flake .#hostname // First time
+home-manager -- switch --flake .#hostname // Then
 ```
 
 ## Show changements between revisions
