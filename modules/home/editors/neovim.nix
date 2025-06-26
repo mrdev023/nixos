@@ -30,6 +30,14 @@ in {
           enable = true;
         };
 
+        clipboard = {
+          enable = true;
+
+          providers = {
+            wl-copy.enable = true;
+          };
+        };
+
         lsp = {
           enable = true;
           formatOnSave = true;
