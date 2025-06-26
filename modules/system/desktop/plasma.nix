@@ -30,7 +30,13 @@ in {
     services.displayManager.sddm.enable = cfg.enableSddm;
     services.desktopManager.plasma6.enable = true;
 
-    programs.kdeconnect.enable = true;
+    programs = {
+      kde-pim = {
+        enable = true;
+        merkuro = true;
+      };
+      kdeconnect.enable = true;
+    };
 
     environment.systemPackages = with pkgs;
     with kdePackages;
@@ -39,7 +45,6 @@ in {
         discover
         kgpg
         yakuake
-        merkuro
       ]
       ++ lib.optionals cfg.enableWallpaperEngine [wallpaper-engine-plugin];
   };
