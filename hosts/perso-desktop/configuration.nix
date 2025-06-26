@@ -1,18 +1,19 @@
 # Edit this configuration file to define what should be installed on
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
-
-{ config, pkgs, lib, ... }:
-
 {
-  imports =
-    [
-      ../../modules/system
+  config,
+  pkgs,
+  lib,
+  ...
+}: {
+  imports = [
+    ../../modules/system
 
-      # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-      ./disko-config.nix
-    ];
+    # Include the results of the hardware scan.
+    ./hardware-configuration.nix
+    ./disko-config.nix
+  ];
 
   # Bootloader.
   boot.loader.systemd-boot.enable = lib.mkForce false;
@@ -41,6 +42,7 @@
     desktop = {
       plasma = {
         enable = true;
+        enableWallpaperEngine = true;
       };
     };
 
@@ -58,10 +60,8 @@
   # Revert to RADV when this https://gitlab.freedesktop.org/mesa/mesa/-/issues/12865 is resolved
   chaotic.mesa-git = {
     enable = true;
-    # NOTE: Fixed when https://github.com/NixOS/nixpkgs/pull/418461 is available
-    # rocmPackages.clr.icd 
-    extraPackages = with pkgs; [ amdvlk ];
-    extraPackages32 = with pkgs; [ driversi686Linux.amdvlk ];
+    extraPackages = with pkgs; [amdvlk rocmPackages.clr.icd];
+    extraPackages32 = with pkgs; [driversi686Linux.amdvlk];
   };
 
   networking.interfaces.enp17s0.wakeOnLan.enable = true;
@@ -88,5 +88,5 @@
     })
   ];
 
-  warnings = [ "linux-firmware pinned to 20250625. Remove it when https://github.com/NixOS/nixpkgs/issues/419838 is fixed." ];
+  warnings = ["linux-firmware pinned to 20250625. Remove it when https://github.com/NixOS/nixpkgs/issues/419838 is fixed."];
 }

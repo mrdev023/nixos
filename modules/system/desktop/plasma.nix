@@ -1,10 +1,12 @@
-{ config, pkgs, lib, ... }:
-
-with lib;
-let
-  cfg = config.modules.system.desktop.plasma;
-in
 {
+  config,
+  pkgs,
+  lib,
+  ...
+}:
+with lib; let
+  cfg = config.modules.system.desktop.plasma;
+in {
   options.modules.system.desktop.plasma = {
     enable = mkEnableOption ''
       Enable plasma with my custom configurations
@@ -30,11 +32,15 @@ in
 
     programs.kdeconnect.enable = true;
 
-    environment.systemPackages = with pkgs; with kdePackages; [
-      krfb # Use by kdeconnect for virtualmonitorplugin "krfb-virtualmonitor"
-      discover
-      kgpg
-      yakuake
-    ] ++ lib.optionals cfg.enableWallpaperEngine [ wallpaper-engine-plugin ];
+    environment.systemPackages = with pkgs;
+    with kdePackages;
+      [
+        krfb # Use by kdeconnect for virtualmonitorplugin "krfb-virtualmonitor"
+        discover
+        kgpg
+        yakuake
+        merkuro
+      ]
+      ++ lib.optionals cfg.enableWallpaperEngine [wallpaper-engine-plugin];
   };
 }
