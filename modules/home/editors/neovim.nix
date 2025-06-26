@@ -31,14 +31,14 @@ in {
         };
 
         lsp = {
+          enable = true;
           formatOnSave = true;
           lspkind.enable = false;
           lightbulb.enable = true;
           lspsaga.enable = false;
-          trouble.enable = true;
           lspSignature.enable = true;
+          trouble.enable = true;
           otter-nvim.enable = true;
-          lsplines.enable = true;
           nvim-docs-view.enable = true;
         };
 
@@ -50,7 +50,6 @@ in {
         };
 
         languages = {
-          enableLSP = true;
           enableDAP = true;
           enableFormat = true;
           enableTreesitter = true;
@@ -59,31 +58,30 @@ in {
           bash.enable = true;
           clang.enable = true; # C/C++
           css.enable = true;
-          #         Not work currently. Crash during configuration of flutter-tools
-          #          dart = {
-          #            enable = true;
-          #            flutter-tools = {
-          #              enable = true;
-          #              enableNoResolvePatch = true;
-          #              color = {
-          #                enable = true;
-          #                highlightBackground = true;
-          #                highlightForeground = true;
-          #                virtualText.enable = true;
-          #              };
-          #            };
-          #          };
+          dart = {
+            enable = true;
+            flutter-tools = {
+              enable = true;
+              enableNoResolvePatch = true;
+              color = {
+                enable = true;
+                highlightBackground = true;
+                highlightForeground = true;
+                virtualText.enable = true;
+              };
+            };
+          };
           html.enable = true;
           java.enable = true;
           kotlin.enable = true;
           markdown = {
             enable = true;
-            #            extensions.render-markdown-nvim.enable = true; # Supported at the last version in dev
+            extensions.render-markdown-nvim.enable = true;
           };
           nix.enable = true;
           php.enable = true;
           python.enable = true;
-          #          ruby.enable = true; # Supported at the last version in dev
+          ruby.enable = true;
           rust = {
             enable = true;
             crates.enable = true;
@@ -94,7 +92,7 @@ in {
             enable = true;
             extensions.ts-error-translator.enable = false;
           };
-          #          wgsl.enable = true; # Supported at the last version in dev
+          wgsl.enable = true;
           zig.enable = true;
         };
 
@@ -180,7 +178,7 @@ in {
           icon-picker.enable = true;
           surround.enable = true;
           diffview-nvim.enable = true;
-          #          yanky-nvim.enable = false; # Supported at the last version in dev
+          yanky-nvim.enable = false;
           motion = {
             hop.enable = true;
             leap.enable = true;
@@ -193,7 +191,7 @@ in {
         };
 
         notes = {
-          obsidian.enable = false; # FIXME: neovim fails to build if obsidian is enabled
+          obsidian.enable = true;
           neorg.enable = false;
           orgmode.enable = false;
           mind-nvim.enable = true;

@@ -23,5 +23,7 @@
       atuin.enable = true;
       direnv.enable = true;
     };
+
+    editors.neovim.enable = true;
   };
 }
