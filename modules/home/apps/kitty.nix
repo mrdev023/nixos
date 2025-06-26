@@ -18,10 +18,13 @@ in
       '';
       type = types.bool;
     };
+
+    package = lib.mkPackageOption pkgs "kitty" { };
   };
   config = mkIf cfg.enable {
     programs.kitty = {
       enable = true;
+      inherit (cfg) package;
 
       font = {
         name = "FiraCode Nerd Font";

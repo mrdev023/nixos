@@ -78,6 +78,7 @@
     flake-utils,
     home-manager,
     agenix,
+    nixgl,
     lanzaboote,
     disko,
     nvf,
@@ -139,6 +140,8 @@
           { nix.package = pkgs.nix; }
           ./hosts/${name}/home.nix
         ];
+
+      extraSpecialArgs = inputs;
     };
   in
     {
