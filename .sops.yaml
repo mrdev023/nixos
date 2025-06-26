@@ -1,0 +1,5 @@
+creation_rules:
+  - path_regex: secrets/[^/]+\.(yaml|json|env|ini|txt)$
+    key_groups:
+      - pgp:
+        - "B19E3F4A2D806AB4793FDF2FC73D37CBED7BFC77"

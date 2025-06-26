@@ -191,7 +191,7 @@ in {
         };
 
         notes = {
-          obsidian.enable = true;
+          obsidian.enable = false;
           neorg.enable = false;
           orgmode.enable = false;
           mind-nvim.enable = true;
@@ -228,13 +228,26 @@ in {
           fastaction.enable = true;
         };
 
-        #        assistant = {
-        #          chatgpt.enable = false;
-        #          copilot = {
-        #            enable = false;
-        #            cmp.enable = true;
-        #          };
-        #        };
+        assistant = {
+          avante-nvim = {
+            enable = true;
+            setupOpts = {
+              auto_suggestions_provider = "mistral_devstral";
+              provider = "mistral_devstral";
+              providers = {
+                mistral_devstral = {
+                  __inherited_from = "openai";
+                  api_key_name = "MISTRAL_API_KEY";
+                  endpoint = "https://api.mistral.ai/v1/";
+                  model = "devstral-small-latest";
+                  extra_request_body = {
+                    max_tokens = 32768;
+                  };
+                };
+              };
+            };
+          };
+        };
 
         session = {
           nvim-session-manager.enable = false;

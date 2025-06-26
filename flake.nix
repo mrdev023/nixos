@@ -71,6 +71,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.home-manager.follows = "home-manager";
     };
+
+    sops-nix = {
+      url = "github:Mic92/sops-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = inputs @ {
@@ -111,7 +116,7 @@
             lanzaboote.nixosModules.lanzaboote
             disko.nixosModules.disko
             chaotic.nixosModules.default
-            { nixpkgs.overlays = overlays; }
+            {nixpkgs.overlays = overlays;}
             {
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
@@ -128,21 +133,22 @@
 
     customHomeManagerConfiguration = {
       name,
-      system
-    }: home-manager.lib.homeManagerConfiguration rec {
-      pkgs = import nixpkgs {
-        inherit overlays system;
+      system,
+    }:
+      home-manager.lib.homeManagerConfiguration rec {
+        pkgs = import nixpkgs {
+          inherit overlays system;
+        };
+
+        modules =
+          home-modules
+          ++ [
+            {nix.package = pkgs.nix;}
+            ./hosts/${name}/home.nix
+          ];
+
+        extraSpecialArgs = inputs;
       };
-
-      modules =
-        home-modules
-        ++ [
-          { nix.package = pkgs.nix; }
-          ./hosts/${name}/home.nix
-        ];
-
-      extraSpecialArgs = inputs;
-    };
   in
     {
       #####################################################################
@@ -171,8 +177,14 @@
       #####################################################################
       #####################################################################
       homeConfigurations = {
-        perso-home = customHomeManagerConfiguration { name = "perso-home"; system = "x86_64-linux"; };
-        pro-home = customHomeManagerConfiguration { name = "pro-home"; system = "x86_64-linux"; };
+        perso-home = customHomeManagerConfiguration {
+          name = "perso-home";
+          system = "x86_64-linux";
+        };
+        pro-home = customHomeManagerConfiguration {
+          name = "pro-home";
+          system = "x86_64-linux";
+        };
       };
     }
     #####################################################################
@@ -188,6 +200,7 @@
         default = pkgs.mkShell {
           packages = with pkgs; [
             nixd
+            sops
           ];
         };
       };
