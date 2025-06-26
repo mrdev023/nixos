@@ -10,7 +10,7 @@
     };
 
     editors = {
-      # neovim.enable = true; TODO: Not stable yet
+      neovim.enable = true;
       vscode.enable = true;
     };
 
