@@ -26,6 +26,11 @@ in {
           logFile = "/tmp/nvim.log";
         };
 
+        options = {
+          tabstop = 2;
+          shiftwidth = 2;
+        };
+
         spellcheck = {
           enable = true;
         };
@@ -40,7 +45,7 @@ in {
 
         lsp = {
           enable = true;
-          formatOnSave = true;
+          formatOnSave = false;
           lspkind.enable = false;
           lightbulb.enable = true;
           lspsaga.enable = false;
@@ -64,7 +69,12 @@ in {
           enableExtraDiagnostics = true;
 
           bash.enable = true;
-          clang.enable = true; # C/C++
+          clang = {
+            # C++
+            enable = true;
+            dap.enable = true;
+            lsp.enable = true;
+          };
           css.enable = true;
           dart = {
             enable = true;
@@ -150,7 +160,9 @@ in {
           nvimBufferline.enable = true;
         };
 
-        treesitter.context.enable = true;
+        treesitter = {
+          context.enable = true;
+        };
 
         binds = {
           whichKey.enable = true;
@@ -193,7 +205,6 @@ in {
           motion = {
             hop.enable = true;
             leap.enable = true;
-            flash-nvim.enable = true;
             precognition.enable = false; # VIM help
           };
 
