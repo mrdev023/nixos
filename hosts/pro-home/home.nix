@@ -22,6 +22,7 @@
       zsh.enable = true;
       atuin.enable = true;
       direnv.enable = true;
+      lazygit.enable = true;
     };
 
     editors.neovim.enable = true;

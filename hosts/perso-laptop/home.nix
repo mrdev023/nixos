@@ -12,7 +12,7 @@
     };
 
     editors = {
-      # neovim.enable = true; TODO: Not stable yet
+      neovim.enable = true;
       vscode.enable = true;
     };
 
@@ -21,6 +21,7 @@
       atuin.enable = true;
       direnv.enable = true;
       git.enable = true;
+      lazygit.enable = true;
     };
   };
 }
