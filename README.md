@@ -14,13 +14,18 @@ nix flake update --extra-experimental-features "nix-command flakes"
 
 ### Home manager on standalone Linux
 
+Edit /etc/nix/nix.conf
+
+```
+experimental-features = nix-command flakes
+```
+
 ```
 nix run nixpkgs#home-manager -- switch --flake .#hostname // First time
 home-manager -- switch --flake .#hostname // Then
 ```
 
 ## Show changements between revisions
-
 
 ```bash
 nix profile diff-closures --profile /nix/var/nix/profiles/system
@@ -33,11 +38,13 @@ nix store diff-closures /nix/var/nix/profiles/system-rev1-link /nix/var/nix/prof
 ## Clean system
 
 List all profiles
+
 ```bash
 nix profile history --profile /nix/var/nix/profiles/system
 ```
 
 Remove all profiles older than 7 days
+
 ```bash
 sudo nix profile wipe-history --older-than 7d --profile /nix/var/nix/profiles/system
 ```
@@ -47,20 +54,23 @@ nix profile wipe-history --older-than 7d --profile ~/.local/state/nix/profiles/h
 ```
 
 Clean up all useless store from old profiles
+
 ```bash
 sudo nix store gc --debug
 ```
 
 Optimize Store
+
 ```bash
 nix-store --optimise
 ```
 
-error: cached failure of attribute 'nixosConfigurations.perso-desktop.config.system.build.toplevel'
+error: cached failure of attribute
+'nixosConfigurations.perso-desktop.config.system.build.toplevel'
+
 ```bash
 sudo rm -fr /root/.cache/nix/
 ```
-
 
 ## To limit resources use during build
 
