@@ -91,6 +91,7 @@ in {
               };
             };
           };
+          go.enable = true;
           html.enable = true;
           java.enable = true;
           kotlin.enable = true;
