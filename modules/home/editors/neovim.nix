@@ -205,6 +205,7 @@ in {
           surround.enable = true;
           diffview-nvim.enable = true;
           yanky-nvim.enable = false;
+          multicursors.enable = true;
           motion = {
             hop.enable = true;
             leap.enable = true;
