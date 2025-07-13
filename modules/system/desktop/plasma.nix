@@ -34,6 +34,8 @@ in {
       kde-pim = {
         enable = true;
         merkuro = true;
+        kmail = true;
+        kontact = true;
       };
       kdeconnect.enable = true;
     };
