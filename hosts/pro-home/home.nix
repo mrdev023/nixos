@@ -19,10 +19,11 @@
     };
 
     shell = {
-      zsh.enable = true;
       atuin.enable = true;
       direnv.enable = true;
+      git.enable = true;
       lazygit.enable = true;
+      zsh.enable = true;
     };
 
     editors.neovim.enable = true;
