@@ -15,7 +15,10 @@ in
       enable = true;
 
       settings = {
-        git.pull.mode = "rebase";
+        git = {
+          pull.mode = "rebase";
+          paging.externalDiffCommand = "difft --color=always";
+        };
       };
     };
   };

@@ -14,6 +14,7 @@ in
     programs.git = {
       enable = true;
       lfs.enable = true;
+      difftastic.enable = true;
 
       userName = "Florian RICHER";
       userEmail = "florian.richer@protonmail.com";
