@@ -29,10 +29,14 @@
     editors.neovim.enable = true;
   };
 
-  services.gpg-agent = {
-    enable = true;
-    enableZshIntegration = true;
-    enableSshSupport = true;
-    pinentry.package = pkgs.pinentry-qt;
+  services = {
+    gpg-agent = {
+      enable = true;
+      enableZshIntegration = true;
+      enableSshSupport = true;
+      pinentry.package = pkgs.pinentry-qt;
+    };
+
+    yubikey-agent.enable = true;
   };
 }
