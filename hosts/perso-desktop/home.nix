@@ -9,6 +9,8 @@
       kitty.enable = true;
     };
 
+    configs.monado.enable = true;
+
     editors = {
       neovim.enable = true;
       vscode.enable = true;

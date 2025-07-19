@@ -4,6 +4,7 @@
   imports = [
     ../common.nix
     ./apps
+    ./configs
     ./editors
     ./desktop
     ./shell
