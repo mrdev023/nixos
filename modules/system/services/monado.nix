@@ -20,6 +20,14 @@ in
   config = mkIf cfg.enable {
     # https://wiki.nixos.org/wiki/VR
     # https://github.com/NixOS/nixpkgs/issues/258196
+    #
+    # Monado can be run with the following commands:
+    #   systemctl --user start monado.service
+    #   systemctl --user stop monado.{service,socket}
+    #   journalctl --user --follow --unit monado.service
+    # Games require LAUNCH OPTIONS: "env PRESSURE_VESSEL_FILESYSTEMS_RW=$XDG_RUNTIME_DIR/monado_comp_ipc %command%"
+    #
+    # Requires also `configs.monado.enable = true;` in home.nix for the user to work well
     services.monado = {
       enable = true;
       defaultRuntime = true;
@@ -29,12 +37,10 @@ in
     systemd.user.services.monado.environment = {
       STEAMVR_LH_ENABLE = "1";
       XRT_COMPOSITOR_COMPUTE = "1";
-    };
-
-    environment.variables = {
-      STEAMVR_LH_ENABLE = "1";
-      XRT_COMPOSITOR_COMPUTE = "1";
       WMR_HANDTRACKING = "0";
+
+      # Enable debugging if needed
+      XRT_DEBUG_GUI = "0";
     };
 
     boot.kernelPatches = mkIf cfg.enableAmdgpuPatch [
