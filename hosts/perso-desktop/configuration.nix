@@ -55,8 +55,6 @@
       printing.enable = true;
       steering-wheel.enable = true;
     };
-
-    services.monado.enable = true;
   };
 
   chaotic.mesa-git = {
