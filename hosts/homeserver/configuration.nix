@@ -27,4 +27,14 @@
     enable = true;
     dataRoot = "/mnt/work/docker";
   };
+
+  services.borgbackup.jobs.workBackup = {
+    paths = "/mnt/work";
+    exclude = [ "docker" ];
+    repo = "/mnt/backup";
+    compression = "zstd,22";
+    startAt = "daily";
+    dateFormat = "--iso-8601=seconds";
+    archiveBaseName = null;
+  };
 }
