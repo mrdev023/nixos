@@ -22,4 +22,9 @@
   boot.loader.systemd-boot.configurationLimit = 10;
 
   networking.hostName = "nixos-homeserver"; # Define your hostname.
+
+  modules.system.services.docker = {
+    enable = true;
+    dataRoot = "/mnt/work/docker";
+  };
 }
