@@ -19,6 +19,7 @@ in
   config = mkIf cfg.enable {
     virtualisation.docker = {
       enable = true;
+      autoPrune.enable = true;
 
       daemon.settings = lib.mkMerge [
         (lib.mkIf (cfg.dataRoot != null) { "data-root" = cfg.dataRoot; })
