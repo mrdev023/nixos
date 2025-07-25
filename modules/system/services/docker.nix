@@ -9,13 +9,21 @@ in
     enable = mkEnableOption ''
       Enable docker with my custom configurations
     '';
+
+    dataRoot = mkOption {
+      type = types.str;
+      description = "Change the data root of docker daemon";
+      default = null;
+    };
   };
   config = mkIf cfg.enable {
     virtualisation.docker = {
       enable = true;
+
+      daemon.settings = lib.mkMerge [
+        (lib.mkIf (cfg.dataRoot != null) { "data-root" = cfg.dataRoot; })
+      ];
     };
     virtualisation.oci-containers.backend = "docker";
-
-    users.users.florian.extraGroups = [ "docker" ];
   };
 }
