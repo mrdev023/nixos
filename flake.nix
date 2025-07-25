@@ -157,6 +157,10 @@
       #####################################################################
       #####################################################################
       nixosConfigurations = {
+        homeserver = customNixosSystem {
+          name = "homeserver";
+          system = "x86_64-linux";
+        };
         nixos-test = customNixosSystem {
           name = "nixos-test";
           system = "x86_64-linux";
