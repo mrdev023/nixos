@@ -1,7 +1,5 @@
 { ... }:
 
 {
-  imports = [
-    ../../modules/home
-  ];
+  # Nothing yet
 }

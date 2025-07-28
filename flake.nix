@@ -99,24 +99,22 @@
         modules =
           with inputs; [
             ./hosts/${name}/configuration.nix
+            ./hosts/${name}/home.nix
+
             home-manager.nixosModules.home-manager
             lanzaboote.nixosModules.lanzaboote
             disko.nixosModules.disko
             chaotic.nixosModules.default
             sops-nix.nixosModules.sops
-            {nixpkgs.overlays = overlays;}
+
             {
+              nixpkgs.overlays = overlays;
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
               home-manager.extraSpecialArgs = inputs;
-              home-manager.users.florian.imports =
-                home-modules
-                ++ [
-                  ./hosts/${name}/home.nix
-                ];
+              home-manager.sharedModules = home-modules;
             }
-          ]
-          ++ extraModules;
+          ] ++ extraModules;
       };
 
     customHomeManagerConfiguration = {
@@ -149,10 +147,6 @@
           name = "homeserver";
           system = "x86_64-linux";
         };
-        nixos-test = customNixosSystem {
-          name = "nixos-test";
-          system = "x86_64-linux";
-        };
         perso-laptop = customNixosSystem {
           name = "perso-laptop";
           system = "x86_64-linux";
@@ -169,10 +163,6 @@
       #####################################################################
       #####################################################################
       homeConfigurations = {
-        perso-home = customHomeManagerConfiguration {
-          name = "perso-home";
-          system = "x86_64-linux";
-        };
         pro-home = customHomeManagerConfiguration {
           name = "pro-home";
           system = "x86_64-linux";

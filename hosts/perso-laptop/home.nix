@@ -1,28 +1,12 @@
 { ... }:
 
 {
-  imports = [
-    ../../modules/home
-  ];
-
-  modules.home = {
-    apps = {
-      flatpak.enable = true;
-      kitty.enable = true;
-    };
-
-    editors = {
-      neovim.enable = true;
-      vscode.enable = true;
-    };
-
-    shell = {
-      zsh.enable = true;
-      atuin.enable = true;
-      direnv.enable = true;
-      git.enable = true;
-      lazygit.enable = true;
-    };
+  # Define a user account. Don't forget to set a password with ‘passwd’.
+  users.users.florian = {
+    isNormalUser = true;
+    description = "florian";
+    extraGroups = [ "networkmanager" "wheel" ];
   };
-}
 
+  home-manager.users.florian.imports = [ ./homes/florian.nix ];
+}
