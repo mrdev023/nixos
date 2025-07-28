@@ -21,13 +21,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    agenix = {
-      url = "github:ryantm/agenix";
-      inputs.nixpkgs.follows = "nixpkgs";
-      inputs.home-manager.follows = "home-manager";
-      inputs.systems.follows = "systems";
-    };
-
     nix-flatpak.url = "github:gmodena/nix-flatpak";
 
     # Follow nix-doom-emacs completely when this is merged or fixed
@@ -79,21 +72,16 @@
   };
 
   outputs = inputs @ {
-    nixpkgs,
     flake-utils,
     home-manager,
-    agenix,
-    nixgl,
-    lanzaboote,
-    disko,
-    nvf,
-    chaotic,
+    nixpkgs,
     ...
   }: let
     home-modules = with inputs; [
       nix-flatpak.homeManagerModules.nix-flatpak
       nix-doom-emacs.hmModule
       nvf.homeManagerModules.default
+      sops-nix.homeManagerModules.sops
     ];
 
     overlays = with inputs; [
@@ -109,13 +97,13 @@
       nixpkgs.lib.nixosSystem {
         inherit system;
         modules =
-          [
+          with inputs; [
             ./hosts/${name}/configuration.nix
             home-manager.nixosModules.home-manager
-            agenix.nixosModules.default
             lanzaboote.nixosModules.lanzaboote
             disko.nixosModules.disko
             chaotic.nixosModules.default
+            sops-nix.nixosModules.sops
             {nixpkgs.overlays = overlays;}
             {
               home-manager.useGlobalPkgs = true;
