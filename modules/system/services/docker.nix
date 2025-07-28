@@ -11,7 +11,7 @@ in
     '';
 
     dataRoot = mkOption {
-      type = types.str;
+      type = with lib.types; nullOr str;
       description = "Change the data root of docker daemon";
       default = null;
     };
