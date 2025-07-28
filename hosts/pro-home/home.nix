@@ -40,7 +40,11 @@
     yubikey-agent.enable = true;
   };
 
-  programs.gpg.scdaemonSettings = {
-    disable-ccid = true;
+  programs.gpg = {
+    enable = true;
+
+    scdaemonSettings = {
+      disable-ccid = true;
+    };
   };
 }
