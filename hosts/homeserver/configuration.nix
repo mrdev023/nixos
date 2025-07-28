@@ -16,6 +16,7 @@
   ];
 
   # Bootloader.
+  boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
   # Limit the number of generations to keep
@@ -30,6 +31,7 @@
 
   services.borgbackup.jobs.workBackup = {
     paths = "/mnt/work";
+    encryption.mode = "none";
     exclude = [ "docker" ];
     repo = "/mnt/backup";
     compression = "zstd,22";
