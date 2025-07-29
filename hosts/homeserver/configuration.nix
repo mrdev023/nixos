@@ -10,6 +10,7 @@
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
     ./disko-config.nix
+    ./containers
   ];
 
   # Bootloader.
@@ -24,6 +25,11 @@
   modules.system.services.docker = {
     enable = true;
     dataRoot = "/mnt/work/docker";
+  };
+
+  services.containers = {
+    workPath = "/mnt/work";
+    domain = "mrdev023.fr";
   };
 
   services.borgbackup.jobs.workBackup = {
