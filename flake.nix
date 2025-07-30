@@ -23,20 +23,6 @@
 
     nix-flatpak.url = "github:gmodena/nix-flatpak";
 
-    # Follow nix-doom-emacs completely when this is merged or fixed
-    # - https://github.com/nix-community/nix-doom-emacs/issues/409
-    # - https://github.com/nix-community/nix-straight.el/pull/4
-    nix-straight = {
-      url = "github:codingkoi/nix-straight.el?ref=codingkoi/apply-librephoenixs-fix";
-      flake = false;
-    };
-    nix-doom-emacs = {
-      url = "github:nix-community/nix-doom-emacs";
-      inputs.nix-straight.follows = "nix-straight";
-      inputs.nixpkgs.follows = "nixpkgs";
-      inputs.flake-utils.follows = "flake-utils";
-    };
-
     # To use nixos program on others distros
     nixgl = {
       url = "github:nix-community/nixGL";
@@ -79,7 +65,6 @@
   }: let
     home-modules = with inputs; [
       nix-flatpak.homeManagerModules.nix-flatpak
-      nix-doom-emacs.hmModule
       nvf.homeManagerModules.default
       sops-nix.homeManagerModules.sops
     ];
