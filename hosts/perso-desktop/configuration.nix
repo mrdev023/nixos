@@ -53,7 +53,10 @@
       steering-wheel.enable = true;
     };
 
-    services.monado.enable = true;
+    services = {
+      distrobox.enable = true;
+      monado.enable = true;
+    };
   };
 
   chaotic.mesa-git = {
