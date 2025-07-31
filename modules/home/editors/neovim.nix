@@ -201,10 +201,9 @@ in {
 
         utility = {
           nix-develop.enable = true;
-          ccc.enable = false;
+          ccc.enable = true;
           vim-wakatime.enable = false;
           icon-picker.enable = true;
-          surround.enable = true;
           diffview-nvim.enable = true;
           yanky-nvim.enable = false;
           multicursors.enable = true;
@@ -212,10 +211,10 @@ in {
             leap.enable = true;
             precognition.enable = false; # VIM help
           };
-
-          images = {
-            image-nvim.enable = false;
-          };
+          images.image-nvim.enable = false; # WARN: Broken: failed to spawn ueberzug
+          preview.markdownPreview.enable = true;
+          sleuth.enable = true;
+          surround.enable = true;
         };
 
         notes = {
