@@ -30,6 +30,14 @@
   services.containers = {
     workPath = "/mnt/work";
     domain = "mrdev023.fr";
+    
+    # Enable all container services
+    nextcloud.enable = true;
+    home-assistant.enable = true;
+    vaultwarden.enable = true;
+    ryot.enable = true;
+    whoami.enable = true;
+    watchtower.enable = true;
   };
 
   services.borgbackup.jobs.workBackup = {
