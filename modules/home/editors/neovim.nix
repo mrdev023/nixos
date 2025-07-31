@@ -56,6 +56,7 @@ in {
           otter-nvim.enable = true;
           nvim-docs-view.enable = true;
         };
+        formatter.conform-nvim.enable = true;
 
         debugger = {
           nvim-dap = {
