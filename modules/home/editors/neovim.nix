@@ -82,7 +82,7 @@ in {
           dart = {
             enable = true;
             flutter-tools = {
-              enable = true;
+              enable = false; # WARN: Broken
               enableNoResolvePatch = true;
               color = {
                 enable = true;
@@ -202,7 +202,6 @@ in {
 
         utility = {
           nix-develop.enable = true;
-          ccc.enable = true;
           vim-wakatime.enable = false;
           icon-picker.enable = true;
           diffview-nvim.enable = true;
