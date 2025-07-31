@@ -123,12 +123,13 @@ in {
           nvim-cursorline.enable = true;
           cinnamon-nvim.enable = true;
           fidget-nvim.enable = true;
+          rainbow-delimiters.enable = true;
 
           highlight-undo.enable = true;
           indent-blankline.enable = true;
 
           # Fun
-          cellular-automaton.enable = false;
+          cellular-automaton.enable = true;
         };
 
         statusline = {
@@ -142,7 +143,7 @@ in {
           enable = true;
           name = "catppuccin";
           style = "mocha";
-          transparent = false;
+          transparent = true;
         };
 
         autopairs.nvim-autopairs.enable = true;
@@ -199,6 +200,7 @@ in {
         };
 
         utility = {
+          nix-develop.enable = true;
           ccc.enable = false;
           vim-wakatime.enable = false;
           icon-picker.enable = true;
@@ -207,7 +209,6 @@ in {
           yanky-nvim.enable = false;
           multicursors.enable = true;
           motion = {
-            hop.enable = true;
             leap.enable = true;
             precognition.enable = false; # VIM help
           };
