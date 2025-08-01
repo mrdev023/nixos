@@ -259,7 +259,7 @@ in {
           avante-nvim = {
             enable = true;
             setupOpts = {
-              auto_suggestions_provider = "mistral_devstral";
+              auto_suggestions_provider = "mistral_codestral";
               provider = "mistral_devstral";
               providers = {
                 mistral_devstral = {
@@ -268,7 +268,16 @@ in {
                   endpoint = "https://api.mistral.ai/v1/";
                   model = "devstral-small-latest";
                   extra_request_body = {
-                    max_tokens = 32768;
+                    max_tokens = 128000;
+                  };
+                };
+                mistral_codestral = {
+                  __inherited_from = "openai";
+                  api_key_name = "MISTRAL_API_KEY";
+                  endpoint = "https://api.mistral.ai/v1/";
+                  model = "codestral-latest";
+                  extra_request_body = {
+                    max_tokens = 256000;
                   };
                 };
               };
