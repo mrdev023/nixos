@@ -48,6 +48,7 @@
   programs.gpg = {
     enable = true;
 
+    # Requires: ccid package installed and pcscd system service started
     scdaemonSettings = {
       disable-ccid = true;
     };
