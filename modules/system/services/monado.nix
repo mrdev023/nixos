@@ -28,6 +28,10 @@ in
     # Games require LAUNCH OPTIONS: "env PRESSURE_VESSEL_FILESYSTEMS_RW=$XDG_RUNTIME_DIR/monado_comp_ipc %command%"
     #
     # Requires also `configs.monado.enable = true;` in home.nix for the user to work well
+    #
+    # On NVIDIA it requires 60hz so it's needed to set XRT_COMPOSITOR_DESIRED_MODE with the index of the mode
+    # use XRT_COMPOSITOR_PRINT_MODES=true to show all available modes
+
     services.monado = {
       enable = true;
       defaultRuntime = true;
