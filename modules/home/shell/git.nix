@@ -32,6 +32,7 @@ in
       };
 
       extraConfig = {
+        pull.rebase = "true";
         url."https://invent.kde.org/".insteadOf = "kde:";
         url."ssh://git@invent.kde.org/".pushInsteadOf = "kde:";
       };

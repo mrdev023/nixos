@@ -16,7 +16,6 @@ in
 
       settings = {
         git = {
-          pull.mode = "rebase";
           paging.externalDiffCommand = "difft --color=always";
         };
       };
