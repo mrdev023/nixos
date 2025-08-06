@@ -1,4 +1,4 @@
-{ config, lib, ... }:
+{ config, lib, pkgs, ... }:
 
 with lib;
 let
@@ -11,10 +11,16 @@ in
     '';
   };
   config = mkIf cfg.enable {
+    home.packages = with pkgs; [ gitflow ];
+
     programs.git = {
       enable = true;
       lfs.enable = true;
-      difftastic.enable = true;
+
+      difftastic = {
+        enable = true;
+        enableAsDifftool = true;
+      };
 
       userName = "Florian RICHER";
       userEmail = "florian.richer@protonmail.com";
