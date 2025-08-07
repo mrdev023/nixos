@@ -169,7 +169,7 @@ in
         [kdedev]
         home=${config.home.homeDirectory}/distrobox/kdedev
         init_hooks="${getExe initHook}"
-        additional_packages="kde-cli-tools"
+        additional_packages="kde-cli-tools base-devel"
         image=docker.io/archlinux:latest
         init=true
         nvidia=true
