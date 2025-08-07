@@ -105,6 +105,7 @@ let
     unset NIXPKGS_CONFIG
     unset NIX_USER_PROFILE_DIR
     unset NIX_XDG_DESKTOP_PORTAL_DIR
+    unset NIXPKGS_QT6_QML_IMPORT_PATH
     unset QT_PLUGIN_PATH
     unset KPACKAGE_DEP_RESOLVERS_PATH
     unset GDK_PIXBUF_MODULE_FILE
@@ -127,6 +128,8 @@ let
     export XDG_DATA_DIRS=$HOME/kde/usr/share:$HOME/.local/share/applications:$HOME/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share:/usr/local/share:/usr/share
     export PATH=/usr/local/sbin:/usr/local/bin:/usr/bin:/var/lib/flatpak/exports/bin:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl
     export WAYLAND_DISPLAY=wayland-0 # waydroid create --init params seems to remove it
+    export COLORTERM=truecolor
+    export TERM=xterm-256color
 
     # Required for kde-builder
     export PATH="$HOME/.local/bin:$PATH"
