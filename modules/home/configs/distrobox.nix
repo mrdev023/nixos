@@ -135,7 +135,7 @@ let
         echo "Finishing configurations for kde development"
 
         sudo chown ${config.home.username}:${config.home.username} $HOME/{.config,.ssh,run.sh,copy_polkit.sh}
-        sudo chmod o+x $HOME/{run.sh,copy_polkit.sh}
+        sudo chmod u+x $HOME/{run.sh,copy_polkit.sh}
 
         curl 'https://invent.kde.org/sdk/kde-builder/-/raw/master/scripts/initial_setup.sh?ref_type=heads' > $HOME/initial_setup.sh
         bash $HOME/initial_setup.sh
