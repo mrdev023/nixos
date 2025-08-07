@@ -16,7 +16,10 @@
       kitty.enable = true;
     };
 
-    configs.monado.enable = true;
+    configs = {
+      distrobox.enable = true;
+      monado.enable = true;
+    };
 
     editors = {
       neovim.enable = true;
