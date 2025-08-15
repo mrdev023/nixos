@@ -85,7 +85,7 @@ let
     }
     EOF
 
-    cat >> $HOME/copy_polkit.sh << 'EOF'
+    cat > $HOME/copy_polkit.sh << 'EOF'
     TMP_POLKIT_DIR=$HOME/kde/usr/share/polkit-1/actions/tmp
     mkdir -p $TMP_POLKIT_DIR
 
