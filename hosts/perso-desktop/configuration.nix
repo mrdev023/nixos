@@ -71,4 +71,9 @@
       PasswordAuthentication = false;
     };
   };
+
+  environment.systemPackages = with pkgs; [
+    lsfg-vk
+    lsfg-vk-ui
+  ];
 }
