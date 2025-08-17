@@ -152,6 +152,10 @@
           name = "pro-home";
           system = "x86_64-linux";
         };
+        kdedev-home = customHomeManagerConfiguration {
+          name = "kdedev-home";
+          system = "x86_64-linux";
+        };
       };
     }
     #####################################################################

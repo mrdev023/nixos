@@ -8,8 +8,6 @@ let
     rm /usr/bin/flatpak
     cp -f /etc/skel/.* $HOME/
 
-    mkdir -p $HOME/.config
-    ln -s ${config.home.homeDirectory}/.config/git $HOME/.config/git
     ln -s ${config.home.homeDirectory}/.ssh $HOME/.ssh
 
     # Needed because distrobox with --init it's not a seat session
@@ -132,7 +130,7 @@ let
     export TERM=xterm-256color
 
     # Required for kde-builder
-    export PATH="$HOME/.local/bin:$PATH"
+    export PATH="$HOME/.nix-profile/bin:$HOME/.local/bin:$PATH"
 
     alias nvim="distrobox-host-exec nvim"
     alias lazygit="distrobox-host-exec lazygit"
@@ -175,7 +173,7 @@ in
         [kdedev]
         home=${config.home.homeDirectory}/distrobox/kdedev
         init_hooks="${getExe initHook}"
-        additional_packages="kde-cli-tools base-devel"
+        additional_packages="kde-cli-tools base-devel nix"
         image=docker.io/archlinux:latest
         init=true
         nvidia=true
