@@ -18,7 +18,6 @@
 
     configs = {
       distrobox.enable = true;
-      monado.enable = true;
     };
 
     editors = {

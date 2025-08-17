@@ -55,7 +55,6 @@
 
     services = {
       distrobox.enable = true;
-      monado.enable = true;
     };
   };
 
