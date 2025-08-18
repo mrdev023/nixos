@@ -132,9 +132,6 @@ let
     # Required for kde-builder
     export PATH="$HOME/.nix-profile/bin:$HOME/.local/bin:$PATH"
 
-    alias nvim="distrobox-host-exec nvim"
-    alias lazygit="distrobox-host-exec lazygit"
-
     if [[ ! -f $HOME/.local/bin/kde-builder ]]; then
         echo "Finishing configurations for kde development"
 
