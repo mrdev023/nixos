@@ -50,4 +50,6 @@
     dateFormat = "--iso-8601=seconds";
     archiveBaseName = null;
   };
+  
+  virtualisation.docker.autoPrune.enable = true;
 }
