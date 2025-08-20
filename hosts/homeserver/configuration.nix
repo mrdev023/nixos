@@ -26,7 +26,8 @@
     services = {
       docker = {
         enable = true;
-        dataRoot = "/mnt/work/docker";
+        # Uncomment when is deployed in server (docker not support shared directories)
+        # dataRoot = "/mnt/work/docker";
       };
       openssh.enable = true;
     };
@@ -71,6 +72,16 @@
       forwardPorts = [
         { from = "host"; host.port = 2222; guest.port = 22; }
       ];
+      sharedDirectories = {
+        work = {
+          source = "${builtins.getEnv "PWD"}/data/work";
+          target = "/mnt/work";
+        };
+        backup = {
+          source = "${builtins.getEnv "PWD"}/data/backup";
+          target = "/mnt/backup";
+        };
+      };
     };
   };
 }
