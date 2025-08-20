@@ -51,39 +51,8 @@
   # $ nix search wget
   environment.systemPackages = with pkgs; [
     vim
-    nixd
-
-    # For debugging and troubleshooting Secure Boot.
-    sbctl
-
-    # Usefull tools to debug
-    gdb
-    lldb
-    # FIXME: Uncomment when build is fixed
-    # gammaray # QT Inspector
-
     yubikey-manager
-
-    # Usefull for automatic informations collect software like KDE
-    vulkan-tools # For vulkaninfo command
-    wayland-utils # For wayland-info command
-    glxinfo
-    clinfo
-    aha
-    usbutils
-    pciutils
-    mangohud
   ];
-
-  programs.appimage = {
-    enable = true;
-    binfmt = true;
-  };
-
-  environment.sessionVariables = {
-    STEAM_EXTRA_COMPAT_TOOLS_PATHS = "\${HOME}/.steam/root/compatibilitytools.d";
-    MANGOHUD_CONFIG = ''no_display,control=mangohud,legacy_layout=0,vertical,background_alpha=0,gpu_stats,gpu_power,cpu_stats,core_load,ram,vram,fps,fps_metrics=AVG,0.001,frametime,refresh_rate,resolution,gpu_name,vulkan_driver,wine'';
-  };
 
   services.fwupd.enable = true;
 

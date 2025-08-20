@@ -43,8 +43,10 @@
 
   modules.system = {
     apps = {
-      steam.enable = true;
+      appimage.enable = true;
       flatpak.enable = true;
+      lutris.enable = true;
+      steam.enable = true;
     };
 
     boot.plymouth.enable = true;

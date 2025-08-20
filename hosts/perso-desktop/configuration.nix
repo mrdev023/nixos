@@ -28,6 +28,7 @@
 
   modules.system = {
     apps = {
+      appimage.enable = true;
       flatpak.enable = true;
       steam.enable = true;
       qemu.enable = true;

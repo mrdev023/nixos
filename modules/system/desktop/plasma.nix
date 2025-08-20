@@ -43,6 +43,15 @@ in {
     environment.systemPackages = with pkgs;
     with kdePackages;
       [
+        # Usefull for automatic informations collect software like KDE
+        vulkan-tools # For vulkaninfo command
+        wayland-utils # For wayland-info command
+        glxinfo
+        clinfo
+        aha
+        usbutils
+        pciutils
+
         krfb # Use by kdeconnect for virtualmonitorplugin "krfb-virtualmonitor"
         discover
         kgpg

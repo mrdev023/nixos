@@ -27,5 +27,14 @@ in
     };
 
     hardware.steam-hardware.enable = true;
+
+    environment.systemPackages = with pkgs; [
+      mangohud
+    ];
+
+    environment.sessionVariables = {
+      STEAM_EXTRA_COMPAT_TOOLS_PATHS = "\${HOME}/.steam/root/compatibilitytools.d";
+      MANGOHUD_CONFIG = ''no_display,control=mangohud,legacy_layout=0,vertical,background_alpha=0,gpu_stats,gpu_power,cpu_stats,core_load,ram,vram,fps,fps_metrics=AVG,0.001,frametime,refresh_rate,resolution,gpu_name,vulkan_driver,wine'';
+    };
   };
 }
