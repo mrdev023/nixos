@@ -15,7 +15,7 @@ in
       enable = true;
 
       settings = {
-        PasswordAuthentication = true;
+        PasswordAuthentication = false;
       };
     };
   };
