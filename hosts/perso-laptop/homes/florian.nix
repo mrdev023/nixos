@@ -27,6 +27,7 @@
       direnv.enable = true;
       git.enable = true;
       lazygit.enable = true;
+      zoxide.enable = true;
     };
   };
 }

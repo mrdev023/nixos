@@ -29,6 +29,7 @@
       git.enable = true;
       lazygit.enable = true;
       zsh.enable = true;
+      zoxide.enable = true;
     };
 
     editors.neovim.enable = true;
