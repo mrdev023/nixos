@@ -256,29 +256,36 @@ in {
         };
 
         assistant = {
-          avante-nvim = {
+          codecompanion-nvim = {
             enable = true;
+
             setupOpts = {
-              auto_suggestions_provider = "mistral_codestral";
-              provider = "mistral_devstral";
-              providers = {
-                mistral_devstral = {
-                  __inherited_from = "openai";
-                  api_key_name = "MISTRAL_API_KEY";
-                  endpoint = "https://api.mistral.ai/v1/";
-                  model = "devstral-small-latest";
-                  extra_request_body = {
-                    max_tokens = 128000;
-                  };
+              adapters = mkLuaInline ''
+                {
+                  adapters = {
+                    mistral = function()
+                      return require("codecompanion.adapters").extend("openai", {
+                        env = {
+                          url = "https://api.mistral.ai/",
+                          api_key = "MISTRAL_API_KEY",
+                        },
+                      })
+                    end,
+                  },
+                }
+              '';
+              strategies = {
+                chat = {
+                  adapter = "mistral";
                 };
-                mistral_codestral = {
-                  __inherited_from = "openai";
-                  api_key_name = "MISTRAL_API_KEY";
-                  endpoint = "https://api.mistral.ai/v1/";
-                  model = "codestral-latest";
-                  extra_request_body = {
-                    max_tokens = 256000;
-                  };
+                inline = {
+                  adapter = "mistral";
+                };
+              };
+              display = {
+                chat = {
+                  auto_scroll = true;
+                  show_settings = true;
                 };
               };
             };
