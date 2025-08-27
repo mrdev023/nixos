@@ -3,7 +3,7 @@
 with lib;
 let
   cfg = config.modules.home.apps.ghostty;
-  cfgFont = config.modules.home.configs.font;
+  cfgFont = config.modules.home.shell.font;
 in
 {
   options.modules.home.apps.ghostty = {

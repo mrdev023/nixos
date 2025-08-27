@@ -2,10 +2,10 @@
 
 with lib;
 let
-  cfg = config.modules.home.configs.font;
+  cfg = config.modules.home.shell.font;
 in
 {
-  options.modules.home.configs.font = {
+  options.modules.home.shell.font = {
     name = mkOption {
       type = types.str;
       description = "Font name to use";
