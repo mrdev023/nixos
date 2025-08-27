@@ -3,6 +3,7 @@
 with lib;
 let
   cfg = config.modules.home.apps.kitty;
+  cfgFont = config.modules.home.configs.font;
 in
 {
   options.modules.home.apps.kitty = {
@@ -26,10 +27,7 @@ in
       enable = true;
       inherit (cfg) package;
 
-      font = {
-        name = "FiraCode Nerd Font";
-        package = pkgs.nerd-fonts.fira-code;
-      };
+      font.name = cfgFont.name;
 
       settings = lib.mkMerge [
         {
