@@ -17,9 +17,13 @@ in
     };
 
     channels = mkOption {
-      type = types.listOf types.str;
+      type = types.listOf (
+        types.enum [
+          "nix-search-tv"
+        ]
+      );
       default = [];
-      description = "List of channels to enable. (Available channels: [ nix-search-tv ])";
+      description = "List of channels to enable.";
     };
   };
   config = mkIf cfg.enable {

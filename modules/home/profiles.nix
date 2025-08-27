@@ -7,7 +7,12 @@ in
 {
   options.modules.home = {
     profiles = mkOption {
-      type = types.listOf types.str;
+      type = types.listOf (
+        types.enum [
+          "hm_only"
+          "shell"
+        ]
+      );
       default = [];
       example = [ "shell" ];
       description = "Enable pre-defined profile.";
