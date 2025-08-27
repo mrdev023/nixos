@@ -20,7 +20,7 @@ in
       type = types.bool;
     };
 
-    package = lib.mkPackageOption pkgs "kitty" { };
+    package = mkPackageOption pkgs "kitty" { };
   };
   config = mkIf cfg.enable {
     programs.kitty = {
@@ -29,17 +29,18 @@ in
 
       font.name = cfgFont.name;
 
-      settings = lib.mkMerge [
+      settings = mkMerge [
         {
           disable_ligatures = "never";
           sync_to_monitor = "yes"; # Avoid to update a lot
           confirm_os_window_close = 0; # Disable close confirmation
+          # hide_window_decorations = if pkgs.stdenv.hostPlatform.isDarwin then "titlebar-and-corners" else "yes";
 
           background_opacity = "0.7";
         }
 
-        (lib.mkIf cfg.enableBlur { background_blur = "1"; })
-        (lib.mkIf config.programs.zsh.enable { shell = "zsh"; })
+        (mkIf cfg.enableBlur { background_blur = "1"; })
+        (mkIf config.programs.zsh.enable { shell = "zsh"; })
       ];
     };
   };
