@@ -28,6 +28,10 @@
       direnv.enable = true;
       git.enable = true;
       lazygit.enable = true;
+      television = {
+        enable = true;
+        channels = [ "nix-search-tv" ];
+      };
       zsh.enable = true;
       zoxide.enable = true;
     };
