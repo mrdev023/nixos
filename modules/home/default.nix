@@ -5,8 +5,8 @@
     ../common.nix
     ./apps
     ./configs
-    ./editors
     ./desktop
+    ./editors
     ./profiles.nix
     ./shell
   ];
