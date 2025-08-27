@@ -7,6 +7,7 @@
     ./configs
     ./editors
     ./desktop
+    ./profiles.nix
     ./shell
   ];
 

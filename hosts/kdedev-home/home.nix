@@ -11,16 +11,8 @@
   };
 
   modules.home = {
-    shell = {
-      atuin.enable = true;
-      direnv.enable = true;
-      git.enable = true;
-      lazygit.enable = true;
-      zsh.enable = true;
-      zoxide.enable = true;
-    };
-
-    editors.neovim.enable = true;
+    profiles = [ "shell" "hm_only" ];
+    apps.kitty.package = config.lib.nixGL.wrap pkgs.kitty;
   };
 
   services = {

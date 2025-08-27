@@ -16,46 +16,7 @@
   };
 
   modules.home = {
-    apps = {
-      kitty = {
-        enable = true;
-        package = config.lib.nixGL.wrap pkgs.kitty;
-      };
-    };
-
-    shell = {
-      atuin.enable = true;
-      direnv.enable = true;
-      git.enable = true;
-      lazygit.enable = true;
-      television = {
-        enable = true;
-        channels = [ "nix-search-tv" ];
-      };
-      zsh.enable = true;
-      zoxide.enable = true;
-    };
-
-    editors.neovim.enable = true;
-  };
-
-  services = {
-    gpg-agent = {
-      enable = true;
-      enableZshIntegration = true;
-      enableSshSupport = true;
-      pinentry.package = pkgs.pinentry-qt;
-    };
-
-    yubikey-agent.enable = true;
-  };
-
-  programs.gpg = {
-    enable = true;
-
-    # Requires: ccid package installed and pcscd system service started
-    scdaemonSettings = {
-      disable-ccid = true;
-    };
+    profiles = [ "shell" "hm_only" ];
+    apps.kitty.package = config.lib.nixGL.wrap pkgs.kitty;
   };
 }
