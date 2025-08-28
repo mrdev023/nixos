@@ -37,13 +37,14 @@
     workPath = "/mnt/work";
     domain = "mrdev023.fr";
     
-    # Enable all container services
-    nextcloud.enable = true;
-    home-assistant.enable = true;
-    vaultwarden.enable = true;
-    ryot.enable = true;
-    whoami.enable = true;
-    watchtower.enable = true;
+    # Enable only Traefik for now (others disabled during migration)
+    traefik.enable = true;
+    # nextcloud.enable = true;
+    # home-assistant.enable = true;
+    # vaultwarden.enable = true;
+    # ryot.enable = true;
+    # whoami.enable = true;
+    # watchtower.enable = true;
   };
 
   services.borgbackup.jobs.workBackup = {
@@ -71,6 +72,8 @@
       diskSize = 16 * 1024;
       forwardPorts = [
         { from = "host"; host.port = 2222; guest.port = 22; }
+        { from = "host"; host.port = 8000; guest.port = 80; }
+        { from = "host"; host.port = 8443; guest.port = 443; }
       ];
       sharedDirectories = {
         work = {

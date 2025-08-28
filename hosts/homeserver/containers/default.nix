@@ -1,9 +1,6 @@
 { config, lib, pkgs, ... }:
 
 with lib;
-let
-  cfg = config.services.containers;
-in
 {
   options.services.containers = {
     workPath = mkOption {
@@ -20,23 +17,26 @@ in
   };
 
   config = {
-    # Create shared proxy network for Traefik
+    # Create shared proxy network for Traefik (using Docker backend)
     systemd.services.create-proxy-network = {
       serviceConfig.Type = "oneshot";
       wantedBy = [ "multi-user.target" ];
+      after = [ "docker.service" "docker.socket" ];
+      requires = [ "docker.service" "docker.socket" ];
       script = ''
-        ${pkgs.podman}/bin/podman network exists proxy || \
-        ${pkgs.podman}/bin/podman network create proxy
+        ${pkgs.docker}/bin/docker network inspect proxy >/dev/null 2>&1 || \
+        ${pkgs.docker}/bin/docker network create proxy
       '';
     };
   };
 
   imports = [
-    ./cloud.nix
-    ./home-assistant.nix
-    ./ryot.nix
-    ./vaultwarden.nix
-    ./watchtower.nix
-    ./whoami.nix
+    ./traefik.nix
+    # ./cloud.nix
+    # ./home-assistant.nix
+    # ./ryot.nix
+    # ./vaultwarden.nix
+    # ./watchtower.nix
+    # ./whoami.nix
   ];
 }
