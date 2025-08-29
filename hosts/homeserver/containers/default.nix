@@ -32,7 +32,7 @@ with lib;
 
   imports = [
     ./traefik.nix
-    # ./cloud.nix
+    ./nextcloud.nix
     # ./home-assistant.nix
     # ./ryot.nix
     # ./vaultwarden.nix

@@ -55,7 +55,7 @@ in
           "--label=traefik.http.middlewares.nextcloud-headers.headers.customRequestHeaders.X-Forwarded-Proto=https"
           "--label=traefik.http.middlewares.nextcloud-headers.headers.customRequestHeaders.X-Forwarded-Host=mycld.${cfgContainers.domain}"
           "--label=traefik.http.routers.nextcloud-secure.entrypoints=https"
-          "--label=traefik.http.routers.nextcloud-secure.rule=Host('mycld.${cfgContainers.domain}')"
+          "--label=traefik.http.routers.nextcloud-secure.rule=Host(`mycld.${cfgContainers.domain}`)"
           "--label=traefik.http.routers.nextcloud-secure.tls=true"
           "--label=traefik.http.routers.nextcloud-secure.tls.certresolver=sslResolver"
           "--label=traefik.http.routers.nextcloud-secure.middlewares=nextcloud-caldav,nextcloud-headers,nextcloud-compress"
@@ -64,19 +64,12 @@ in
       };
     };
 
-    # Create the necessary directories
-    system.activationScripts.nextcloud-dirs = ''
-      mkdir -p ${cfgContainers.workPath}/nextcloud/db
-      mkdir -p ${cfgContainers.workPath}/nextcloud/base
-    '';
-
-    # Create networks
     systemd.services.create-nextcloud-network = {
       serviceConfig.Type = "oneshot";
       wantedBy = [ "multi-user.target" ];
       script = ''
-        ${pkgs.podman}/bin/podman network exists nextcloud-internal || \
-        ${pkgs.podman}/bin/podman network create nextcloud-internal
+        ${pkgs.lib.getExe pkgs.docker} network exists nextcloud-internal || \
+        ${pkgs.lib.getExe pkgs.docker} network create nextcloud-internal
       '';
     };
   };

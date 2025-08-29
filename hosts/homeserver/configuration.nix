@@ -39,7 +39,7 @@
     
     # Enable only Traefik for now (others disabled during migration)
     traefik.enable = true;
-    # nextcloud.enable = true;
+    nextcloud.enable = true;
     # home-assistant.enable = true;
     # vaultwarden.enable = true;
     # ryot.enable = true;
