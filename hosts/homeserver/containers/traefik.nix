@@ -9,22 +9,57 @@ let
     api.dashboard = true;
     log.level = "INFO";
     accessLog = {};
-    entryPoints.http.address = ":80";
-    entryPoints.https.address = ":443";
-    providers.docker = {
-      endpoint = "unix:///var/run/docker.sock";
-      exposedByDefault = false;
+
+    entryPoints = {
+      ssh.address = ":22";
+      http = {
+        address = ":80";
+        http.redirections.entryPoint = {
+          to = "https";
+          scheme = "https";
+        };
+      };
+      https.address = ":443";
+      metrics.address = ":8080";
     };
-    providers.file = {
-      filename = "/dynamic_conf.toml";
-      watch = true;
+
+    metrics.prometheus = {
+      entryPoint = "metrics";
+      buckets = [ 0.1 0.3 1.2 5.0 ];
+      addEntryPointsLabels = true;
+      addServicesLabels = true;
+    };
+
+    providers = {
+      docker = {
+        endpoint = "unix:///var/run/docker.sock";
+        exposedByDefault = false;
+      };
+      file = {
+        filename = "/dynamic_conf.toml";
+        watch = true;
+      };
+    };
+
+    certificatesResolvers.sslResolver.acme = {
+      email = "florian.richer@protonmail.com";
+      tlsChallenge = {};
+      storage = "acme.json";
+      keyType = "RSA4096";
+      # Use only to debug ACME
+      # caServer = "https://acme-staging-v02.api.letsencrypt.org/directory";
+      httpChallenge.entryPoint = "http";
     };
   };
 
   traefikDynamic = pkgs.writers.writeTOML "dynamic_conf.toml" {
     http.middlewares."private-network".ipWhiteList.sourceRange = [
+      # WARN: Remove it before deploy in production
       "0.0.0.0/0"
       "::/0"
+
+      "176.181.127.236"
+      "2001:861:52c1:fecf::1"
     ];
   };
 in
