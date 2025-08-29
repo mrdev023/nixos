@@ -22,6 +22,13 @@ in
   };
 
   config = mkIf cfg.enable {
+    sops.secrets = {
+      forgejo_env = {
+        sopsFile = ../../../secrets/forgejo.env;
+        format = "dotenv";
+      };
+    };
+
     virtualisation.oci-containers.containers = {
       forgejo = {
         image = "codeberg.org/forgejo/forgejo:12";
@@ -69,8 +76,10 @@ in
         environment = {
           CONFIG_FILE = "/config.yml";
           GITEA_INSTANCE_URL = "https://git.${cfgContainers.domain}";
-          GITEA_RUNNER_REGISTRATION_TOKEN = "your_runner_registration_token";
         };
+        environmentFiles = [
+          config.sops.secrets.forgejo_env.path 
+        ];
       };
     };
 
