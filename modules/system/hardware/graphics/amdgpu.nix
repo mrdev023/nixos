@@ -11,7 +11,10 @@ in
     '';
   };
   config = mkIf cfg.enable {
-    boot.initrd.kernelModules = [ "amdgpu" ];
+    hardware.amdgpu = {
+      initrd.enable = true;
+      opencl.enable = true;
+    };
 
     # Set acceleration to rocm
     services.ollama.acceleration = "rocm";
@@ -25,7 +28,6 @@ in
     hardware.graphics = {
       enable = true;
       enable32Bit = true;
-      extraPackages = with pkgs; [ rocmPackages.clr.icd ];
     };
   };
 }
