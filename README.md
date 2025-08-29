@@ -14,16 +14,7 @@ nix flake update --extra-experimental-features "nix-command flakes"
 
 ### Home manager on standalone Linux
 
-Edit /etc/nix/nix.conf
-
-```
-experimental-features = nix-command flakes
-```
-
-```
-nix run nixpkgs#home-manager -- switch --flake .#hostname // First time
-home-manager -- switch --flake .#hostname // Then
-```
+Already explain [here](./tips/home_manager.md)
 
 ## Show changements between revisions
 
@@ -72,18 +63,6 @@ error: cached failure of attribute
 sudo rm -fr /root/.cache/nix/
 ```
 
-## To limit resources use during build
-
-```bash
-nixos-rebuild build-vm --cores 16 --max-jobs 1 --flake .#nixos-test
-```
-
-Or without NixOS
-
-```
-nix build .#nixosConfigurations.nixos-test.config.system.build.vm
-```
-
 # Usefull links
 
 - https://api.github.com/rate_limit
@@ -91,6 +70,7 @@ nix build .#nixosConfigurations.nixos-test.config.system.build.vm
 - https://nixpk.gs/pr-tracker.html
 - https://mobile.nixos.org/
 - https://nixos.wiki/wiki/Build_flags
+- https://ayats.org/blog/no-flake-utils
 
 # Sources
 

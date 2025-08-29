@@ -2,19 +2,17 @@
 
 ## Install home-manager
 
-1. Add `nixpkgs` and `home-manager` channels
+1. Edit /etc/nix/nix.conf
 
-```bash
-nix-channel --add https://nixos.org/channels/nixpkgs-unstable
-nix-channel --add https://github.com/nix-community/home-manager/archive/master.tar.gz home-manager
-nix-channel --update
+```
+experimental-features = nix-command flakes
 ```
 
-2. Install `home-manager`
+2. Apply the configuration for the first time
 
-```bash
-export NIX_PATH=$HOME/.nix-defexpr/channels:/nix/var/nix/profiles/per-user/root/channels${NIX_PATH:+:$NIX_PATH}
-nix-shell '<home-manager>' -A install
+```
+nix run nixpkgs#home-manager -- switch --flake .#hostname // First time
+home-manager -- switch --flake .#hostname // Then
 ```
 
 ## How use home-manager

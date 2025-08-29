@@ -1,6 +1,6 @@
-## Configure VM
+## Test on VM
 
-Configure VM
+### Configure VM
 ```nix
 users.users.<user>.initialPassword = "<password>";
 virtualisation.vmVariant = {
@@ -13,12 +13,27 @@ virtualisation.vmVariant = {
 };
 ```
 
-Build
+### Build
+
 ```bash
 nixos-rebuild build-vm --flake .#nixos-test
 ```
 
-Run
+Or without NixOS
+
+```
+nix build .#nixosConfigurations.nixos-test.config.system.build.vm
+```
+
+### Run
+
 ```bash
 ./result/bin/run-nixos-vm-vm
 ```
+
+### To limit resources use during build
+
+```bash
+nixos-rebuild build-vm --cores 16 --max-jobs 1 --flake .#nixos-test
+```
+
