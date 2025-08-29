@@ -11,6 +11,13 @@ in
   };
 
   config = mkIf cfg.enable {
+    sops.secrets = {
+      vaultwarden_env = {
+        sopsFile = ../../../secrets/vaultwarden.env;
+        format = "dotenv";
+      };
+    };
+
     systemd.services.create-vaultwarden-network = {
       serviceConfig.Type = "oneshot";
       wantedBy = [ "multi-user.target" ];
@@ -50,6 +57,9 @@ in
           ADMIN_TOKEN = "your_admin_token_here";
           DOMAIN = "https://pwds.${cfgContainers.domain}";
         };
+        environmentFiles = [
+          config.sops.secrets.vaultwarden_env.path 
+        ];
         dependsOn = [
           "vaultwarden_db"
         ];
