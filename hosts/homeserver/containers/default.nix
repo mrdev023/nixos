@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ lib, pkgs, ... }:
 
 with lib;
 {
@@ -17,15 +17,25 @@ with lib;
   };
 
   config = {
-    # Create shared proxy network for Traefik (using Docker backend)
     systemd.services.create-proxy-network = {
       serviceConfig.Type = "oneshot";
       wantedBy = [ "multi-user.target" ];
       after = [ "docker.service" "docker.socket" ];
       requires = [ "docker.service" "docker.socket" ];
       script = ''
-        ${pkgs.docker}/bin/docker network inspect proxy >/dev/null 2>&1 || \
-        ${pkgs.docker}/bin/docker network create proxy
+        ${pkgs.lib.getExe pkgs.docker} network inspect proxy >/dev/null 2>&1 || \
+        ${pkgs.lib.getExe pkgs.docker} network create proxy
+      '';
+    };
+
+    systemd.services.create-metrics-network = {
+      serviceConfig.Type = "oneshot";
+      wantedBy = [ "multi-user.target" ];
+      after = [ "docker.service" "docker.socket" ];
+      requires = [ "docker.service" "docker.socket" ];
+      script = ''
+        ${pkgs.lib.getExe pkgs.docker} network inspect metrics >/dev/null 2>&1 || \
+        ${pkgs.lib.getExe pkgs.docker} network create metrics
       '';
     };
   };
@@ -33,10 +43,12 @@ with lib;
   imports = [
     ./traefik.nix
     ./nextcloud.nix
-    # ./home-assistant.nix
-    # ./ryot.nix
-    # ./vaultwarden.nix
-    # ./watchtower.nix
-    # ./whoami.nix
+    ./home-assistant.nix
+    ./ryot.nix
+    ./vaultwarden.nix
+    ./watchtower.nix
+    ./whoami.nix
+    ./forgejo.nix
+    ./portfolio.nix
   ];
 }

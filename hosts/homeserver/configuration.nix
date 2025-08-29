@@ -37,14 +37,15 @@
     workPath = "/mnt/work";
     domain = "mrdev023.local";
     
-    # Enable only Traefik for now (others disabled during migration)
     traefik.enable = true;
     nextcloud.enable = true;
-    # home-assistant.enable = true;
-    # vaultwarden.enable = true;
-    # ryot.enable = true;
-    # whoami.enable = true;
-    # watchtower.enable = true;
+    home-assistant.enable = true;
+    vaultwarden.enable = true;
+    ryot.enable = true;
+    whoami.enable = true;
+    watchtower.enable = true;
+    forgejo.enable = true;
+    portfolio.enable = true;
   };
 
   services.borgbackup.jobs.workBackup = {

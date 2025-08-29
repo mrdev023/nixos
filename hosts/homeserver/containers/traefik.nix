@@ -55,6 +55,7 @@ in
       };
       extraOptions = [
         "--network=proxy"
+        "--network=metrics"
         "--add-host=host.docker.internal:host-gateway"
         "--label=traefik.enable=true"
         "--label=traefik.http.routers.traefik-secure.entrypoints=https"
@@ -79,9 +80,9 @@ in
       ];
     };
 
-    systemd.services."docker-traefik" = {
-      after = [ "create-proxy-network.service" "docker.service" "docker.socket" ];
-      requires = [ "create-proxy-network.service" "docker.service" "docker.socket" ];
+    systemd.services.docker-traefik = {
+      after = [ "create-proxy-network.service" "create-metrics-network.service" "docker.service" "docker.socket" ];
+      requires = [ "create-proxy-network.service" "create-metrics-network.service" "docker.service" "docker.socket" ];
     };
   };
 }

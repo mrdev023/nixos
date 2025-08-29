@@ -1,4 +1,4 @@
-{ config, pkgs, lib, ... }:
+{ config, lib, ... }:
 
 with lib;
 let
@@ -19,13 +19,18 @@ in
           "--network=proxy"
           "--label=traefik.enable=true"
           "--label=traefik.http.routers.whoami-secure.entrypoints=https"
-          "--label=traefik.http.routers.whoami-secure.rule=Host('whoami.${cfgContainers.domain}')"
+          "--label=traefik.http.routers.whoami-secure.rule=Host(`whoami.${cfgContainers.domain}`)"
           "--label=traefik.http.routers.whoami-secure.tls=true"
           "--label=traefik.http.routers.whoami-secure.tls.certresolver=sslResolver"
           "--label=traefik.http.routers.whoami-secure.middlewares=private-network@file"
           "--label=traefik.docker.network=proxy"
         ];
       };
+    };
+
+    systemd.services.docker-whoami = {
+      after = [ "create-proxy-network.service" "docker.service" "docker.socket" ];
+      requires = [ "create-proxy-network.service" "docker.service" "docker.socket" ];
     };
   };
 }

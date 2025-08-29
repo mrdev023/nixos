@@ -11,17 +11,26 @@ in
   };
 
   config = mkIf cfg.enable {
+    systemd.services.create-ryot-network = {
+      serviceConfig.Type = "oneshot";
+      wantedBy = [ "multi-user.target" ];
+      script = ''
+        ${pkgs.lib.getExe pkgs.docker} network inspect ryot-internal >/dev/null 2>&1 || \
+        ${pkgs.lib.getExe pkgs.docker} network create ryot-internal
+      '';
+    };
+
     virtualisation.oci-containers.containers = {
       ryot_db = {
-        image = "postgres:16";
+        image = "postgres:16-alpine";
         autoStart = true;
         volumes = [
           "${cfgContainers.workPath}/ryot/db:/var/lib/postgresql/data"
         ];
         environment = {
-          POSTGRES_DB = "ryot";
-          POSTGRES_USER = "ryot"; 
-          POSTGRES_PASSWORD = "ryot";
+          POSTGRES_DB = "postgres";
+          POSTGRES_USER = "postgres"; 
+          POSTGRES_PASSWORD = "postgres";
         };
         extraOptions = [
           "--network=ryot-internal"
@@ -29,13 +38,10 @@ in
       };
 
       ryot = {
-        image = "ghcr.io/ignisda/ryot:latest";
+        image = "ghcr.io/ignisda/ryot:v9";
         autoStart = true;
-        volumes = [
-          "${cfgContainers.workPath}/ryot/data:/data"
-        ];
         environment = {
-          DATABASE_URL = "postgres://ryot:ryot@ryot_db:5432/ryot";
+          DATABASE_URL = "postgres://postgres:postgres@ryot_db:5432/postgres";
         };
         dependsOn = [
           "ryot_db"
@@ -45,7 +51,7 @@ in
           "--network=proxy"
           "--label=traefik.enable=true"
           "--label=traefik.http.routers.ryot-secure.entrypoints=https"
-          "--label=traefik.http.routers.ryot-secure.rule=Host('ryot.${cfgContainers.domain}')"
+          "--label=traefik.http.routers.ryot-secure.rule=Host(`ryot.${cfgContainers.domain}`)"
           "--label=traefik.http.routers.ryot-secure.tls=true"
           "--label=traefik.http.routers.ryot-secure.tls.certresolver=sslResolver"
           "--label=traefik.http.routers.ryot-secure.middlewares=private-network@file"
@@ -55,20 +61,16 @@ in
       };
     };
 
-    # Create the necessary directories
-    system.activationScripts.ryot-dirs = ''
-      mkdir -p ${cfgContainers.workPath}/ryot/db
-      mkdir -p ${cfgContainers.workPath}/ryot/data
-    '';
+    systemd.services = {
+      docker-ryot_db = {
+        after = [ "create-ryot-network.service" "docker.service" "docker.socket" ];
+        requires = [ "create-ryot-network.service" "docker.service" "docker.socket" ];
+      };
 
-    # Create networks
-    systemd.services.create-ryot-network = {
-      serviceConfig.Type = "oneshot";
-      wantedBy = [ "multi-user.target" ];
-      script = ''
-        ${pkgs.podman}/bin/podman network exists ryot-internal || \
-        ${pkgs.podman}/bin/podman network create ryot-internal
-      '';
+      docker-ryot = {
+        after = [ "create-ryot-network.service" "create-proxy-network.service" "docker.service" "docker.socket" ];
+        requires = [ "create-ryot-network.service" "create-proxy-network.service" "docker.service" "docker.socket" ];
+      };
     };
   };
 }

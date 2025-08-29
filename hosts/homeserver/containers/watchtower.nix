@@ -1,9 +1,8 @@
-{ config, pkgs, lib, ... }:
+{ config, lib, ... }:
 
 with lib;
 let
   cfg = config.services.containers.watchtower;
-  cfgContainers = config.services.containers;
 in
 {
   options.services.containers.watchtower = {
@@ -11,33 +10,28 @@ in
   };
 
   config = mkIf cfg.enable {
-  virtualisation.oci-containers.containers = {
-    watchtower = {
-      image = "containrrr/watchtower:latest";
-      autoStart = true;
-      volumes = [
-        "/run/podman/podman.sock:/var/run/docker.sock"
-        "/root/.docker/config.json:/config.json:ro"
-      ];
-      environment = {
-        WATCHTOWER_HTTP_API_TOKEN = "watchtower";
-        WATCHTOWER_HTTP_API_METRICS = "true";
-        WATCHTOWER_POLL_INTERVAL = "1";
+    virtualisation.oci-containers.containers = {
+      watchtower = {
+        image = "containrrr/watchtower:latest";
+        autoStart = true;
+        volumes = [
+          "/var/run/docker.sock:/var/run/docker.sock"
+          "/root/.docker/config.json:/config.json:ro"
+        ];
+        environment = {
+          WATCHTOWER_HTTP_API_TOKEN = "watchtower";
+          WATCHTOWER_HTTP_API_METRICS = "true";
+          WATCHTOWER_POLL_INTERVAL = "1";
+        };
+        extraOptions = [
+          "--network=metrics"
+        ];
       };
-      extraOptions = [
-        "--network=watchtower-metrics"
-      ];
     };
-  };
 
-    # Create networks
-    systemd.services.create-watchtower-network = {
-      serviceConfig.Type = "oneshot";
-      wantedBy = [ "multi-user.target" ];
-      script = ''
-        ${pkgs.podman}/bin/podman network exists watchtower-metrics || \
-        ${pkgs.podman}/bin/podman network create watchtower-metrics
-      '';
+    systemd.services.docker-watchtower = {
+      after = [ "create-metrics-network.service" "docker.service" "docker.socket" ];
+      requires = [ "create-metrics-network.service" "docker.service" "docker.socket" ];
     };
   };
 }
