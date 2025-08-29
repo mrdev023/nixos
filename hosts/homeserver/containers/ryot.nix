@@ -11,6 +11,13 @@ in
   };
 
   config = mkIf cfg.enable {
+    sops.secrets = {
+      ryot_env = {
+        sopsFile = ../../../secrets/ryot.env;
+        format = "dotenv";
+      };
+    };
+
     systemd.services.create-ryot-network = {
       serviceConfig.Type = "oneshot";
       wantedBy = [ "multi-user.target" ];
@@ -43,6 +50,9 @@ in
         environment = {
           DATABASE_URL = "postgres://postgres:postgres@ryot_db:5432/postgres";
         };
+        environmentFiles = [
+          config.sops.secrets.ryot_env.path 
+        ];
         dependsOn = [
           "ryot_db"
         ];
