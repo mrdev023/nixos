@@ -35,7 +35,7 @@
 
   services.containers = {
     workPath = "/mnt/work";
-    domain = "mrdev023.fr";
+    domain = "mrdev023.local";
     
     # Enable only Traefik for now (others disabled during migration)
     traefik.enable = true;
