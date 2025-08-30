@@ -64,5 +64,9 @@
       printing.enable = true;
       waydroid.enable = true;
     };
+
+    services = {
+      distrobox.enable = true;
+    };
   };
 }
