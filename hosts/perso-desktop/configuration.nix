@@ -52,6 +52,7 @@
       audio.pipewire.enable = true;
       printing.enable = true;
       steering-wheel.enable = true;
+      waydroid.enable = true;
     };
 
     services = {
