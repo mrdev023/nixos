@@ -114,6 +114,7 @@ in {
             enable = true;
             extensions.ts-error-translator.enable = false;
           };
+          terraform.enable = true;
           wgsl.enable = true;
           zig.enable = true;
         };
