@@ -28,6 +28,7 @@ in
           atuin.enable = true;
           direnv.enable = true;
           git.enable = true;
+          jujutsu.enable = true;
           lazygit.enable = true;
           television = {
             enable = true;

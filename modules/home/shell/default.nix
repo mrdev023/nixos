@@ -6,6 +6,7 @@
     ./direnv.nix
     ./font.nix
     ./git.nix
+    ./jujutsu.nix
     ./lazygit.nix
     ./television.nix
     ./zoxide.nix
