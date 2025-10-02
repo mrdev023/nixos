@@ -18,9 +18,6 @@ in
       update.onActivation = true;
 
       packages = [
-        # Gaming
-        { appId = "com.discordapp.Discord"; origin = "flathub";  }
-
         # Pro
         { appId = "ch.protonmail.protonmail-bridge"; origin = "flathub";  }
         { appId = "org.kde.neochat"; origin = "flathub"; }
