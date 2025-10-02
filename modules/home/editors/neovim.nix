@@ -306,7 +306,12 @@ in {
         };
 
         presence = {
-          neocord.enable = true;
+          neocord = {
+            enable = true;
+            setupOpts = {
+              log_level = "error";
+            };
+          };
         };
       };
     };
