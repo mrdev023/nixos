@@ -1,4 +1,4 @@
-{...}:
+{ pkgs, ...}:
 
 {
   imports = [
@@ -18,4 +18,8 @@
 
     profiles = [ "shell" ];
   };
+
+  home.packages = with pkgs; [
+    parsec-bin
+  ];
 }
