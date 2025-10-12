@@ -140,6 +140,10 @@
           name = "perso-desktop";
           system = "x86_64-linux";
         };
+        test = customNixosSystem {
+          name = "nixos-test";
+          system = "x86_64-linux";
+        };
       };
 
       #####################################################################
