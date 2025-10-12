@@ -16,24 +16,28 @@ in
     '';
   };
   config = mkIf cfg.enable {
-    modules.home.apps.kitty.enable = true;
+    modules.home.apps.kitty.enable = mkDefault true;
 
     wayland.windowManager.hyprland = {
       enable = true;
 
+      plugins = with pkgs.hyprlandPlugins; [
+        hyprsplit
+      ];
+
       settings = {
         exec-once = [
-          "dunst -conf ~/.config/hypr/dunstrc"
-          "~/.config/hypr/eww/scripts/start"
-          "~/.config/hypr/swww/start"
-
-          # Keyring daemon
-          "gnome-keyring-daemon --start --components=gpg"
-          "gnome-keyring-daemon --start --components=secrets"
-          "gnome-keyring-daemon --start --components=ssh"
-          "gnome-keyring-daemon --start --components=pkcs11"
-
-          "/usr/libexec/kf5/polkit-kde-authentication-agent-1"
+          # "dunst -conf ~/.config/hypr/dunstrc"
+          # "~/.config/hypr/eww/scripts/start"
+          # "~/.config/hypr/swww/start"
+          #
+          # # Keyring daemon
+          # "gnome-keyring-daemon --start --components=gpg"
+          # "gnome-keyring-daemon --start --components=secrets"
+          # "gnome-keyring-daemon --start --components=ssh"
+          # "gnome-keyring-daemon --start --components=pkcs11"
+          #
+          # "/usr/libexec/kf5/polkit-kde-authentication-agent-1"
           "dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP"
         ];
 
@@ -41,8 +45,8 @@ in
 
         # For all categories, see https://wiki.hyprland.org/Configuring/Variables/
         input = {
-          kb_layout = config.services.xserver.xkb.layout;
-          kb_variant = config.services.xserver.xkb.variant;
+          kb_layout = "us";
+          kb_variant = "altgr-intl";
           kb_model = "";
           kb_options = "";
           kb_rules = "";
@@ -64,8 +68,6 @@ in
           gaps_in = 5;
           gaps_out = 20;
           border_size = 3;
-          col.active_border = "rgb()";
-          col.inactive_border = "rgb()";
 
           layout = "dwindle";
         };
@@ -80,11 +82,11 @@ in
             passes = 1;
           };
 
-          drop_shadow = "yes";
-          shadow_range = 15;
-          shadow_render_power = 4;
-          col.shadow = "rgb()";
-          col.shadow_inactive = "rgb()";
+          shadow = {
+            enabled = true;
+            range = 15;
+            render_power = 4;
+          };
         };
 
         # Some default animations, see https://wiki.hyprland.org/Configuring/Animations/ for more
@@ -111,26 +113,19 @@ in
 
         # See https://wiki.hyprland.org/Configuring/Master-Layout/ for more
         master = {
-          new_is_master = "true";
+          new_status = "master";
         };
 
         # See https://wiki.hyprland.org/Configuring/Variables/ for more
-        gestures = {
-          workspace_swipe = "on";
-          workspace_swipe_forever = "on";
-        };
+        gesture = [
+          "3, horizontal, workspace"
+        ];
 
-        # Example per-device config
-        # See https://wiki.hyprland.org/Configuring/Keywords/#executing for more
-        "device:epic-mouse-v1" = {
-          sensitivity = "-0.5";
-        };
-
-        "$mod" = "SUPER";
+        "$mainMod" = "SUPER";
 
         bind = [
-          "SUPERSHIFT,R,hyprload,reload"
-          "SUPERSHIFT,U,hyprload,update"
+          # "SUPERSHIFT,R,hyprload,reload"
+          # "SUPERSHIFT,U,hyprload,update"
 
           # Example binds, see https://wiki.hyprland.org/Configuring/Binds/ for more
           "$mainMod, RETURN, exec, kitty"
@@ -160,28 +155,28 @@ in
           "$mainMod ALT_L, x, exec, dunstctl close"
 
           # Switch workspaces with mainMod + [0-9]
-          "$mainMod, 1, split-workspace, 1"
-          "$mainMod, 2, split-workspace, 2"
-          "$mainMod, 3, split-workspace, 3"
-          "$mainMod, 4, split-workspace, 4"
-          "$mainMod, 5, split-workspace, 5"
-          "$mainMod, 6, split-workspace, 6"
-          "$mainMod, 7, split-workspace, 7"
-          "$mainMod, 8, split-workspace, 8"
-          "$mainMod, 9, split-workspace, 9"
-          "$mainMod, 0, split-workspace, 10"
+          "$mainMod, 1, split:workspace, 1"
+          "$mainMod, 2, split:workspace, 2"
+          "$mainMod, 3, split:workspace, 3"
+          "$mainMod, 4, split:workspace, 4"
+          "$mainMod, 5, split:workspace, 5"
+          "$mainMod, 6, split:workspace, 6"
+          "$mainMod, 7, split:workspace, 7"
+          "$mainMod, 8, split:workspace, 8"
+          "$mainMod, 9, split:workspace, 9"
+          "$mainMod, 0, split:workspace, 10"
 
           # Move active window to a workspace with mainMod + SHIFT + [0-9]
-          "$mainMod SHIFT, 1, split-movetoworkspace, 1"
-          "$mainMod SHIFT, 2, split-movetoworkspace, 2"
-          "$mainMod SHIFT, 3, split-movetoworkspace, 3"
-          "$mainMod SHIFT, 4, split-movetoworkspace, 4"
-          "$mainMod SHIFT, 5, split-movetoworkspace, 5"
-          "$mainMod SHIFT, 6, split-movetoworkspace, 6"
-          "$mainMod SHIFT, 7, split-movetoworkspace, 7"
-          "$mainMod SHIFT, 8, split-movetoworkspace, 8"
-          "$mainMod SHIFT, 9, split-movetoworkspace, 9"
-          "$mainMod SHIFT, 0, split-movetoworkspace, 10"
+          "$mainMod SHIFT, 1, split:movetoworkspace, 1"
+          "$mainMod SHIFT, 2, split:movetoworkspace, 2"
+          "$mainMod SHIFT, 3, split:movetoworkspace, 3"
+          "$mainMod SHIFT, 4, split:movetoworkspace, 4"
+          "$mainMod SHIFT, 5, split:movetoworkspace, 5"
+          "$mainMod SHIFT, 6, split:movetoworkspace, 6"
+          "$mainMod SHIFT, 7, split:movetoworkspace, 7"
+          "$mainMod SHIFT, 8, split:movetoworkspace, 8"
+          "$mainMod SHIFT, 9, split:movetoworkspace, 9"
+          "$mainMod SHIFT, 0, split:movetoworkspace, 10"
 
           # Scroll through existing workspaces with mainMod + scroll
           "$mainMod, mouse_down, workspace, e+1"
