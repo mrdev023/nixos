@@ -15,6 +15,7 @@ in {
     programs.nvf = {
       enable = true;
       enableManpages = true;
+      defaultEditor = true;
 
       # https://notashelf.github.io/nvf/options.html
       settings.vim = {
