@@ -26,6 +26,12 @@
 
   networking.hostName = "nixos-desktop-perso"; # Define your hostname.
 
+  services.sunshine = {
+    enable = true;
+    capSysAdmin = true;
+    openFirewall = true;
+  };
+
   modules.system = {
     apps = {
       appimage.enable = true;
