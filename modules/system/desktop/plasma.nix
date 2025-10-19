@@ -56,6 +56,10 @@ in {
         discover
         kgpg
         yakuake
+
+        # Online accounts
+        kaccounts-integration
+        kaccounts-providers
       ]
       ++ lib.optionals cfg.enableWallpaperEngine [wallpaper-engine-plugin];
   };
