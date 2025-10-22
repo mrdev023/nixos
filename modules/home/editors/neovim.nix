@@ -12,6 +12,13 @@ in {
     '';
   };
   config = mkIf cfg.enable {
+    sops.secrets = {
+      mistral = {
+        sopsFile = ../../../secrets/mistral.txt;
+        format = "binary";
+      };
+    };
+
     programs.nvf = {
       enable = true;
       enableManpages = true;
@@ -265,14 +272,16 @@ in {
               adapters = mkLuaInline ''
                 {
                   adapters = {
-                    mistral = function()
-                      return require("codecompanion.adapters").extend("openai", {
-                        env = {
-                          url = "https://api.mistral.ai/",
-                          api_key = "MISTRAL_API_KEY",
-                        },
-                      })
-                    end,
+                    http = {
+                      mistral = function()
+                        return require("codecompanion.adapters").extend("openai", {
+                          env = {
+                            url = "https://api.mistral.ai/",
+                            api_key = "cmd:cat ${config.sops.secrets.mistral.path}",
+                          },
+                        })
+                      end,
+                    },
                   },
                 }
               '';
@@ -281,6 +290,9 @@ in {
                   adapter = "mistral";
                 };
                 inline = {
+                  adapter = "mistral";
+                };
+                cmd = {
                   adapter = "mistral";
                 };
               };
