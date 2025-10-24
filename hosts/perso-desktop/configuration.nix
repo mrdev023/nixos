@@ -43,12 +43,7 @@
 
     boot.plymouth.enable = true;
 
-    desktop = {
-      plasma = {
-        enable = true;
-        enableWallpaperEngine = true;
-      };
-    };
+    desktop.plasma.enable = true;
 
     hardware = {
       bluetooth.enable = true;
