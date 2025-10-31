@@ -3,6 +3,7 @@
 {
   imports = [
     ./atuin.nix
+    ./difftastic.nix
     ./direnv.nix
     ./font.nix
     ./git.nix

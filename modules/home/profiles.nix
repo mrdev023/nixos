@@ -26,6 +26,7 @@ in
 
         shell = {
           atuin.enable = true;
+          difftastic.enable = true;
           direnv.enable = true;
           git.enable = true;
           jujutsu.enable = true;

@@ -17,21 +17,18 @@ in
       enable = true;
       lfs.enable = true;
 
-      difftastic = {
-        enable = true;
-        enableAsDifftool = true;
-      };
-
-      userName = "Florian RICHER";
-      userEmail = "florian.richer@protonmail.com";
-
       signing = {
         signByDefault = true;
         format = "openpgp";
         key = "B19E3F4A2D806AB4793FDF2FC73D37CBED7BFC77";
       };
 
-      extraConfig = {
+      settings = {
+        user = {
+          name = "Florian RICHER";
+          email = "florian.richer@protonmail.com";
+        };
+
         pull.rebase = "true";
         url."https://invent.kde.org/".insteadOf = "kde:";
         url."ssh://git@invent.kde.org/".pushInsteadOf = "kde:";

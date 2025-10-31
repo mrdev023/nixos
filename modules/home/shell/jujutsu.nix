@@ -29,10 +29,6 @@ in
         git = {
           sign-on-push = true;
         };
-
-        ui = {
-          diff-formatter = ["${lib.getExe pkgs.difftastic}" "--color=always" "$left" "$right"];
-        };
       };
     };
   };
