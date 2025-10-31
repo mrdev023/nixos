@@ -30,6 +30,7 @@ in
           git.enable = true;
           jujutsu.enable = true;
           lazygit.enable = true;
+          mergiraf.enable = true;
           television = {
             enable = true;
             channels = [ "nix-search-tv" ];

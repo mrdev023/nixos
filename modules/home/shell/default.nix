@@ -8,6 +8,7 @@
     ./git.nix
     ./jujutsu.nix
     ./lazygit.nix
+    ./mergiraf.nix
     ./television.nix
     ./zoxide.nix
     ./zsh
