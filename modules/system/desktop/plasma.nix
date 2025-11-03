@@ -46,7 +46,7 @@ in {
         # Usefull for automatic informations collect software like KDE
         vulkan-tools # For vulkaninfo command
         wayland-utils # For wayland-info command
-        glxinfo
+        mesa-demos
         clinfo
         aha
         usbutils

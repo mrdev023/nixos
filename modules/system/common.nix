@@ -58,7 +58,7 @@
 
   # Downloads and provides debug symbols and source code for nix derivations to gdb and other debuginfod-capable debuggers as needed.
   # Require https://github.com/symphorien/nixseparatedebuginfod?tab=readme-ov-file#gdb
-  services.nixseparatedebuginfod.enable = true;
+  services.nixseparatedebuginfod2.enable = true;
 
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
