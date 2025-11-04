@@ -17,8 +17,14 @@ in
   };
   config = mkIf cfg.enable (mkMerge [
     (import ./programs/dunst/default.nix)
+    (import ./programs/waybar/default.nix)
     {
       modules.home.apps.kitty.enable = mkDefault true;
+
+      home.packages = with pkgs; [
+        hyprpicker
+        playerctl
+      ];
 
       wayland.windowManager.hyprland = {
         enable = true;
