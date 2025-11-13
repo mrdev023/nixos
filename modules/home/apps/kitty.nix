@@ -37,6 +37,9 @@ in
           # hide_window_decorations = if pkgs.stdenv.hostPlatform.isDarwin then "titlebar-and-corners" else "yes";
 
           background_opacity = "0.7";
+
+          cursor_trail = 3;
+          cursor_trail_decay = "0.1 0.4";
         }
 
         (mkIf cfg.enableBlur { background_blur = "1"; })
