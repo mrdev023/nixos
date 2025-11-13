@@ -40,7 +40,10 @@ in
           zoxide.enable = true;
         };
 
-        editors.neovim.enable = true;
+        editors = {
+          neovim.enable = true;
+          helix.enable = true;
+        };
       };
     })
 
