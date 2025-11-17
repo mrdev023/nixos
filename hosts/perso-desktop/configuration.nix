@@ -61,14 +61,6 @@
     };
   };
 
-  chaotic.mesa-git = {
-    enable = true;
-    extraPackages = with pkgs; [
-      rocmPackages.clr
-      rocmPackages.clr.icd
-    ];
-  };
-
   networking.interfaces.enp17s0.wakeOnLan.enable = true;
   services.openssh = {
     enable = true;
