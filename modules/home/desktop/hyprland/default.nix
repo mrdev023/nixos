@@ -22,9 +22,25 @@ in
       modules.home.apps.kitty.enable = mkDefault true;
 
       home.packages = with pkgs; [
+        dunst
         hyprpicker
+        hyprpicker
+        networkmanagerapplet
         playerctl
+        waybar
       ];
+
+      xdg.portal = {
+        enable = true;
+        extraPortals = with pkgs; [
+          xdg-desktop-portal-gtk
+        ];
+        xdgOpenUsePortal = true;
+        configPackages = [ config.wayland.windowManager.hyprland.package ];
+        config.hyprland = {
+          default = [ "hyprland" ];
+        };
+      };
 
       wayland.windowManager.hyprland = {
         enable = true;
@@ -32,24 +48,22 @@ in
         plugins = with pkgs.hyprlandPlugins; [
           hyprsplit
         ];
+        
+        systemd = {
+          enable = true;
+          variables = [ "--all" ];
+        };
 
         settings = {
+          "$mainMod" = "SUPER";
+
           exec-once = [
-            # "dunst -conf ~/.config/hypr/dunstrc"
-            # "~/.config/hypr/eww/scripts/start"
-            # "~/.config/hypr/swww/start"
-            #
-            # # Keyring daemon
-            # "gnome-keyring-daemon --start --components=gpg"
-            # "gnome-keyring-daemon --start --components=secrets"
-            # "gnome-keyring-daemon --start --components=ssh"
-            # "gnome-keyring-daemon --start --components=pkcs11"
-            #
-            # "/usr/libexec/kf5/polkit-kde-authentication-agent-1"
-            "dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP"
+            "waybar"
           ];
 
-          env = "XCURSOR_SIZE,24";
+          env = [
+            "XCURSOR_SIZE,24"
+          ];
 
           # For all categories, see https://wiki.hyprland.org/Configuring/Variables/
           input = {
@@ -128,8 +142,6 @@ in
           gesture = [
             "3, horizontal, workspace"
           ];
-
-          "$mainMod" = "SUPER";
 
           bind = [
             # "SUPERSHIFT,R,hyprload,reload"
