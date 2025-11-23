@@ -24,6 +24,15 @@
   boot.loader.systemd-boot.configurationLimit = 10;
   # boot.loader.grub.configurationLimit = 10;
 
+  i18n.inputMethod = {
+    enable = true;
+    type = "ibus";
+    ibus.engines = with pkgs.ibus-engines; [
+      typing-booster
+      mozc
+    ];
+  };
+
   networking.hostName = "nixos-desktop-perso"; # Define your hostname.
 
   services.sunshine = {
