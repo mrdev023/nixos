@@ -98,6 +98,7 @@
               home-manager.useUserPackages = true;
               home-manager.extraSpecialArgs = inputs;
               home-manager.sharedModules = home-modules;
+              home-manager.backupFileExtension = "bak";
             }
           ] ++ extraModules;
       };
