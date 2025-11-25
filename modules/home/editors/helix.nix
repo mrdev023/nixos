@@ -49,7 +49,12 @@ in
       settings = {
         theme = "tokyonight";
 
-        editor.line-number = "relative";
+        editor = {
+          bufferline = "always";
+          line-number = "relative";
+
+          cursor-shape.insert = "bar";
+        };
       };
 
       languages = {
