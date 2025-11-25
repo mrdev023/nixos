@@ -10,9 +10,9 @@
     homeDirectory = "/home/florian";
   };
 
-  nixGL = {
+  targets.genericLinux.nixGL = {
     packages = nixgl.packages;
-    installScripts = ["mesa"];
+    installScripts = [ "mesa" ];
   };
 
   modules.home = {
