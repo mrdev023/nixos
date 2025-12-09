@@ -14,9 +14,6 @@ in
     # Load nvidia driver for Xorg and Wayland
     services.xserver.videoDrivers = ["nvidia"];
 
-    # Set acceleration to cuda
-    services.ollama.acceleration = "cuda";
-
     hardware = {
       graphics = {
         enable = true;
