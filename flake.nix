@@ -45,83 +45,80 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    chaotic = {
-      url = "github:chaotic-cx/nyx/nyxpkgs-unstable";
-      inputs.nixpkgs.follows = "nixpkgs";
-      inputs.home-manager.follows = "home-manager";
-    };
-
     sops-nix = {
       url = "github:Mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 
-  outputs = inputs @ {
-    flake-utils,
-    home-manager,
-    nixpkgs,
-    ...
-  }: let
-    home-modules = with inputs; [
-      nix-flatpak.homeManagerModules.nix-flatpak
-      nvf.homeManagerModules.default
-      sops-nix.homeManagerModules.sops
-    ];
-
-    overlays = with inputs; [
-      nur.overlays.default
-      nixgl.overlay
-    ];
-
-    customNixosSystem = {
-      name,
-      system,
-      extraModules ? [],
+  outputs =
+    inputs@{
+      flake-utils,
+      home-manager,
+      nixpkgs,
+      ...
     }:
-      nixpkgs.lib.nixosSystem {
-        inherit system;
-        modules =
-          with inputs; [
-            ./hosts/${name}/configuration.nix
-            ./hosts/${name}/home.nix
+    let
+      home-modules = with inputs; [
+        nix-flatpak.homeManagerModules.nix-flatpak
+        nvf.homeManagerModules.default
+        sops-nix.homeManagerModules.sops
+      ];
 
-            home-manager.nixosModules.home-manager
-            lanzaboote.nixosModules.lanzaboote
-            disko.nixosModules.disko
-            chaotic.nixosModules.default
-            sops-nix.nixosModules.sops
+      overlays = with inputs; [
+        nur.overlays.default
+        nixgl.overlay
+      ];
 
-            {
-              nixpkgs.overlays = overlays;
-              home-manager.useGlobalPkgs = true;
-              home-manager.useUserPackages = true;
-              home-manager.extraSpecialArgs = inputs;
-              home-manager.sharedModules = home-modules;
-              home-manager.backupFileExtension = "bak";
-            }
-          ] ++ extraModules;
-      };
+      customNixosSystem =
+        {
+          name,
+          system,
+          extraModules ? [ ],
+        }:
+        nixpkgs.lib.nixosSystem {
+          inherit system;
+          modules =
+            with inputs;
+            [
+              ./hosts/${name}/configuration.nix
+              ./hosts/${name}/home.nix
 
-    customHomeManagerConfiguration = {
-      name,
-      system,
-    }:
-      home-manager.lib.homeManagerConfiguration rec {
-        pkgs = import nixpkgs {
-          inherit overlays system;
+              home-manager.nixosModules.home-manager
+              lanzaboote.nixosModules.lanzaboote
+              disko.nixosModules.disko
+              sops-nix.nixosModules.sops
+
+              {
+                nixpkgs.overlays = overlays;
+                home-manager.useGlobalPkgs = true;
+                home-manager.useUserPackages = true;
+                home-manager.extraSpecialArgs = inputs;
+                home-manager.sharedModules = home-modules;
+                home-manager.backupFileExtension = "bak";
+              }
+            ]
+            ++ extraModules;
         };
 
-        modules =
-          home-modules
-          ++ [
-            {nix.package = pkgs.nix;}
+      customHomeManagerConfiguration =
+        {
+          name,
+          system,
+        }:
+        home-manager.lib.homeManagerConfiguration rec {
+          pkgs = import nixpkgs {
+            inherit overlays system;
+          };
+
+          modules = home-modules ++ [
+            { nix.package = pkgs.nix; }
             ./hosts/${name}/home.nix
           ];
 
-        extraSpecialArgs = inputs;
-      };
-  in
+          extraSpecialArgs = inputs;
+        };
+    in
     {
       #####################################################################
       #####################################################################
@@ -169,16 +166,20 @@
     # previous configurations with //
     #####################################################################
     #####################################################################
-    // flake-utils.lib.eachSystem flake-utils.lib.allSystems (system: let
-      pkgs = import nixpkgs {inherit system;};
-    in {
-      devShells = {
-        default = pkgs.mkShell {
-          packages = with pkgs; [
-            nixd
-            sops
-          ];
+    // flake-utils.lib.eachSystem flake-utils.lib.allSystems (
+      system:
+      let
+        pkgs = import nixpkgs { inherit system; };
+      in
+      {
+        devShells = {
+          default = pkgs.mkShell {
+            packages = with pkgs; [
+              nixd
+              sops
+            ];
+          };
         };
-      };
-    });
+      }
+    );
 }
