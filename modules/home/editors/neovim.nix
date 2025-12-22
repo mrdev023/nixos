@@ -107,7 +107,7 @@ in {
           ruby.enable = true;
           rust = {
             enable = true;
-            crates.enable = true;
+            extensions.crates-nvim.enable = true;
           };
           sql.enable = true;
           tailwind.enable = true;
@@ -265,14 +265,16 @@ in {
               adapters = mkLuaInline ''
                 {
                   adapters = {
-                    mistral = function()
-                      return require("codecompanion.adapters").extend("openai", {
-                        env = {
-                          url = "https://api.mistral.ai/",
-                          api_key = "MISTRAL_API_KEY",
-                        },
-                      })
-                    end,
+                    http = {
+                      mistral = function()
+                        return require("codecompanion.adapters").extend("openai", {
+                          env = {
+                            url = "https://api.mistral.ai/",
+                            api_key = "MISTRAL_API_KEY",
+                          },
+                        })
+                      end,
+                    },
                   },
                 }
               '';
@@ -281,6 +283,9 @@ in {
                   adapter = "mistral";
                 };
                 inline = {
+                  adapter = "mistral";
+                };
+                cmd = {
                   adapter = "mistral";
                 };
               };
