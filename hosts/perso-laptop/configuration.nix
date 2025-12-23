@@ -29,6 +29,8 @@
 
   networking.hostName = "nixos-laptop-perso"; # Define your hostname.
 
+  hardware.wooting.enable = true;
+
   hardware.nvidia.prime = {
     offload = {
       enable = true;

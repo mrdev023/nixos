@@ -41,6 +41,8 @@
     openFirewall = true;
   };
 
+  hardware.wooting.enable = true;
+
   modules.system = {
     apps = {
       appimage.enable = true;
