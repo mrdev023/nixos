@@ -2,7 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ lib, ... }:
+{ pkgs, ... }:
 
 {
   imports =
@@ -29,7 +29,7 @@
 
   networking.hostName = "nixos-laptop-perso"; # Define your hostname.
 
-  hardware.wooting.enable = true;
+  services.udev.packages = [ pkgs.wooting-udev-rules ];
 
   hardware.nvidia.prime = {
     offload = {

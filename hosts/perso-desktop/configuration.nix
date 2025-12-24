@@ -41,7 +41,7 @@
     openFirewall = true;
   };
 
-  hardware.wooting.enable = true;
+  services.udev.packages = [ pkgs.wooting-udev-rules ];
 
   modules.system = {
     apps = {
