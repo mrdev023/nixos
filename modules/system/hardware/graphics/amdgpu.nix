@@ -16,21 +16,6 @@ in
     '';
   };
   config = mkIf cfg.enable {
-    warnings = [
-      "hardware.firmware.linux-firmware override to 20251111 to fix amdgpu issues. See https://github.com/NixOS/nixpkgs/issues/466945. Remove the override when fixed."
-    ];
-    hardware.firmware = [
-      (pkgs.linux-firmware.overrideAttrs (old: {
-        version = "20251111";
-        src = pkgs.fetchurl {
-          # https://www.kernel.org/pub/linux/kernel/firmware/
-          url = "https://www.kernel.org/pub/linux/kernel/firmware/linux-firmware-20251111.tar.gz";
-          # > nix-prefetch-url https://www.kernel.org/pub/linux/kernel/firmware/linux-firmware-20251111.tar.gz
-          sha256 = "0rp2ah8drcnl7fh9vbawa8p8c9lhvn1d8zkl48ckj20vba0maz2g";
-        };
-      }))
-    ];
-
     hardware.amdgpu = {
       initrd.enable = true;
       opencl.enable = true;
