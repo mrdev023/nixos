@@ -70,6 +70,8 @@
   networking = {
     networkmanager.enable = true;
     firewall.enable = true;
+    # https://github.com/NixOS/nixpkgs/pull/477049
+    nftables.enable = true;
   };
 
   # Open ports in the firewall.
