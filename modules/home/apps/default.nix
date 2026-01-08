@@ -10,5 +10,6 @@
     ./jetbrains-toolbox.nix
     ./kitty.nix
     ./minecraft.nix
+    ./scrcpy.nix
   ];
 }
