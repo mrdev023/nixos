@@ -13,7 +13,7 @@ in
           "shell"
         ]
       );
-      default = [];
+      default = [ ];
       example = [ "shell" ];
       description = "Enable pre-defined profile.";
     };
@@ -36,6 +36,7 @@ in
             enable = true;
             channels = [ "nix-search-tv" ];
           };
+          superfile.enable = true;
           zsh.enable = true;
           zoxide.enable = true;
         };
