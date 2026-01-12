@@ -28,7 +28,7 @@ in
         marksman
         nil
         nixd
-        nixpkgs-fmt
+        nixfmt
         nodePackages.prettier
         nodePackages.typescript-language-server
         sql-formatter
@@ -165,7 +165,7 @@ in
           {
             name = "nix";
             formatter = {
-              command = "nixpkgs-fmt";
+              command = "nixfmt";
             };
             auto-format = true;
           }
