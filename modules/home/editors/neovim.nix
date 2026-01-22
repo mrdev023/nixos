@@ -3,9 +3,11 @@
   lib,
   ...
 }:
-with lib; let
+with lib;
+let
   cfg = config.modules.home.editors.neovim;
-in {
+in
+{
   options.modules.home.editors.neovim = {
     enable = mkEnableOption ''
       Enable neovim with my custom configurations
@@ -15,7 +17,6 @@ in {
     programs.nvf = {
       enable = true;
       enableManpages = true;
-      defaultEditor = true;
 
       # https://notashelf.github.io/nvf/options.html
       settings.vim = {
@@ -251,7 +252,10 @@ in {
               nix = "110";
               ruby = "120";
               java = "130";
-              go = ["90" "130"];
+              go = [
+                "90"
+                "130"
+              ];
             };
           };
           fastaction.enable = true;

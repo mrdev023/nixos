@@ -1,4 +1,9 @@
-{ config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 
 with lib;
 let
@@ -41,11 +46,10 @@ in
           zoxide.enable = true;
         };
 
-        editors = {
-          neovim.enable = true;
-          helix.enable = true;
-        };
+        editors.helix.enable = true;
       };
+
+      programs.helix.defaultEditor = true;
     })
 
     # Profile for minimal usable home manager configuration on non NixOS
