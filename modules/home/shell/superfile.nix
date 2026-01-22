@@ -1,4 +1,8 @@
-{ config, pkgs, lib, ... }:
+{
+  config,
+  lib,
+  ...
+}:
 
 with lib;
 let
@@ -11,6 +15,16 @@ in
     '';
   };
   config = mkIf cfg.enable {
-    home.packages = with pkgs; [ superfile ];
+    programs.superfile = {
+      enable = true;
+
+      hotkeys = {
+        quit = [ "q" ]; # Remove esc shortcut to avoid quit accidentally
+      };
+
+      settings = {
+        transparent_background = true;
+      };
+    };
   };
 }
