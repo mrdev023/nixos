@@ -23,12 +23,8 @@
     LC_TIME = "fr_FR.UTF-8";
   };
 
-  # Perform garbage collection weekly to maintain low disk usage
-  nix.gc = {
-    automatic = true;
-    dates = "*-*-* 20:00:00";
-    options = "--delete-older-than 1w";
-  };
+  # Enable also the profiles + GC Cleaning
+  modules.system.apps.nh.enable = true;
 
   # Optimize storage
   # You can also manually optimize the store via:
