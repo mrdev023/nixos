@@ -76,8 +76,4 @@
     lsfg-vk
     lsfg-vk-ui
   ];
-
-  virtualisation.vmware.host = {
-    enable = true;
-  };
 }
