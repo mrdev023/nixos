@@ -126,19 +126,19 @@
       #####################################################################
       #####################################################################
       nixosConfigurations = {
-        homeserver = customNixosSystem {
+        nixos-homeserver = customNixosSystem {
           name = "homeserver";
           system = "x86_64-linux";
         };
-        perso-laptop = customNixosSystem {
+        nixos-laptop-perso = customNixosSystem {
           name = "perso-laptop";
           system = "x86_64-linux";
         };
-        perso-desktop = customNixosSystem {
+        nixos-desktop-perso = customNixosSystem {
           name = "perso-desktop";
           system = "x86_64-linux";
         };
-        test = customNixosSystem {
+        nixos-test-perso = customNixosSystem {
           name = "nixos-test";
           system = "x86_64-linux";
         };
