@@ -1,4 +1,9 @@
-{ config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 
 with lib;
 let
@@ -28,6 +33,11 @@ in
       inherit (cfg) package;
 
       font.name = cfgFont.name;
+
+      keybindings = {
+        "ctrl+shift+enter" = "new_window_with_cwd";
+        "ctrl+shift+t" = "new_tab_with_cwd";
+      };
 
       settings = mkMerge [
         {
