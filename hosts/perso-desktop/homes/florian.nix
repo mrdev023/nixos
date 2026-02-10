@@ -20,5 +20,5 @@
     profiles = [ "shell" ];
   };
 
-  home.sessionVariables.NH_FLAKE = "${config.home.homeDirectory}/Projets/Perso/nixos";
+  home.sessionVariables.NH_FLAKE = "${config.home.homeDirectory}/Projets/Perso/DevOps/nixos";
 }
