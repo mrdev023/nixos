@@ -150,7 +150,7 @@
       #####################################################################
       #####################################################################
       homeConfigurations = {
-        pro-home = customHomeManagerConfiguration {
+        "florian@fedora" = customHomeManagerConfiguration {
           name = "pro-home";
           system = "x86_64-linux";
         };
