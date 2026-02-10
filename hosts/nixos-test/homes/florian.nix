@@ -1,4 +1,4 @@
-{ pkgs, ...}:
+{ config, pkgs, ... }:
 
 {
   imports = [
@@ -19,4 +19,6 @@
 
     profiles = [ "shell" ];
   };
+
+  home.sessionVariables.NH_FLAKE = "${config.home.homeDirectory}/Projets/Perso/nixos";
 }

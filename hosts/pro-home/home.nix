@@ -1,4 +1,9 @@
-{ config, nixgl, pkgs, ... }:
+{
+  config,
+  nixgl,
+  pkgs,
+  ...
+}:
 
 {
   imports = [
@@ -16,7 +21,12 @@
   };
 
   modules.home = {
-    profiles = [ "shell" "hm_only" ];
+    profiles = [
+      "shell"
+      "hm_only"
+    ];
     apps.kitty.package = config.lib.nixGL.wrap pkgs.kitty;
   };
+
+  programs.nh.flake = "${config.home.homeDirectory}/Documents/Perso/nixos";
 }

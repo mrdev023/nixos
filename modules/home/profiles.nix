@@ -73,6 +73,17 @@ in
           disable-ccid = true;
         };
       };
+
+      # Enable only for non NixOS homes
+      # Already enabled for NixOS in modules/system/common.nix
+      programs.nh = {
+        enable = true;
+
+        clean = {
+          enable = true;
+          extraArgs = "--keep-since 7d --keep 3";
+        };
+      };
     })
   ];
 }
