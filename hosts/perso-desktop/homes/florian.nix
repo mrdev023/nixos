@@ -1,5 +1,13 @@
-{ config, ... }:
+{
+  nix-citizen,
+  config,
+  pkgs,
+  ...
+}:
 
+let
+  system = pkgs.stdenv.hostPlatform.system;
+in
 {
   imports = [
     ../../../modules/home
@@ -19,6 +27,10 @@
 
     profiles = [ "shell" ];
   };
+
+  home.packages = [
+    nix-citizen.packages.${system}.rsi-launcher
+  ];
 
   home.sessionVariables.NH_FLAKE = "${config.home.homeDirectory}/Projets/Perso/DevOps/nixos";
 }
