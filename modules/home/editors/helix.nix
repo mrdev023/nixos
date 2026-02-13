@@ -29,7 +29,6 @@ in
         golangci-lint-langserver
         gopls
         gotools
-        helix-gpt
         marksman
         nil
         nixd
@@ -73,14 +72,6 @@ in
             args = [ "lsp-proxy" ];
           };
 
-          gpt = {
-            command = "helix-gpt";
-            args = [
-              "--handler"
-              "copilot"
-            ];
-          };
-
           rust-analyzer.config.check = {
             command = "clippy";
           };
@@ -101,7 +92,6 @@ in
               "vscode-css-language-server"
               "tailwindcss-ls"
               "biome"
-              "gpt"
             ];
             auto-format = true;
           }
@@ -110,7 +100,6 @@ in
             language-servers = [
               "gopls"
               "golangci-lint-lsp"
-              "gpt"
             ];
             formatter = {
               command = "goimports";
@@ -140,7 +129,6 @@ in
                 except-features = [ "format" ];
               }
               "biome"
-              "gpt"
             ];
             auto-format = true;
           }
@@ -199,7 +187,6 @@ in
               }
               "tailwindcss-ls"
               "biome"
-              "gpt"
             ];
             formatter = {
               command = "biome";
@@ -236,7 +223,6 @@ in
             name = "python";
             language-servers = [
               "pylsp"
-              "gpt"
             ];
             formatter = {
               command = "sh";
@@ -249,10 +235,7 @@ in
           }
           {
             name = "rust";
-            language-servers = [
-              "rust-analyzer"
-              "gpt"
-            ];
+            language-servers = [ "rust-analyzer" ];
             auto-format = true;
           }
           {
@@ -291,7 +274,6 @@ in
               }
               "tailwindcss-ls"
               "biome"
-              "gpt"
             ];
             formatter = {
               command = "biome";
@@ -313,7 +295,6 @@ in
                 except-features = [ "format" ];
               }
               "biome"
-              "gpt"
             ];
             formatter = {
               command = "biome";
@@ -341,10 +322,7 @@ in
           }
           {
             name = "java";
-            language-servers = [
-              "jdtls"
-              "gpt"
-            ];
+            language-servers = [ "jdtls" ];
             auto-format = true;
           }
         ];
