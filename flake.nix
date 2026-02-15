@@ -156,7 +156,7 @@
           name = "pro-home";
           system = "x86_64-linux";
         };
-        kdedev-home = customHomeManagerConfiguration {
+        "florian@archlinux" = customHomeManagerConfiguration {
           name = "kdedev-home";
           system = "x86_64-linux";
         };
