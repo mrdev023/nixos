@@ -34,19 +34,20 @@ in
       enable32Bit = true;
     };
 
-    systemd.tmpfiles.rules =
-      let
-        rocmEnv = pkgs.symlinkJoin {
-          name = "rocm-combined";
-          paths = with pkgs.rocmPackages; [
-            rocblas
-            hipblas
-            clr
-          ];
-        };
-      in
-      [
-        "L+    /opt/rocm   -    -    -     -    ${rocmEnv}"
-      ];
+    # https://hydra.nixos.org/build/321902794/nixlog/1
+    # systemd.tmpfiles.rules =
+    #   let
+    #     rocmEnv = pkgs.symlinkJoin {
+    #       name = "rocm-combined";
+    #       paths = with pkgs.rocmPackages; [
+    #         rocblas
+    #         hipblas
+    #         clr
+    #       ];
+    #     };
+    #   in
+    #   [
+    #     "L+    /opt/rocm   -    -    -     -    ${rocmEnv}"
+    #   ];
   };
 }
