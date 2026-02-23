@@ -163,7 +163,7 @@ in
   };
   config = mkIf cfg.enable {
     xdg.configFile."distrobox/distrobox.conf".text = ''
-        ${getExe pkgs.xorg.xhost} +si:localuser:${config.home.username} > /dev/null
+        ${getExe pkgs.xhost} +si:localuser:${config.home.username} > /dev/null
     '';
 
     xdg.configFile."distrobox/kdedev.ini".text = ''
