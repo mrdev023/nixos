@@ -132,12 +132,16 @@
           name = "homeserver";
           system = "x86_64-linux";
         };
+        nixos-desktop-perso = customNixosSystem {
+          name = "perso-desktop";
+          system = "x86_64-linux";
+        };
         nixos-laptop-perso = customNixosSystem {
           name = "perso-laptop";
           system = "x86_64-linux";
         };
-        nixos-desktop-perso = customNixosSystem {
-          name = "perso-desktop";
+        nixos-laptop-pro = customNixosSystem {
+          name = "pro-laptop";
           system = "x86_64-linux";
         };
         nixos-test-perso = customNixosSystem {
