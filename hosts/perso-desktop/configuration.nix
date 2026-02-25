@@ -13,13 +13,7 @@
   ];
 
   # Bootloader.
-  boot.loader.systemd-boot.enable = lib.mkForce false;
-  boot.lanzaboote = {
-    enable = true;
-    pkiBundle = "/var/lib/sbctl";
-  };
   boot.loader.efi.canTouchEfiVariables = true;
-
   # Limit the number of generations to keep
   boot.loader.systemd-boot.configurationLimit = 10;
   # boot.loader.grub.configurationLimit = 10;
@@ -54,6 +48,7 @@
       graphics.amdgpu.enable = true;
       audio.pipewire.enable = true;
       printing.enable = true;
+      secure-boot.enable = true;
       steering-wheel.enable = true;
       waydroid.enable = true;
     };
