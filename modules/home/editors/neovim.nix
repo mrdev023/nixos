@@ -5,7 +5,11 @@
 }:
 with lib;
 let
-  cfg = config.modules.home.editors.neovim;
+  cfgTop = config.modules.home.editors;
+  cfg = cfgTop.neovim;
+
+  utils = import ./utils.nix { config = cfgTop; lib = lib; };
+  inherit (utils) cfgHasLanguage;
 in
 {
   options.modules.home.editors.neovim = {
@@ -73,15 +77,24 @@ in
           enableTreesitter = true;
           enableExtraDiagnostics = true;
 
-          bash.enable = true;
-          clang = {
-            # C++
+          # "Web - Frontend"
+          ts = mkIf (cfgHasLanguage "js_ts") {
             enable = true;
-            dap.enable = true;
-            lsp.enable = true;
+            extensions.ts-error-translator.enable = false;
           };
-          css.enable = true;
-          dart = {
+          html.enable = cfgHasLanguage "html";
+          css.enable = cfgHasLanguage "css";
+          tailwind.enable = cfgHasLanguage "css";
+
+          # "Web - backend"
+          php.enable = cfgHasLanguage "php";
+          java.enable = cfgHasLanguage "java";
+          kotlin.enable = cfgHasLanguage "kotlin";
+          ruby.enable = cfgHasLanguage "ruby";
+          sql.enable = cfgHasLanguage "sql";
+
+          # Mobile
+          dart = mkIf (cfgHasLanguage "dart") {
             enable = true;
             flutter-tools = {
               enable = false; # WARN: Broken
@@ -94,31 +107,34 @@ in
               };
             };
           };
-          go.enable = true;
-          html.enable = true;
-          java.enable = true;
-          kotlin.enable = true;
-          markdown = {
-            enable = true;
-            extensions.render-markdown-nvim.enable = true;
-          };
-          nix.enable = true;
-          php.enable = true;
-          python.enable = true;
-          ruby.enable = true;
-          rust = {
+
+          # Datascience
+          python.enable = cfgHasLanguage "python";
+
+          # DevOps
+          terraform.enable = cfgHasLanguage "terraform";
+          helm.enable = cfgHasLanguage "helm";
+          bash.enable = cfgHasLanguage "bash";
+
+          # Graphics API
+          # glsl.enable = elem "glsl" cfgTop.languages; Maybe available for 0.9 of nvf
+          wgsl.enable = cfgHasLanguage "wgsl";
+
+          # System
+          zig.enable = cfgHasLanguage "zip";
+          rust = mkIf (cfgHasLanguage "rust") {
             enable = true;
             extensions.crates-nvim.enable = true;
           };
-          sql.enable = true;
-          tailwind.enable = true;
-          ts = {
+          clang.enable = cfgHasLanguage "c_cpp";
+          go.enable = cfgHasLanguage "go";
+
+          # Autres
+          nix.enable = cfgHasLanguage "nix";
+          markdown = mkIf (cfgHasLanguage "markdown") {
             enable = true;
-            extensions.ts-error-translator.enable = false;
+            extensions.render-markdown-nvim.enable = true;
           };
-          terraform.enable = true;
-          wgsl.enable = true;
-          zig.enable = true;
         };
 
         visuals = {
@@ -259,48 +275,6 @@ in
             };
           };
           fastaction.enable = true;
-        };
-
-        assistant = {
-          codecompanion-nvim = {
-            enable = true;
-
-            setupOpts = {
-              adapters = mkLuaInline ''
-                {
-                  adapters = {
-                    http = {
-                      mistral = function()
-                        return require("codecompanion.adapters").extend("openai", {
-                          env = {
-                            url = "https://api.mistral.ai/",
-                            api_key = "MISTRAL_API_KEY",
-                          },
-                        })
-                      end,
-                    },
-                  },
-                }
-              '';
-              strategies = {
-                chat = {
-                  adapter = "mistral";
-                };
-                inline = {
-                  adapter = "mistral";
-                };
-                cmd = {
-                  adapter = "mistral";
-                };
-              };
-              display = {
-                chat = {
-                  auto_scroll = true;
-                  show_settings = true;
-                };
-              };
-            };
-          };
         };
 
         session = {

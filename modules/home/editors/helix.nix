@@ -7,7 +7,11 @@
 
 with lib;
 let
-  cfg = config.modules.home.editors.helix;
+  cfgTop = config.modules.home.editors;
+  cfg = cfgTop.helix;
+
+  utils = import ./utils.nix { config = cfgTop; lib = lib; };
+  inherit (utils) cfgHasLanguage cfgHasAnyOfLanguages;
 in
 {
   options.modules.home.editors.helix = {
@@ -15,45 +19,9 @@ in
       Enable helix with my custom configurations
     '';
   };
-  config = mkIf cfg.enable {
-    programs.helix = {
+  config.programs.helix = mkIf cfg.enable (mkMerge [
+    {
       enable = true;
-
-      extraPackages = with pkgs; [
-        bash-language-server
-        biome
-        clang-tools
-        docker-compose-language-service
-        dockerfile-language-server
-        golangci-lint
-        golangci-lint-langserver
-        gopls
-        gotools
-        marksman
-        nil
-        nixd
-        nixfmt
-        nodePackages.prettier
-        nodePackages.typescript-language-server
-        sql-formatter
-        ruff
-        (python3.withPackages (
-          p:
-          (with p; [
-            python-lsp-ruff
-            python-lsp-server
-          ])
-        ))
-        rust-analyzer
-        tailwindcss-language-server
-        taplo
-        terraform-ls
-        typescript
-        jdt-language-server
-        vscode-langservers-extracted
-        yaml-language-server
-      ];
-
       settings = {
         theme = "tokyonight";
 
@@ -64,63 +32,75 @@ in
           cursor-shape.insert = "bar";
         };
       };
+    }
+
+    (mkIf (cfgHasAnyOfLanguages ["c_cpp" "rust" "zig"]) {
+      extraPackages = with pkgs; [ lldb ];
+    })
+    (mkIf (cfgHasAnyOfLanguages ["html" "markdown"]) {
+      extraPackages = with pkgs; [ prettier ];
+    })
+    (mkIf (cfgHasAnyOfLanguages ["html" "css"]) {
+      extraPackages = with pkgs; [ vscode-langservers-extracted ];
+    })
+    (mkIf (cfgHasAnyOfLanguages ["html" "css" "js_ts"]) {
+      extraPackages = with pkgs; [ tailwindcss-language-server ];
+    })
+    (mkIf (cfgHasAnyOfLanguages ["css" "js_ts"]) {
+      extraPackages = with pkgs; [
+        biome
+      ];
+
+      languages.language-server.biome = {
+        command = "biome";
+        args = [ "lsp-proxy" ];
+      };
+    })
+
+    # "Web - Front"
+    (mkIf (cfgHasLanguage "html") {
+      languages.language = [
+        {
+          name = "html";
+          language-servers = [
+            "vscode-html-language-server"
+            "tailwindcss-ls"
+          ];
+          formatter = {
+            command = "prettier";
+            args = [
+              "--stdin-filepath"
+              "%{buffer_name}"
+            ];
+          };
+          auto-format = true;
+        }
+      ];
+    })
+    (mkIf (cfgHasLanguage "css") {
+      languages.language = [
+        {
+          name = "css";
+          language-servers = [
+            "vscode-css-language-server"
+            "tailwindcss-ls"
+            "biome"
+          ];
+          auto-format = true;
+        }
+      ];
+    })
+    (mkIf (cfgHasLanguage "js_ts") {
+      extraPackages = with pkgs; [
+        typescript
+      ];
 
       languages = {
-        language-server = {
-          biome = {
-            command = "biome";
-            args = [ "lsp-proxy" ];
-          };
-
-          rust-analyzer.config.check = {
-            command = "clippy";
-          };
-
-          yaml-language-server.config.yaml.schemas = {
-            kubernetes = "k8s/*.yaml";
-          };
-
-          typescript-language-server.config.tsserver = {
-            path = "${pkgs.typescript}/lib/node_modules/typescript/lib/tsserver.js";
-          };
+        language-server.typescript-language-server.config.tsserver = {
+          path = "${pkgs.typescript}/lib/node_modules/typescript/lib/tsserver.js";
         };
 
         language = [
-          {
-            name = "css";
-            language-servers = [
-              "vscode-css-language-server"
-              "tailwindcss-ls"
-              "biome"
-            ];
-            auto-format = true;
-          }
-          {
-            name = "go";
-            language-servers = [
-              "gopls"
-              "golangci-lint-lsp"
-            ];
-            formatter = {
-              command = "goimports";
-            };
-            auto-format = true;
-          }
-          {
-            name = "html";
-            language-servers = [
-              "vscode-html-language-server"
-              "tailwindcss-ls"
-            ];
-            formatter = {
-              command = "prettier";
-              args = [
-                "--stdin-filepath"
-                "%{buffer_name}"
-              ];
-            };
-            auto-format = true;
-          }
           {
             name = "javascript";
             language-servers = [
@@ -129,52 +109,6 @@ in
                 except-features = [ "format" ];
               }
               "biome"
-            ];
-            auto-format = true;
-          }
-          {
-            name = "json";
-            language-servers = [
-              {
-                name = "vscode-json-language-server";
-                except-features = [ "format" ];
-              }
-              "biome"
-            ];
-            formatter = {
-              command = "biome";
-              args = [
-                "format"
-                "--indent-style"
-                "space"
-                "--stdin-file-path"
-                "%{buffer_name}"
-              ];
-            };
-            auto-format = true;
-          }
-          {
-            name = "jsonc";
-            language-servers = [
-              {
-                name = "vscode-json-language-server";
-                except-features = [ "format" ];
-              }
-              "biome"
-            ];
-            formatter = {
-              command = "biome";
-              args = [
-                "format"
-                "--indent-style"
-                "space"
-                "--stdin-file-path"
-                "%{buffer_name}"
-              ];
-            };
-            file-types = [
-              "jsonc"
-              "hujson"
             ];
             auto-format = true;
           }
@@ -196,71 +130,6 @@ in
                 "space"
                 "--stdin-file-path"
                 "%{buffer_name}"
-              ];
-            };
-            auto-format = true;
-          }
-          {
-            name = "markdown";
-            language-servers = [ "marksman" ];
-            formatter = {
-              command = "prettier";
-              args = [
-                "--stdin-filepath"
-                "%{buffer_name}"
-              ];
-            };
-            auto-format = true;
-          }
-          {
-            name = "nix";
-            formatter = {
-              command = "nixfmt";
-            };
-            auto-format = true;
-          }
-          {
-            name = "python";
-            language-servers = [
-              "pylsp"
-            ];
-            formatter = {
-              command = "sh";
-              args = [
-                "-c"
-                "ruff check --select I --fix - | ruff format --line-length 88 -"
-              ];
-            };
-            auto-format = true;
-          }
-          {
-            name = "rust";
-            language-servers = [ "rust-analyzer" ];
-            auto-format = true;
-          }
-          {
-            name = "sql";
-            formatter = {
-              command = "sql-formatter";
-              args = [
-                "-l"
-                "postgresql"
-                "-c"
-                "{\"keywordCase\": \"lower\", \"dataTypeCase\": \"lower\", \"functionCase\": \"lower\", \"expressionWidth\": 120, \"tabWidth\": 4}"
-              ];
-            };
-            auto-format = true;
-          }
-          {
-            name = "toml";
-            language-servers = [ "taplo" ];
-            formatter = {
-              command = "taplo";
-              args = [
-                "fmt"
-                "-o"
-                "column_width=120"
-                "-"
               ];
             };
             auto-format = true;
@@ -308,25 +177,116 @@ in
             };
             auto-format = true;
           }
+        ];
+      };
+    })
+
+    # DevOps
+    (mkIf (cfgHasLanguage "bash") {
+      extraPackages = with pkgs; [ bash-language-server ];
+    })
+    (mkIf (cfgHasLanguage "go") {
+      extraPackages = with pkgs; [
+        golangci-lint
+        golangci-lint-langserver
+        gopls
+        gotools
+      ];
+
+      languages.language = [
+        {
+          name = "go";
+          language-servers = [
+            "gopls"
+            "golangci-lint-lsp"
+          ];
+          formatter = {
+            command = "goimports";
+          };
+          auto-format = true;
+        }
+      ];
+    })
+
+    # Graphics API
+    (mkIf (cfgHasLanguage "wgsl") {
+      extraPackages = with pkgs; [ wgsl-analyzer ];
+    })
+    (mkIf (cfgHasLanguage "glsl") {
+      extraPackages = with pkgs; [ glsl_analyzer ];
+    })
+
+    # System
+    (mkIf (cfgHasLanguage "c_cpp") {
+      extraPackages = with pkgs; [ clang-tools ];
+    })
+    (mkIf (cfgHasLanguage "rust") {
+      extraPackages = with pkgs; [
+        rust-analyzer
+        clippy
+      ];
+
+      languages = {
+        language-server.rust-analyzer.config.check = {
+          command = "clippy";
+        };
+
+        language = [
           {
-            name = "yaml";
-            language-servers = [ "yaml-language-server" ];
-            formatter = {
-              command = "prettier";
-              args = [
-                "--stdin-filepath"
-                "%{buffer_name}"
-              ];
-            };
-            auto-format = true;
-          }
-          {
-            name = "java";
-            language-servers = [ "jdtls" ];
+            name = "rust";
+            language-servers = [ "rust-analyzer" ];
             auto-format = true;
           }
         ];
       };
-    };
-  };
+    })
+    (mkIf (cfgHasLanguage "c_cpp") {
+      extraPackages = with pkgs; [ clang-tools ];
+    })
+    
+    # Autres
+    (mkIf (cfgHasLanguage "zig") {
+      extraPackages = with pkgs; [
+        zig
+        zls
+      ];
+    })
+    (mkIf (cfgHasLanguage "nix") {
+      extraPackages = with pkgs; [
+        nil
+        nixd
+        nixfmt
+      ];
+
+      languages.language = [
+        {
+          name = "nix";
+          formatter = {
+            command = "nixfmt";
+          };
+          auto-format = true;
+        }
+      ];
+    })
+    (mkIf (cfgHasLanguage "markdown") {
+      extraPackages = with pkgs; [
+        marksman
+      ];
+
+      languages.language = [
+        {
+          name = "markdown";
+          language-servers = [ "marksman" ];
+          formatter = {
+            command = "prettier";
+            args = [
+              "--stdin-filepath"
+              "%{buffer_name}"
+            ];
+          };
+          auto-format = true;
+        }
+      ];
+    })
+  ]);
 }
