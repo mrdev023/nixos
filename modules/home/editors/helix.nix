@@ -10,7 +10,10 @@ let
   cfgTop = config.modules.home.editors;
   cfg = cfgTop.helix;
 
-  utils = import ./utils.nix { config = cfgTop; lib = lib; };
+  utils = import ./utils.nix {
+    config = cfgTop;
+    lib = lib;
+  };
   inherit (utils) cfgHasLanguage cfgHasAnyOfLanguages;
 in
 {
@@ -34,28 +37,60 @@ in
       };
     }
 
-    (mkIf (cfgHasAnyOfLanguages ["c_cpp" "rust" "zig"]) {
-      extraPackages = with pkgs; [ lldb ];
-    })
-    (mkIf (cfgHasAnyOfLanguages ["html" "markdown"]) {
-      extraPackages = with pkgs; [ prettier ];
-    })
-    (mkIf (cfgHasAnyOfLanguages ["html" "css"]) {
-      extraPackages = with pkgs; [ vscode-langservers-extracted ];
-    })
-    (mkIf (cfgHasAnyOfLanguages ["html" "css" "js_ts"]) {
-      extraPackages = with pkgs; [ tailwindcss-language-server ];
-    })
-    (mkIf (cfgHasAnyOfLanguages ["css" "js_ts"]) {
-      extraPackages = with pkgs; [
-        biome
-      ];
+    (mkIf
+      (cfgHasAnyOfLanguages [
+        "c_cpp"
+        "rust"
+        "zig"
+      ])
+      {
+        extraPackages = with pkgs; [ lldb ];
+      }
+    )
+    (mkIf
+      (cfgHasAnyOfLanguages [
+        "html"
+        "markdown"
+      ])
+      {
+        extraPackages = with pkgs; [ prettier ];
+      }
+    )
+    (mkIf
+      (cfgHasAnyOfLanguages [
+        "html"
+        "css"
+      ])
+      {
+        extraPackages = with pkgs; [ vscode-langservers-extracted ];
+      }
+    )
+    (mkIf
+      (cfgHasAnyOfLanguages [
+        "html"
+        "css"
+        "js_ts"
+      ])
+      {
+        extraPackages = with pkgs; [ tailwindcss-language-server ];
+      }
+    )
+    (mkIf
+      (cfgHasAnyOfLanguages [
+        "css"
+        "js_ts"
+      ])
+      {
+        extraPackages = with pkgs; [
+          biome
+        ];
 
-      languages.language-server.biome = {
-        command = "biome";
-        args = [ "lsp-proxy" ];
-      };
-    })
+        languages.language-server.biome = {
+          command = "biome";
+          args = [ "lsp-proxy" ];
+        };
+      }
+    )
 
     # "Web - Front"
     (mkIf (cfgHasLanguage "html") {
@@ -93,6 +128,7 @@ in
     (mkIf (cfgHasLanguage "js_ts") {
       extraPackages = with pkgs; [
         typescript
+        nodePackages.typescript-language-server
       ];
 
       languages = {
@@ -181,7 +217,93 @@ in
       };
     })
 
+    # Web - backend
+    (mkIf (cfgHasLanguage "php") {
+      extraPackages = with pkgs; [ phpactor ];
+
+      languages = {
+        language-server.phpactor = {
+          command = "phpactor";
+          args = [ "language-server" ];
+        };
+
+        language = [
+          {
+            name = "php";
+            language-servers = [ "phpactor" ];
+            auto-format = true;
+          }
+        ];
+      };
+    })
+    (mkIf (cfgHasLanguage "ruby") {
+      extraPackages = with pkgs; [
+        ruby-lsp
+        rubyPackages.solargraph
+      ];
+    })
+    (mkIf (cfgHasLanguage "java") {
+      extraPackages = with pkgs; [ jdt-language-server ];
+    })
+    (mkIf (cfgHasLanguage "kotlin") {
+      extraPackages = with pkgs; [ kotlin-language-server ];
+    })
+    (mkIf (cfgHasLanguage "sql") {
+      extraPackages = with pkgs; [ sql-formatter ];
+
+      languages.language = [
+        {
+          name = "sql";
+          formatter = {
+            command = "sql-formatter";
+            args = [
+              "-l"
+              "postgresql"
+            ];
+          };
+          auto-format = true;
+        }
+      ];
+    })
+
+    # Datascience
+    (mkIf (cfgHasLanguage "python") {
+      extraPackages = with pkgs; [
+        ruff
+        (python3.withPackages (
+          p:
+          (with p; [
+            python-lsp-ruff
+            python-lsp-server
+          ])
+        ))
+      ];
+
+      languages.language = [
+        {
+          name = "python";
+          language-servers = [
+            "pylsp"
+          ];
+          formatter = {
+            command = "sh";
+            args = [
+              "-c"
+              "ruff check --select I --fix - | ruff format --line-length 88 -"
+            ];
+          };
+          auto-format = true;
+        }
+      ];
+    })
+
     # DevOps
+    (mkIf (cfgHasLanguage "terraform") {
+      extraPackages = with pkgs; [ terraform-ls ];
+    })
+    (mkIf (cfgHasLanguage "helm") {
+      extraPackages = with pkgs; [ helm-ls ];
+    })
     (mkIf (cfgHasLanguage "bash") {
       extraPackages = with pkgs; [ bash-language-server ];
     })
@@ -206,6 +328,11 @@ in
           auto-format = true;
         }
       ];
+    })
+
+    # Mobile
+    (mkIf (cfgHasLanguage "dart") {
+      extraPackages = with pkgs; [ dart ];
     })
 
     # Graphics API
@@ -243,7 +370,7 @@ in
     (mkIf (cfgHasLanguage "c_cpp") {
       extraPackages = with pkgs; [ clang-tools ];
     })
-    
+
     # Autres
     (mkIf (cfgHasLanguage "zig") {
       extraPackages = with pkgs; [

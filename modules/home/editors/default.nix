@@ -1,13 +1,11 @@
 {
   lib,
   config,
-  options,
   ...
 }:
 
 with lib;
 let
-  opts = options.modules.home.editors;
   cfg = config.modules.home.editors;
 
   allLanguages = [
@@ -135,7 +133,6 @@ in
             "glsl"
           ];
       in
-      if (elem "all" cfg.extraLanguages) then unique allLanguages
-      else unique languages;
+      if (elem "all" cfg.extraLanguages) then unique allLanguages else unique languages;
   };
 }
