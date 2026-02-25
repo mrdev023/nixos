@@ -9,6 +9,7 @@
           partitions = {
             ESP = {
               type = "EF00";
+              label = "boot";
               size = "500M";
               content = {
                 type = "filesystem";
@@ -19,6 +20,7 @@
             };
             root = {
               size = "100%";
+              label = "nixos";
               content = {
                 type = "filesystem";
                 format = "ext4";
