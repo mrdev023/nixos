@@ -187,6 +187,7 @@
             ];
           };
         };
+        formatter = pkgs.nixfmt-tree;
       }
     );
 }
