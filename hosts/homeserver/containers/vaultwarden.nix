@@ -1,4 +1,9 @@
-{ config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 
 with lib;
 let
@@ -58,7 +63,7 @@ in
           DOMAIN = "https://pwds.${cfgContainers.domain}";
         };
         environmentFiles = [
-          config.sops.secrets.vaultwarden_env.path 
+          config.sops.secrets.vaultwarden_env.path
         ];
         dependsOn = [
           "vaultwarden_db"
@@ -86,13 +91,31 @@ in
 
     systemd.services = {
       docker-vaultwarden_db = {
-        after = [ "create-vaultwarden-network.service" "docker.service" "docker.socket" ];
-        requires = [ "create-vaultwarden-network.service" "docker.service" "docker.socket" ];
+        after = [
+          "create-vaultwarden-network.service"
+          "docker.service"
+          "docker.socket"
+        ];
+        requires = [
+          "create-vaultwarden-network.service"
+          "docker.service"
+          "docker.socket"
+        ];
       };
 
       docker-vaultwarden = {
-        after = [ "create-vaultwarden-network.service" "create-proxy-network.service" "docker.service" "docker.socket" ];
-        requires = [ "create-vaultwarden-network.service" "create-proxy-network.service" "docker.service" "docker.socket" ];
+        after = [
+          "create-vaultwarden-network.service"
+          "create-proxy-network.service"
+          "docker.service"
+          "docker.socket"
+        ];
+        requires = [
+          "create-vaultwarden-network.service"
+          "create-proxy-network.service"
+          "docker.service"
+          "docker.socket"
+        ];
       };
     };
   };

@@ -19,13 +19,28 @@ in
 
       packages = [
         # Pro
-        { appId = "ch.protonmail.protonmail-bridge"; origin = "flathub";  }
-        { appId = "org.kde.neochat"; origin = "flathub"; }
+        {
+          appId = "ch.protonmail.protonmail-bridge";
+          origin = "flathub";
+        }
+        {
+          appId = "org.kde.neochat";
+          origin = "flathub";
+        }
 
         # Loisir
-        { appId = "io.github.zen_browser.zen"; origin = "flathub"; }
-        { appId = "com.spotify.Client"; origin = "flathub"; }
-        { appId = "org.videolan.VLC"; origin = "flathub"; }
+        {
+          appId = "io.github.zen_browser.zen";
+          origin = "flathub";
+        }
+        {
+          appId = "com.spotify.Client";
+          origin = "flathub";
+        }
+        {
+          appId = "org.videolan.VLC";
+          origin = "flathub";
+        }
       ];
     };
   };

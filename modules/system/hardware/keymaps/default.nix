@@ -16,8 +16,7 @@ in
     };
   };
   config = mkMerge [
-    (mkIf (cfg.layout == "fr") (import ./fr.nix {}))
-    (mkIf (cfg.layout == "us") (import ./us.nix {}))
+    (mkIf (cfg.layout == "fr") (import ./fr.nix { }))
+    (mkIf (cfg.layout == "us") (import ./us.nix { }))
   ];
 }
-

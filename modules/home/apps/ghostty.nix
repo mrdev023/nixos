@@ -1,4 +1,9 @@
-{ config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 
 with lib;
 let
@@ -37,7 +42,7 @@ in
           font-feature = "+liga,+dlig,+calt";
         }
 
-        (lib.mkIf cfg.enableBlur { background-blur  = "1"; })
+        (lib.mkIf cfg.enableBlur { background-blur = "1"; })
         (lib.mkIf config.programs.zsh.enable { command = "zsh"; })
       ];
     };

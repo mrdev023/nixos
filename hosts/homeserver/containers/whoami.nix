@@ -29,8 +29,16 @@ in
     };
 
     systemd.services.docker-whoami = {
-      after = [ "create-proxy-network.service" "docker.service" "docker.socket" ];
-      requires = [ "create-proxy-network.service" "docker.service" "docker.socket" ];
+      after = [
+        "create-proxy-network.service"
+        "docker.service"
+        "docker.socket"
+      ];
+      requires = [
+        "create-proxy-network.service"
+        "docker.service"
+        "docker.socket"
+      ];
     };
   };
 }

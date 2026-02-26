@@ -5,14 +5,13 @@
 { pkgs, ... }:
 
 {
-  imports =
-    [
-      ../../modules/system
+  imports = [
+    ../../modules/system
 
-      # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-      ./disko-config.nix
-    ];
+    # Include the results of the hardware scan.
+    ./hardware-configuration.nix
+    ./disko-config.nix
+  ];
 
   # Bootloader.
   # boot.loader.systemd-boot.enable = lib.mkForce false;

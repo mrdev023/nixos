@@ -28,10 +28,16 @@ in
     };
 
     systemd.services.docker-portfolio = {
-      after = [ "create-proxy-network.service" "docker.service" "docker.socket" ];
-      requires = [ "create-proxy-network.service" "docker.service" "docker.socket" ];
+      after = [
+        "create-proxy-network.service"
+        "docker.service"
+        "docker.socket"
+      ];
+      requires = [
+        "create-proxy-network.service"
+        "docker.service"
+        "docker.socket"
+      ];
     };
   };
 }
-
-

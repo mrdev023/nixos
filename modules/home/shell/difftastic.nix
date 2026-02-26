@@ -1,4 +1,9 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 with lib;
 let
@@ -21,7 +26,10 @@ in
     };
 
     programs.jujutsu.settings.ui.diff-formatter = [
-      "${lib.getExe pkgs.difftastic}" "--color=always" "$left" "$right"
+      "${lib.getExe pkgs.difftastic}"
+      "--color=always"
+      "$left"
+      "$right"
     ];
   };
 }

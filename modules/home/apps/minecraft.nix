@@ -1,4 +1,9 @@
-{ config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 
 with lib;
 let
@@ -11,6 +16,6 @@ in
     '';
   };
   config = mkIf cfg.enable {
-    home.packages = with pkgs; [gdlauncher-carbon];
+    home.packages = with pkgs; [ gdlauncher-carbon ];
   };
 }

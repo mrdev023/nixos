@@ -5,7 +5,10 @@
   users.users.florian = {
     isNormalUser = true;
     description = "florian";
-    extraGroups = [ "networkmanager" "wheel" ];
+    extraGroups = [
+      "networkmanager"
+      "wheel"
+    ];
     initialPassword = "password"; # Unsafe but not important because it's just a VM to test configuration
   };
 

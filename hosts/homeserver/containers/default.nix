@@ -8,7 +8,7 @@ with lib;
       description = "Base path for container data storage";
       example = "/mnt/work";
     };
-    
+
     domain = mkOption {
       type = types.str;
       description = "Domain name for Traefik routing";
@@ -20,8 +20,14 @@ with lib;
     systemd.services.create-proxy-network = {
       serviceConfig.Type = "oneshot";
       wantedBy = [ "multi-user.target" ];
-      after = [ "docker.service" "docker.socket" ];
-      requires = [ "docker.service" "docker.socket" ];
+      after = [
+        "docker.service"
+        "docker.socket"
+      ];
+      requires = [
+        "docker.service"
+        "docker.socket"
+      ];
       script = ''
         ${pkgs.lib.getExe pkgs.docker} network inspect proxy >/dev/null 2>&1 || \
         ${pkgs.lib.getExe pkgs.docker} network create proxy
@@ -31,8 +37,14 @@ with lib;
     systemd.services.create-metrics-network = {
       serviceConfig.Type = "oneshot";
       wantedBy = [ "multi-user.target" ];
-      after = [ "docker.service" "docker.socket" ];
-      requires = [ "docker.service" "docker.socket" ];
+      after = [
+        "docker.service"
+        "docker.socket"
+      ];
+      requires = [
+        "docker.service"
+        "docker.socket"
+      ];
       script = ''
         ${pkgs.lib.getExe pkgs.docker} network inspect metrics >/dev/null 2>&1 || \
         ${pkgs.lib.getExe pkgs.docker} network create metrics

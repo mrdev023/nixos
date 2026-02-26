@@ -1,4 +1,9 @@
-{ config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 
 with lib;
 let
@@ -8,7 +13,7 @@ let
   traefikStatic = pkgs.writers.writeTOML "traefik.toml" {
     api.dashboard = true;
     log.level = "INFO";
-    accessLog = {};
+    accessLog = { };
 
     entryPoints = {
       ssh.address = ":22";
@@ -25,7 +30,12 @@ let
 
     metrics.prometheus = {
       entryPoint = "metrics";
-      buckets = [ 0.1 0.3 1.2 5.0 ];
+      buckets = [
+        0.1
+        0.3
+        1.2
+        5.0
+      ];
       addEntryPointsLabels = true;
       addServicesLabels = true;
     };
@@ -43,7 +53,7 @@ let
 
     certificatesResolvers.sslResolver.acme = {
       email = "florian.richer@protonmail.com";
-      tlsChallenge = {};
+      tlsChallenge = { };
       storage = "acme.json";
       keyType = "RSA4096";
       # Use only to debug ACME
@@ -116,10 +126,18 @@ in
     };
 
     systemd.services.docker-traefik = {
-      after = [ "create-proxy-network.service" "create-metrics-network.service" "docker.service" "docker.socket" ];
-      requires = [ "create-proxy-network.service" "create-metrics-network.service" "docker.service" "docker.socket" ];
+      after = [
+        "create-proxy-network.service"
+        "create-metrics-network.service"
+        "docker.service"
+        "docker.socket"
+      ];
+      requires = [
+        "create-proxy-network.service"
+        "create-metrics-network.service"
+        "docker.service"
+        "docker.socket"
+      ];
     };
   };
 }
-
-

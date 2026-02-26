@@ -22,14 +22,14 @@ in
           "nix-search-tv"
         ]
       );
-      default = [];
+      default = [ ];
       description = "List of channels to enable.";
     };
   };
   config = mkIf cfg.enable {
     programs.television = {
       enable = true;
-      
+
       settings = {
         tick_rate = 50;
         default_channel = mkIf (cfg.defaultChannel != null) cfg.defaultChannel;
@@ -41,9 +41,14 @@ in
 
     programs.nix-search-tv = mkIf (elem "nix-search-tv" cfg.channels) {
       enable = true;
-      
+
       settings = {
-        indexes = [ "nixpkgs" "home-manager" "nixos" "nur" ];
+        indexes = [
+          "nixpkgs"
+          "home-manager"
+          "nixos"
+          "nur"
+        ];
 
         experimental = {
           render_docs_indexes = {

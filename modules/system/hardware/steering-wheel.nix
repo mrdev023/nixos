@@ -12,9 +12,9 @@ in
   };
   config = mkIf cfg.enable {
     boot = {
-        blacklistedKernelModules = [ "hid-thrustmaster" ];
-        kernelModules = [ "hid-tmff2" ];
-        extraModulePackages = [ config.boot.kernelPackages.hid-tmff2 ];
+      blacklistedKernelModules = [ "hid-thrustmaster" ];
+      kernelModules = [ "hid-tmff2" ];
+      extraModulePackages = [ config.boot.kernelPackages.hid-tmff2 ];
     };
   };
 }

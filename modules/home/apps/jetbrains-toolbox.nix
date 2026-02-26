@@ -1,4 +1,9 @@
-{ config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 
 with lib;
 let
@@ -11,6 +16,9 @@ in
     '';
   };
   config = mkIf cfg.enable {
-    home.packages = with pkgs; [jetbrains-toolbox graalvm-ce];
+    home.packages = with pkgs; [
+      jetbrains-toolbox
+      graalvm-ce
+    ];
   };
 }

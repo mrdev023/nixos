@@ -5,7 +5,12 @@
   users.users.florian = {
     isNormalUser = true;
     description = "florian";
-    extraGroups = [ "networkmanager" "wheel" "libvirtd" "docker" ];
+    extraGroups = [
+      "networkmanager"
+      "wheel"
+      "libvirtd"
+      "docker"
+    ];
   };
 
   home-manager.users.florian.imports = [ ./homes/florian.nix ];

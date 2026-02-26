@@ -8,7 +8,10 @@ let
   cfgTop = config.modules.home.editors;
   cfg = cfgTop.neovim;
 
-  utils = import ./utils.nix { config = cfgTop; lib = lib; };
+  utils = import ./utils.nix {
+    config = cfgTop;
+    lib = lib;
+  };
   inherit (utils) cfgHasLanguage;
 in
 {

@@ -1,4 +1,9 @@
-{ config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 
 with lib;
 let
@@ -34,7 +39,7 @@ in
     ];
 
     environment.sessionVariables = {
-      MANGOHUD_CONFIG = ''no_display,control=mangohud,legacy_layout=0,vertical,background_alpha=0,gpu_stats,gpu_power,cpu_stats,core_load,ram,vram,fps,fps_metrics=AVG,0.001,frametime,refresh_rate,resolution,gpu_name,vulkan_driver,wine'';
+      MANGOHUD_CONFIG = "no_display,control=mangohud,legacy_layout=0,vertical,background_alpha=0,gpu_stats,gpu_power,cpu_stats,core_load,ram,vram,fps,fps_metrics=AVG,0.001,frametime,refresh_rate,resolution,gpu_name,vulkan_driver,wine";
     };
   };
 }

@@ -1,4 +1,9 @@
-{ config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 
 with lib;
 let
@@ -78,22 +83,34 @@ in
           GITEA_INSTANCE_URL = "https://git.${cfgContainers.domain}";
         };
         environmentFiles = [
-          config.sops.secrets.forgejo_env.path 
+          config.sops.secrets.forgejo_env.path
         ];
       };
     };
 
     systemd.services = {
       docker-forgejo = {
-        after = [ "create-proxy-network.service" "docker.service" "docker.socket" ];
-        requires = [ "create-proxy-network.service" "docker.service" "docker.socket" ];
+        after = [
+          "create-proxy-network.service"
+          "docker.service"
+          "docker.socket"
+        ];
+        requires = [
+          "create-proxy-network.service"
+          "docker.service"
+          "docker.socket"
+        ];
       };
       docker-forgejo_runner = {
-        after = [ "docker.service" "docker.socket" ];
-        requires = [ "docker.service" "docker.socket" ];
+        after = [
+          "docker.service"
+          "docker.socket"
+        ];
+        requires = [
+          "docker.service"
+          "docker.socket"
+        ];
       };
     };
   };
 }
-
-

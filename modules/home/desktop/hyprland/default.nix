@@ -1,4 +1,9 @@
-{ config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 
 with lib;
 let
@@ -48,7 +53,7 @@ in
         plugins = with pkgs.hyprlandPlugins; [
           hyprsplit
         ];
-        
+
         systemd = {
           enable = true;
           variables = [ "--all" ];

@@ -1,4 +1,9 @@
-{ config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 
 with lib;
 let
@@ -75,13 +80,31 @@ in
 
     systemd.services = {
       docker-nextcloud_db = {
-        after = [ "create-nextcloud-network.service" "docker.service" "docker.socket" ];
-        requires = [ "create-nextcloud-network.service" "docker.service" "docker.socket" ];
+        after = [
+          "create-nextcloud-network.service"
+          "docker.service"
+          "docker.socket"
+        ];
+        requires = [
+          "create-nextcloud-network.service"
+          "docker.service"
+          "docker.socket"
+        ];
       };
 
       docker-nextcloud = {
-        after = [ "create-nextcloud-network.service" "create-proxy-network.service" "docker.service" "docker.socket" ];
-        requires = [ "create-nextcloud-network.service" "create-proxy-network.service" "docker.service" "docker.socket" ];
+        after = [
+          "create-nextcloud-network.service"
+          "create-proxy-network.service"
+          "docker.service"
+          "docker.socket"
+        ];
+        requires = [
+          "create-nextcloud-network.service"
+          "create-proxy-network.service"
+          "docker.service"
+          "docker.socket"
+        ];
       };
     };
   };

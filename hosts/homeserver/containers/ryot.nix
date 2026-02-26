@@ -1,4 +1,9 @@
-{ config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 
 with lib;
 let
@@ -36,7 +41,7 @@ in
         ];
         environment = {
           POSTGRES_DB = "postgres";
-          POSTGRES_USER = "postgres"; 
+          POSTGRES_USER = "postgres";
           POSTGRES_PASSWORD = "postgres";
         };
         extraOptions = [
@@ -51,7 +56,7 @@ in
           DATABASE_URL = "postgres://postgres:postgres@ryot_db:5432/postgres";
         };
         environmentFiles = [
-          config.sops.secrets.ryot_env.path 
+          config.sops.secrets.ryot_env.path
         ];
         dependsOn = [
           "ryot_db"
@@ -73,13 +78,31 @@ in
 
     systemd.services = {
       docker-ryot_db = {
-        after = [ "create-ryot-network.service" "docker.service" "docker.socket" ];
-        requires = [ "create-ryot-network.service" "docker.service" "docker.socket" ];
+        after = [
+          "create-ryot-network.service"
+          "docker.service"
+          "docker.socket"
+        ];
+        requires = [
+          "create-ryot-network.service"
+          "docker.service"
+          "docker.socket"
+        ];
       };
 
       docker-ryot = {
-        after = [ "create-ryot-network.service" "create-proxy-network.service" "docker.service" "docker.socket" ];
-        requires = [ "create-ryot-network.service" "create-proxy-network.service" "docker.service" "docker.socket" ];
+        after = [
+          "create-ryot-network.service"
+          "create-proxy-network.service"
+          "docker.service"
+          "docker.socket"
+        ];
+        requires = [
+          "create-ryot-network.service"
+          "create-proxy-network.service"
+          "docker.service"
+          "docker.socket"
+        ];
       };
     };
   };

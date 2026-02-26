@@ -1,15 +1,21 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 with lib;
 let
   cfg = config.modules.system.apps.lutris;
 
   lutris = pkgs.lutris.override {
-    extraLibraries = pkgs: with pkgs; [
-      # For Unreal Engine Fab Plugin
-      nspr
-      xorg.libXdamage
-    ];
+    extraLibraries =
+      pkgs: with pkgs; [
+        # For Unreal Engine Fab Plugin
+        nspr
+        xorg.libXdamage
+      ];
   };
 in
 {

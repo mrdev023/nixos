@@ -30,8 +30,16 @@ in
     };
 
     systemd.services.docker-watchtower = {
-      after = [ "create-metrics-network.service" "docker.service" "docker.socket" ];
-      requires = [ "create-metrics-network.service" "docker.service" "docker.socket" ];
+      after = [
+        "create-metrics-network.service"
+        "docker.service"
+        "docker.socket"
+      ];
+      requires = [
+        "create-metrics-network.service"
+        "docker.service"
+        "docker.socket"
+      ];
     };
   };
 }

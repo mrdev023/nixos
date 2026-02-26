@@ -1,4 +1,9 @@
-{ config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 
 with lib;
 let
@@ -32,7 +37,8 @@ in
             "files.autoSave" = "onFocusChange";
             "git.autofetch" = true;
           };
-        in rec {
+        in
+        rec {
           default = {
             extensions = commonExtensions;
             enableUpdateCheck = false;
@@ -44,28 +50,36 @@ in
             extensions =
               with pkgs.vscode-extensions;
               commonExtensions
-                ++ [ ms-vscode.cpptools ms-vscode.cmake-tools ms-vscode.cpptools-extension-pack ];
+              ++ [
+                ms-vscode.cpptools
+                ms-vscode.cmake-tools
+                ms-vscode.cpptools-extension-pack
+              ];
           };
 
           C_Sharp = {
             extensions =
               with pkgs.vscode-extensions;
               commonExtensions
-                ++ [ ms-dotnettools.csdevkit ms-dotnettools.csharp ms-dotnettools.vscode-dotnet-runtime ];
+              ++ [
+                ms-dotnettools.csdevkit
+                ms-dotnettools.csharp
+                ms-dotnettools.vscode-dotnet-runtime
+              ];
           };
-          
+
           UnrealEngine = {
-            extensions =
-              commonExtensions
-                ++ C_CPP.extensions
-                ++ C_Sharp.extensions;
+            extensions = commonExtensions ++ C_CPP.extensions ++ C_Sharp.extensions;
           };
 
           Phoenix = {
             extensions =
               with pkgs.vscode-extensions;
               commonExtensions
-                ++ [ phoenixframework.phoenix elixir-lsp.vscode-elixir-ls ];
+              ++ [
+                phoenixframework.phoenix
+                elixir-lsp.vscode-elixir-ls
+              ];
 
             userSettings = commonSettings // {
               "emmet.includeLanguages" = {
@@ -75,24 +89,21 @@ in
           };
 
           Ruby = {
-            extensions =
-              with pkgs.vscode-extensions;
-              commonExtensions
-                ++ [ shopify.ruby-lsp ];
+            extensions = with pkgs.vscode-extensions; commonExtensions ++ [ shopify.ruby-lsp ];
           };
 
           Rust = {
             extensions =
               with pkgs.vscode-extensions;
               commonExtensions
-                ++ [ tamasfe.even-better-toml rust-lang.rust-analyzer ];
+              ++ [
+                tamasfe.even-better-toml
+                rust-lang.rust-analyzer
+              ];
           };
 
           Typescript = {
-            extensions =
-              with pkgs.vscode-extensions;
-              commonExtensions
-                ++ [ yoavbls.pretty-ts-errors ];
+            extensions = with pkgs.vscode-extensions; commonExtensions ++ [ yoavbls.pretty-ts-errors ];
           };
         };
     };

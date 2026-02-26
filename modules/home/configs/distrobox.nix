@@ -1,4 +1,9 @@
-{ config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 
 with lib;
 let
@@ -163,19 +168,19 @@ in
   };
   config = mkIf cfg.enable {
     xdg.configFile."distrobox/distrobox.conf".text = ''
-        ${getExe pkgs.xhost} +si:localuser:${config.home.username} > /dev/null
+      ${getExe pkgs.xhost} +si:localuser:${config.home.username} > /dev/null
     '';
 
     xdg.configFile."distrobox/kdedev.ini".text = ''
-        [kdedev]
-        home=${config.home.homeDirectory}/distrobox/kdedev
-        init_hooks="${getExe initHook}"
-        additional_packages="kde-cli-tools base-devel nix"
-        image=docker.io/archlinux:latest
-        init=true
-        nvidia=true
-        pull=true
-        root=false
+      [kdedev]
+      home=${config.home.homeDirectory}/distrobox/kdedev
+      init_hooks="${getExe initHook}"
+      additional_packages="kde-cli-tools base-devel nix"
+      image=docker.io/archlinux:latest
+      init=true
+      nvidia=true
+      pull=true
+      root=false
     '';
   };
 }

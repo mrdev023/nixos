@@ -35,7 +35,7 @@
   services.containers = {
     workPath = "/mnt/work";
     domain = "mrdev023.local";
-    
+
     traefik.enable = true;
     nextcloud.enable = true;
     home-assistant.enable = true;
@@ -57,7 +57,7 @@
     dateFormat = "--iso-8601=seconds";
     archiveBaseName = null;
   };
-  
+
   virtualisation.docker.autoPrune.enable = true;
 
   # SSH configuration
