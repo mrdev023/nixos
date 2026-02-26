@@ -28,7 +28,7 @@
     videos = "${config.home.homeDirectory}/Vidéos";
 
     extraConfig = {
-      PROJECT = "${config.home.homeDirectory}/Projets";
+      PROJECTS = "${config.home.homeDirectory}/Projets";
     };
   };
 }
