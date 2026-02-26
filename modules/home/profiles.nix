@@ -50,6 +50,10 @@ in
       };
 
       programs.helix.defaultEditor = true;
+
+      home.packages = with pkgs; [
+        tldr # Alternative à man
+      ];
     })
 
     # Profile for minimal usable home manager configuration on non NixOS
