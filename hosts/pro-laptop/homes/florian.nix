@@ -1,4 +1,4 @@
-{ config, ... }:
+{ config, pkgs, ... }:
 
 {
   imports = [
@@ -15,4 +15,10 @@
   };
 
   home.sessionVariables.NH_FLAKE = "${config.home.homeDirectory}/Projets/Perso/nixos";
+
+  home.packages = with pkgs; [
+    kubectl
+    lazysql
+    k9s
+  ];
 }
