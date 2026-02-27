@@ -30,6 +30,7 @@ in
 
   home.packages = [
     nix-citizen.packages.${system}.rsi-launcher
+    pkgs.claude-code
   ];
 
   home.sessionVariables.NH_FLAKE = "${config.home.homeDirectory}/Projets/Perso/DevOps/nixos";
