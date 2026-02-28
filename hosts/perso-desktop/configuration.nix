@@ -20,11 +20,11 @@
 
   networking.hostName = "nixos-desktop-perso"; # Define your hostname.
 
-  services.sunshine = {
-    enable = true;
-    capSysAdmin = true;
-    openFirewall = true;
-  };
+  # services.sunshine = {
+  #   enable = true;
+  #   capSysAdmin = true;
+  #   openFirewall = true;
+  # };
 
   services.udev.packages = [ pkgs.wooting-udev-rules ];
 
