@@ -14,12 +14,6 @@
   ];
 
   # Bootloader.
-  # boot.loader.systemd-boot.enable = lib.mkForce false;
-  # boot.lanzaboote = {
-  #   enable = true;
-  #   pkiBundle = "/var/lib/sbctl";
-  # };
-  boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
   # Limit the number of generations to keep
@@ -54,11 +48,12 @@
     desktop.plasma.enable = true;
 
     hardware = {
+      audio.pipewire.enable = true;
       bluetooth.enable = true;
       gamingKernel.enable = true;
-      keymaps.layout = "fr";
       graphics.nvidia.enable = true;
-      audio.pipewire.enable = true;
+      keymaps.layout = "fr";
+      secure-boot.enable = true;
       printing.enable = true;
     };
 
