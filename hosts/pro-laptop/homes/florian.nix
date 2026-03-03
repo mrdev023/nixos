@@ -20,6 +20,5 @@
     kubectl
     lazysql
     k9s
-    claude-code
   ];
 }

@@ -37,10 +37,6 @@ in
           jujutsu.enable = true;
           lazygit.enable = true;
           mergiraf.enable = true;
-          television = {
-            enable = true;
-            channels = [ "nix-search-tv" ];
-          };
           superfile.enable = true;
           zsh.enable = true;
           zoxide.enable = true;
@@ -51,9 +47,20 @@ in
 
       programs.helix.defaultEditor = true;
 
-      home.packages = with pkgs; [
-        tldr # Alternative à man
-      ];
+      home = {
+        packages = with pkgs; [
+          tldr # Alternative à man
+          claude-code
+        ];
+
+        sessionVariables = {
+          SSH_AUTH_SOCK = "${config.home.homeDirectory}/.var/app/com.bitwarden.desktop/data/.bitwarden-ssh-agent.sock";
+        };
+
+        shellAliases = {
+          help = "tldr";
+        };
+      };
     })
 
     # Profile for minimal usable home manager configuration on non NixOS

@@ -156,10 +156,6 @@
       #####################################################################
       #####################################################################
       homeConfigurations = {
-        "florian@fedora" = customHomeManagerConfiguration {
-          name = "pro-home";
-          system = "x86_64-linux";
-        };
         "florian@archlinux" = customHomeManagerConfiguration {
           name = "kdedev-home";
           system = "x86_64-linux";
