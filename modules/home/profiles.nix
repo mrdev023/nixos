@@ -72,8 +72,6 @@ in
           enableSshSupport = true;
           pinentry.package = pkgs.pinentry-qt;
         };
-
-        yubikey-agent.enable = true;
       };
 
       programs.gpg = {
