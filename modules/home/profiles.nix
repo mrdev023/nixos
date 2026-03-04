@@ -48,9 +48,24 @@ in
       programs.helix.defaultEditor = true;
 
       home = {
+        file.".ssh/import-agent-keys.sh" = {
+          executable = true;
+          text = ''
+            #!/usr/bin/env bash
+            mkdir -p ~/.ssh
+            rm ~/.ssh/*_ssh.pub
+            ssh-add -L | while read -r type key comment; do
+              filename=$(echo "$comment" | tr ' ' '_' | tr '[:upper:]' '[:lower:]').pub
+              echo "$type $key $comment" > ~/.ssh/"$filename"
+              echo "Imported: ~/.ssh/$filename"
+            done
+          '';
+        };
+
         packages = with pkgs; [
           tldr # Alternative à man
           claude-code
+          npins
         ];
 
         sessionVariables = {
