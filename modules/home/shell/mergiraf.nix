@@ -11,8 +11,7 @@ in
     '';
   };
   config = mkIf cfg.enable {
-    # Already configure git to use mergiraf
+    # Already configure git and jujutsu to use mergiraf
     programs.mergiraf.enable = true;
-    programs.jujutsu.settings.ui.merge-editor = "mergiraf";
   };
 }
