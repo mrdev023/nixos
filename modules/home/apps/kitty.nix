@@ -9,21 +9,13 @@ with lib;
 let
   cfg = config.modules.home.apps.kitty;
   cfgFont = config.modules.home.shell.font;
+  cfgStylix = config.stylix;
 in
 {
   options.modules.home.apps.kitty = {
     enable = mkEnableOption ''
       Enable kitty with my custom configurations
     '';
-
-    enableBlur = mkOption {
-      default = !config.modules.home.desktop.hyprland.enable; # Disable by default if hyprland is enabled (Hyprland enable own blur)
-      example = true;
-      description = ''
-        Enable blur (Usefull to disable with hyprland)
-      '';
-      type = types.bool;
-    };
 
     package = mkPackageOption pkgs "kitty" { };
   };
@@ -46,13 +38,14 @@ in
           confirm_os_window_close = 0; # Disable close confirmation
           # hide_window_decorations = if pkgs.stdenv.hostPlatform.isDarwin then "titlebar-and-corners" else "yes";
 
-          background_opacity = "0.7";
-
           cursor_trail = 3;
           cursor_trail_decay = "0.1 0.4";
         }
 
-        (mkIf cfg.enableBlur { background_blur = "1"; })
+        (mkIf (!cfgStylix.enable) {
+          background_opacity = "0.7";
+          background_blur = "1";
+        })
         (mkIf config.programs.zsh.enable { shell = "zsh"; })
       ];
     };

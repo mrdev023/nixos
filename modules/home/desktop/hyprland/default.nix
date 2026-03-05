@@ -3,7 +3,7 @@
   pkgs,
   lib,
   ...
-}:
+}@args:
 
 with lib;
 let
@@ -21,6 +21,7 @@ in
     '';
   };
   config = mkIf cfg.enable (mkMerge [
+    (import ./programs/stylix/default.nix args)
     (import ./programs/dunst/default.nix)
     (import ./programs/waybar/default.nix)
     {

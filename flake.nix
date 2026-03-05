@@ -51,6 +51,11 @@
     };
 
     nix-citizen.url = "github:LovingMelody/nix-citizen";
+
+    stylix = {
+      url = "github:nix-community/stylix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
@@ -58,6 +63,7 @@
       flake-utils,
       home-manager,
       nixpkgs,
+      stylix,
       ...
     }:
     let
@@ -65,6 +71,7 @@
         nix-flatpak.homeManagerModules.nix-flatpak
         nvf.homeManagerModules.default
         sops-nix.homeManagerModules.sops
+        stylix.homeModules.stylix
       ];
 
       overlays = with inputs; [
