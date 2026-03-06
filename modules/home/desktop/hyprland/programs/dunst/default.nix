@@ -5,15 +5,18 @@
       global = {
         monitor = 0;
         follow = "keyboard";
-        geometry = "400x5-10+48";
+        width = 400;
+        height = "(12, 300)";
+        notification_limit = 5;
+        offset = "(10, 48)";
+        origin = "top-right";
         indicate_hidden = "yes";
         shrink = "yes";
         transparency = 20;
-        notification_height = 12;
         separator_height = 2;
         padding = 24;
         horizontal_padding = 24;
-        frame_width = 1;
+        frame_width = 2;
         corner_radius = 3;
 
         # Sort messages by urgency.
@@ -27,13 +30,15 @@
         #   %a  appname
         #   %s  summary
         #   %b  body
+        #   %c  category
+        #   %S  stack_tag
         #   %i  iconname (including its path)
         #   %I  iconname (without its path)
-        #   %p  progress value if set ([  0%] to [100%]) or nothing
-        #   %n  progress value if set without any extra characters
-        #   %%  Literal %
+        #   %p  progress value ([ 0%] to [100%])
+        #   %n  progress value without any extra characters
+        #   %%  literal %
         # Markup is allowed
-        format = " <b>%s %p</b>\\n%b";
+        format = "<span size='x-large'> </span><b>%s %p</b>\\n%b";
 
         alignment = "left";
         show_age_threshold = 60;
@@ -65,14 +70,17 @@
 
       urgency_low = {
         timeout = 8;
+        format = "<span size='x-large'> </span><b>%s %p</b>\\n%b";
       };
 
       urgency_normal = {
         timeout = 10;
+        format = "<span size='x-large'>󰂞 </span><b>%s %p</b>\\n%b";
       };
 
       urgency_critical = {
         timeout = 0;
+        format = "<span size='x-large'>󰵙 </span><b>%s %p</b>\\n%b";
       };
     };
   };
