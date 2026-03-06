@@ -1,5 +1,6 @@
 {
   lib,
+  pkgs,
   ...
 }:
 
@@ -31,10 +32,10 @@ with lib;
 
         modules-left = [
           "hyprland/workspaces"
-          "mpris"
         ];
 
         modules-center = [
+          "mpris"
           "idle_inhibitor"
           "clock"
         ];
@@ -50,7 +51,7 @@ with lib;
           format = "{player_icon} {title} - {artist}";
           format-paused = "{status_icon} <i>{title} - {artist}</i>";
           player-icons = {
-            default = "▶";
+            default = "";
           };
           status-icons = {
             paused = "⏸";
@@ -59,14 +60,48 @@ with lib;
           max-length = 30;
         };
 
-        tray = {
-          icon-size = 12;
-          spacing = 5;
+        idle_inhibitor = {
+          format = "{icon}";
+          format-icons = {
+            activated = "󰒳";
+            deactivated = "󰒲";
+          };
         };
 
         clock = {
           tooltip-format = "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>";
           format = "{:%a, %d %b, %H:%M}";
+        };
+
+        tray = {
+          icon-size = 16;
+          spacing = 8;
+        };
+
+        pulseaudio = {
+          on-click = getExe pkgs.pavucontrol;
+          scroll-step = 5;
+          format = "{icon}";
+          format-muted = "";
+          format-icons.default = [
+            ""
+            ""
+            ""
+            ""
+          ];
+        };
+
+        network = {
+          on-click = "${getExe pkgs.kitty} --title nmtui ${getExe' pkgs.networkmanager "nmtui"}";
+          format = "{ifname}";
+          format-wifi = "";
+          format-ethernet = "󰈀";
+          format-disconnected = "󰌙";
+          tooltip-format = "{ifname} via {gwaddr} 󰊗";
+          tooltip-format-wifi = "<big>{essid}</big>\n<tt>{signalStrength}%</tt>";
+          tooltip-format-ethernet = "<big>{ifname}</big>\n<tt>{ipaddr}/{cidr}</tt>";
+          tooltip-format-disconnected = "Disconnected";
+          max-length = 50;
         };
       };
     };
