@@ -13,6 +13,15 @@ let
     #!${pkgs.runtimeShell}
     pactl set-sink-volume @DEFAULT_SINK@ $1 && $send_volume_notif notify-send "Volume" -h int:value:"$(pactl get-sink-volume @DEFAULT_SINK@ | cut -d ' ' -f6 | cut -d '%' -f1)"
   '';
+
+  hyprsplit = pkgs.hyprlandPlugins.hyprsplit.overrideAttrs {
+    src = pkgs.fetchFromGitHub {
+      owner = "shezdy";
+      repo = "hyprsplit";
+      rev = "v0.54.1";
+      hash = "sha256-IksjbT24cgWl2h6ZV4bPxoORmHCQ7h/M/OLQ4epReAE=";
+    };
+  };
 in
 {
   options.modules.home.desktop.hyprland = {
@@ -23,23 +32,23 @@ in
   config = mkIf cfg.enable (mkMerge [
     (import ./programs/stylix/default.nix args)
     (import ./programs/dunst/default.nix)
-    (import ./programs/waybar/default.nix)
+    (import ./programs/hyprpaper/default.nix)
+    (import ./programs/waybar/default.nix args)
+    (import ./programs/wofi/default.nix)
     {
       modules.home.apps.kitty.enable = mkDefault true;
 
       home.packages = with pkgs; [
         dunst
         hyprpicker
-        hyprpicker
         networkmanagerapplet
         playerctl
-        waybar
       ];
 
       xdg.portal = {
         enable = true;
         extraPortals = with pkgs; [
-          xdg-desktop-portal-gtk
+          kdePackages.xdg-desktop-portal-kde
         ];
         xdgOpenUsePortal = true;
         configPackages = [ config.wayland.windowManager.hyprland.package ];
@@ -51,7 +60,7 @@ in
       wayland.windowManager.hyprland = {
         enable = true;
 
-        plugins = with pkgs.hyprlandPlugins; [
+        plugins = [
           hyprsplit
         ];
 
@@ -97,11 +106,13 @@ in
             gaps_out = 20;
             border_size = 3;
 
-            layout = "dwindle";
+            layout = "scrolling";
           };
 
           # See https://wiki.hyprland.org/Configuring/Variables/ for more
           decoration = {
+            active_opacity = 0.95;
+            inactive_opacity = 0.75;
             rounding = 10;
 
             blur = {
@@ -133,12 +144,6 @@ in
             ];
           };
 
-          # See https://wiki.hyprland.org/Configuring/Dwindle-Layout/ for more
-          dwindle = {
-            pseudotile = "yes"; # master switch for pseudotiling. Enabling is bound to mainMod + P in the keybinds section below
-            preserve_split = "yes"; # you probably want this
-          };
-
           # See https://wiki.hyprland.org/Configuring/Master-Layout/ for more
           master = {
             new_status = "master";
@@ -162,8 +167,6 @@ in
             "$mainMod, V, togglefloating,"
             "$mainMod, F, fullscreen, 0"
             "$mainMod, D, exec, wofi -i -s ~/.config/hypr/wofi/style.css --show drun"
-            "$mainMod, P, pseudo," # dwindle
-            "$mainMod, B, togglesplit," # dwindle
 
             # Move focus with mainMod + arrow keys
             "$mainMod, h, movefocus, l"
@@ -239,6 +242,11 @@ in
             # Screen brightness controls
             ", XF86MonBrightnessUp, exec, xbacklight -inc 5"
             ", XF86MonBrightnessDown, exec, xbacklight -dec 5"
+          ];
+
+          windowrule = [
+            # opacity <active_value> override <inactive_value> override <fullscreen_value> override
+            "opacity 1.0 override 0.75 override 1.0 override, match:initial_class app.zen_browser.zen"
           ];
         };
       };

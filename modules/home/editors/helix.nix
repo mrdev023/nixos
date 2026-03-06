@@ -9,6 +9,7 @@ with lib;
 let
   cfgTop = config.modules.home.editors;
   cfg = cfgTop.helix;
+  cfgStylix = config.stylix;
 
   utils = import ./utils.nix {
     config = cfgTop;
@@ -26,8 +27,6 @@ in
     {
       enable = true;
       settings = {
-        theme = "tokyonight";
-
         editor = {
           bufferline = "always";
           line-number = "relative";
@@ -36,6 +35,10 @@ in
         };
       };
     }
+
+    (mkIf (!cfgStylix.enable) {
+      settings.theme = "tokyonight";
+    })
 
     (mkIf
       (cfgHasAnyOfLanguages [

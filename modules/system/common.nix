@@ -21,7 +21,12 @@
     LC_PAPER = "fr_FR.UTF-8";
     LC_TELEPHONE = "fr_FR.UTF-8";
     LC_TIME = "fr_FR.UTF-8";
+    LC_ALL = "fr_FR.UTF-8";
   };
+
+  i18n.supportedLocales = [
+    "fr_FR.UTF-8/UTF-8"
+  ];
 
   # Enable also the profiles + GC Cleaning
   modules.system.apps.nh.enable = true;

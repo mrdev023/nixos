@@ -102,7 +102,7 @@
                 nixpkgs.overlays = overlays;
                 home-manager.useGlobalPkgs = true;
                 home-manager.useUserPackages = true;
-                home-manager.extraSpecialArgs = inputs;
+                home-manager.extraSpecialArgs = { inherit inputs; };
                 home-manager.sharedModules = home-modules;
                 home-manager.backupFileExtension = "bak";
               }

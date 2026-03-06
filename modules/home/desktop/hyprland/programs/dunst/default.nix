@@ -14,22 +14,12 @@
         padding = 24;
         horizontal_padding = 24;
         frame_width = 1;
-        frame_color = "#3c3836";
         corner_radius = 3;
-
-        # Define a color for the separator.
-        # possible values are:
-        #  * auto: dunst tries to find a color fitting to the background;
-        #  * foreground: use the same color as the foreground;
-        #  * frame: use the same color as the frame;
-        #  * anything else will be interpreted as a X color.
-        separator_color = "auto";
 
         # Sort messages by urgency.
         sort = "yes";
 
         idle_threshold = 120;
-        font = "RobotoMono Nerd Font 11";
         line_height = 5;
         markup = "full";
 
@@ -74,20 +64,14 @@
       };
 
       urgency_low = {
-        background = "#0A0B0D";
-        foreground = "#FFFFB7";
         timeout = 8;
       };
 
       urgency_normal = {
-        background = "#bdae93";
-        foreground = "#3c3836";
         timeout = 10;
       };
 
       urgency_critical = {
-        background = "#fb4934";
-        foreground = "#32302f";
         timeout = 0;
       };
     };

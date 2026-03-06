@@ -7,6 +7,7 @@
 with lib;
 let
   cfg = config.modules.system.desktop.plasma;
+  cfgHyprland = config.modules.system.desktop.hyprland;
 in
 {
   options.modules.system.desktop.plasma = {
@@ -18,46 +19,53 @@ in
       Enable wallpaper engine plugin for plasma
     '';
   };
-  config = mkIf cfg.enable {
-    # Enable the X11 windowing system.
-    services.xserver.enable = true;
+  config = mkIf cfg.enable (mkMerge [
+    (mkIf cfgHyprland.enable {
+      services.displayManager.sddm.enable = true;
+    })
+    (mkIf (!cfgHyprland.enable) {
+      services.displayManager.plasma-login-manager.enable = true;
+    })
+    {
+      # Enable the X11 windowing system.
+      services.xserver.enable = true;
 
-    # Enable the KDE Plasma Desktop Environment.
-    services.displayManager.plasma-login-manager.enable = true;
-    services.desktopManager.plasma6.enable = true;
+      # Enable the KDE Plasma Desktop Environment.
+      services.desktopManager.plasma6.enable = true;
 
-    programs = {
-      kde-pim = {
-        enable = true;
-        merkuro = true;
-        kmail = true;
-        kontact = true;
+      programs = {
+        kde-pim = {
+          enable = true;
+          merkuro = true;
+          kmail = true;
+          kontact = true;
+        };
+        kdeconnect.enable = true;
       };
-      kdeconnect.enable = true;
-    };
 
-    environment.systemPackages =
-      with pkgs;
-      with kdePackages;
-      [
-        # Usefull for automatic informations collect software like KDE
-        vulkan-tools # For vulkaninfo command
-        wayland-utils # For wayland-info command
-        mesa-demos
-        clinfo
-        aha
-        usbutils
-        pciutils
+      environment.systemPackages =
+        with pkgs;
+        with kdePackages;
+        [
+          # Usefull for automatic informations collect software like KDE
+          vulkan-tools # For vulkaninfo command
+          wayland-utils # For wayland-info command
+          mesa-demos
+          clinfo
+          aha
+          usbutils
+          pciutils
 
-        krfb # Use by kdeconnect for virtualmonitorplugin "krfb-virtualmonitor"
-        discover
-        kgpg
-        yakuake
+          krfb # Use by kdeconnect for virtualmonitorplugin "krfb-virtualmonitor"
+          discover
+          kgpg
+          yakuake
 
-        # Online accounts
-        kaccounts-integration
-        kaccounts-providers
-      ]
-      ++ lib.optionals cfg.enableWallpaperEngine [ wallpaper-engine-plugin ];
-  };
+          # Online accounts
+          kaccounts-integration
+          kaccounts-providers
+        ]
+        ++ lib.optionals cfg.enableWallpaperEngine [ wallpaper-engine-plugin ];
+    }
+  ]);
 }
