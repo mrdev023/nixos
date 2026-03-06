@@ -100,21 +100,18 @@ with lib;
       /* This section can be use if you want to separate waybar modules */
       .modules-left {
         background: @base00;
-        border: 1px solid @base0D;
         padding-right: 15px;
         padding-left: 2px;
         border-radius: 10px;
       }
       .modules-center {
         background: @base00;
-        border: 1px solid @base0D;
         padding-right: 5px;
         padding-left: 5px;
         border-radius: 10px;
       }
       .modules-right {
         background: @base00;
-        border: 1px solid @base0D;
         padding-right: 15px;
         padding-left: 15px;
         border-radius: 10px;

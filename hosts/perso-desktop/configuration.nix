@@ -39,7 +39,10 @@
 
     boot.plymouth.enable = true;
 
-    desktop.plasma.enable = true;
+    desktop = {
+      plasma.enable = true;
+      hyprland.enable = true;
+    };
 
     hardware = {
       bluetooth.enable = true;

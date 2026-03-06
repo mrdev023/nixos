@@ -9,11 +9,6 @@ with lib;
 let
   cfg = config.modules.home.desktop.hyprland;
 
-  set_volume = pkgs.writeScriptBin "set_volume.sh" ''
-    #!${pkgs.runtimeShell}
-    pactl set-sink-volume @DEFAULT_SINK@ $1 && $send_volume_notif notify-send "Volume" -h int:value:"$(pactl get-sink-volume @DEFAULT_SINK@ | cut -d ' ' -f6 | cut -d '%' -f1)"
-  '';
-
   hyprsplit = pkgs.hyprlandPlugins.hyprsplit.overrideAttrs {
     src = pkgs.fetchFromGitHub {
       owner = "shezdy";
@@ -37,13 +32,6 @@ in
     (import ./programs/wofi/default.nix)
     {
       modules.home.apps.kitty.enable = mkDefault true;
-
-      home.packages = with pkgs; [
-        dunst
-        hyprpicker
-        networkmanagerapplet
-        playerctl
-      ];
 
       xdg.portal = {
         enable = true;
@@ -161,7 +149,7 @@ in
             # Example binds, see https://wiki.hyprland.org/Configuring/Binds/ for more
             "$mainMod, RETURN, exec, kitty"
             "$mainMod, C, killactive,"
-            "$mainMod SHIFT, C, exec, hyprpicker -a -f hex"
+            "$mainMod SHIFT, C, exec, ${getExe pkgs.hyprpicker} -a -f hex"
             "$mainMod SHIFT, Q, exit,"
             "$mainMod, E, exec, nautilus"
             "$mainMod, V, togglefloating,"
@@ -218,31 +206,41 @@ in
             "$mainMod, mouse:273, resizewindow"
           ];
 
-          binde = [
-            "$mainMod CTRL_L, h, resizeactive, -50 0"
-            "$mainMod CTRL_L, l, resizeactive, 50 0"
-            "$mainMod CTRL_L, j, resizeactive, 0 -50"
-            "$mainMod CTRL_L, k, resizeactive, 0 50"
+          binde =
+            let
+              volume = (import ./scripts/volume.nix args);
+            in
+            [
+              "$mainMod CTRL_L, h, resizeactive, -50 0"
+              "$mainMod CTRL_L, l, resizeactive, 50 0"
+              "$mainMod CTRL_L, j, resizeactive, 0 -50"
+              "$mainMod CTRL_L, k, resizeactive, 0 50"
 
-            # Use pactl to adjust volume in PulseAudio.
-            ", XF86AudioRaiseVolume, exec, ${set_volume} \"+5%\""
-            ", XF86AudioLowerVolume, exec, ${set_volume} \"-5%\""
-          ];
+              # Use pactl to adjust volume in PulseAudio.
+              ", XF86AudioRaiseVolume, exec, ${volume.raiseVolume}"
+              ", XF86AudioLowerVolume, exec, ${volume.lowerVolume}"
+            ];
 
-          bindl = [
-            ", XF86AudioMute, exec, pactl set-sink-mute @DEFAULT_SINK@ toggle"
-            ", XF86AudioMicMute, exec, pactl set-source-mute @DEFAULT_SOURCE@ toggle"
+          bindl =
+            let
+              volume = (import ./scripts/volume.nix args);
+              player = (import ./scripts/player.nix args);
+              backlight = (import ./scripts/backlight.nix args);
+            in
+            [
+              ", XF86AudioMute, exec, ${volume.toggleMute}"
+              # ", XF86AudioMicMute, exec, ${toggleMute}"
 
-            # Media player controls
-            ", XF86AudioPlay, exec, playerctl play-pause"
-            ", XF86AudioPause, exec, playerctl play-pause"
-            ", XF86AudioPrev, exec, playerctl previous"
-            ", XF86AudioNext, exec, playerctl next"
+              # Media player controls
+              ", XF86AudioPlay, exec, ${player.play}"
+              ", XF86AudioPause, exec, ${player.pause}"
+              ", XF86AudioPrev, exec, ${player.previous}"
+              ", XF86AudioNext, exec, ${player.next}"
 
-            # Screen brightness controls
-            ", XF86MonBrightnessUp, exec, xbacklight -inc 5"
-            ", XF86MonBrightnessDown, exec, xbacklight -dec 5"
-          ];
+              # Screen brightness controls
+              ", XF86MonBrightnessUp, exec, ${backlight.inc}"
+              ", XF86MonBrightnessDown, exec, ${backlight.dec}"
+            ];
 
           windowrule = [
             # opacity <active_value> override <inactive_value> override <fullscreen_value> override
