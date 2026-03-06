@@ -44,6 +44,7 @@ with lib;
           "pulseaudio"
           "network"
           "bluetooth"
+          "privacy"
           "tray"
         ];
 
@@ -74,7 +75,6 @@ with lib;
         };
 
         tray = {
-          icon-size = 16;
           spacing = 8;
         };
 
@@ -103,10 +103,40 @@ with lib;
           tooltip-format-disconnected = "Disconnected";
           max-length = 50;
         };
+
+        bluetooth = {
+          on-click = "${getExe pkgs.overskride}";
+          format = " {status}";
+          format-connected = " {device_alias}";
+          format-connected-battery = " {device_alias} {device_battery_percentage}%";
+          tooltip-format = "{controller_alias}\t{controller_address}\n\n{num_connections} connected";
+          tooltip-format-connected = "{controller_alias}\t{controller_address}\n\n{num_connections} connected\n\n{device_enumerate}";
+          tooltip-format-enumerate-connected = "{device_alias}\t{device_address}";
+          tooltip-format-enumerate-connected-battery = "{device_alias}\t{device_address}\t{device_battery_percentage}%";
+        };
+
+        privacy = {
+          icon-spacing = 4;
+          modules = [
+            {
+              type = "screenshare";
+              tooltip = true;
+            }
+            {
+              type = "audio-out";
+              tooltip = true;
+            }
+            {
+              type = "audio-in";
+              tooltip = true;
+            }
+          ];
+        };
       };
     };
 
     style = mkAfter ''
+      /* Custom section */
       * {
         margin: 0px;
         padding: 0px;
@@ -132,17 +162,16 @@ with lib;
         margin-left: 5px;
       }
 
-      /* This section can be use if you want to separate waybar modules */
       .modules-left {
         background: @base00;
         padding-right: 15px;
-        padding-left: 2px;
+        padding-left: 15px;
         border-radius: 10px;
       }
       .modules-center {
         background: @base00;
-        padding-right: 5px;
-        padding-left: 5px;
+        padding-right: 15px;
+        padding-left: 15px;
         border-radius: 10px;
       }
       .modules-right {
