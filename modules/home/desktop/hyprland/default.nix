@@ -189,6 +189,8 @@ in
             "$mainMod, 8, split:workspace, 8"
             "$mainMod, 9, split:workspace, 9"
             "$mainMod, 0, split:workspace, 10"
+            "$mainMod ALT_L, h, split:workspace, e-1"
+            "$mainMod ALT_L, l, split:workspace, e+1"
 
             # Move active window to a workspace with mainMod + SHIFT + [0-9]
             "$mainMod SHIFT, 1, split:movetoworkspace, 1"
