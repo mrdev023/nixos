@@ -30,10 +30,6 @@ in
 
         # Loisir
         {
-          appId = "io.github.zen_browser.zen";
-          origin = "flathub";
-        }
-        {
           appId = "com.spotify.Client";
           origin = "flathub";
         }
