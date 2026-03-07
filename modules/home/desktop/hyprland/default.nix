@@ -58,7 +58,7 @@ in
           variables = [ "--all" ];
         };
 
-        settings = {
+        settings = rec {
           "$mainMod" = "SUPER";
 
           exec-once = [
@@ -97,12 +97,15 @@ in
             border_size = variables.window.border.size;
 
             layout = "scrolling";
+
+            snap.enabled = true;
           };
 
           # See https://wiki.hyprland.org/Configuring/Variables/ for more
           decoration = {
             active_opacity = 0.95;
             inactive_opacity = 0.75;
+            fullscreen_opacity = 1.0;
             rounding = variables.window.border.radius;
 
             blur = {
@@ -153,9 +156,11 @@ in
             "$mainMod, C, killactive,"
             "$mainMod SHIFT, C, exec, ${getExe pkgs.hyprpicker} -a -f hex"
             "$mainMod SHIFT, Q, exit,"
-            "$mainMod, E, exec, nautilus"
+            "$mainMod, E, exec, ${getExe pkgs.nautilus}"
             "$mainMod, V, togglefloating,"
             "$mainMod, F, fullscreen, 0"
+            "$mainMod, T, pin, active"
+            # Already installed with programs.wofi.enable = true;
             "$mainMod, D, exec, wofi -i -s ~/.config/wofi/style.css --show drun"
 
             # Move focus with mainMod + arrow keys
@@ -245,8 +250,32 @@ in
             ];
 
           windowrule = [
-            # opacity <active_value> override <inactive_value> override <fullscreen_value> override
-            "opacity 1.0 override 0.75 override 1.0 override, match:initial_class app.zen_browser.zen"
+            {
+              name = "no-set-active-opacity-for-zen";
+              "match:initial_class" = "app.zen_browser.zen";
+              opacity = "1.0 ${toString decoration.inactive_opacity}";
+              no_blur = "on";
+            }
+            {
+              name = "set-pavucontrol-to-float";
+              "match:initial_class" = "org.pulseaudio.pavucontrol";
+              float = "on";
+            }
+            {
+              name = "set-overskride-to-float";
+              "match:initial_class" = "io.github.kaii_lb.Overskride";
+              float = "on";
+            }
+            {
+              name = "set-nmtui-to-float";
+              "match:initial_title" = "nmtui";
+              float = "on";
+            }
+            {
+              name = "set_decoration_for_pinned_window";
+              "match:pin" = true;
+              border_size = general.border_size * 2;
+            }
           ];
         };
       };
