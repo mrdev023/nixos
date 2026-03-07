@@ -254,8 +254,15 @@ in
           windowrule = [
             {
               name = "no-set-active-opacity-for-zen";
-              "match:initial_class" = "app.zen_browser.zen";
+              "match:initial_class" = "zen-beta";
               opacity = "1.0 override ${toString decoration.inactive_opacity} override ${toString decoration.fullscreen_opacity} override";
+            }
+            {
+              name = "set-zen-pip-to-float";
+              "match:initial_class" = "zen-beta";
+              "match:initial_title" = "Picture-in-Picture";
+              float = "on";
+              pin = "on";
             }
             {
               name = "set-pavucontrol-to-float";
