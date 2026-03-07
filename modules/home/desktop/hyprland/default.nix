@@ -255,8 +255,7 @@ in
             {
               name = "no-set-active-opacity-for-zen";
               "match:initial_class" = "app.zen_browser.zen";
-              opacity = "1.0 ${toString decoration.inactive_opacity}";
-              no_blur = "on";
+              opacity = "1.0 override ${toString decoration.inactive_opacity} override ${toString decoration.fullscreen_opacity} override";
             }
             {
               name = "set-pavucontrol-to-float";

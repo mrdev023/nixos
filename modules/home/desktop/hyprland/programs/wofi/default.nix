@@ -10,7 +10,10 @@ let
 
   # Custom
   variables = import ../../variables.nix;
-  border.radius = toString variables.window.border.radius;
+  border = {
+    radius = toString variables.window.border.radius;
+    size = toString variables.window.border.size;
+  };
   window.gap = toString variables.window.gap;
   entry.gap = {
     x = toString variables.window.gap;
@@ -24,6 +27,7 @@ in
 
     settings = {
       close_on_focus_loss = true;
+      prompt = "";
 
       key_up = "Ctrl-k";
       key_down = "Ctrl-j";
@@ -41,6 +45,11 @@ in
         background-color: ${colors.base00};
         color: ${colors.base05};
         border-radius: ${border.radius}px;
+        border: ${border.size}px solid ${colors.base03};
+      }
+
+      window:focus {
+        border-color: ${colors.base0D};
       }
 
       #outer-box {
