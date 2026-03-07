@@ -5,7 +5,12 @@
 }:
 
 with lib;
+let
+  variables = import ../../variables.nix;
+in
 {
+  stylix.targets.waybar.addCss = false;
+
   programs.waybar = {
     enable = true;
 
@@ -19,16 +24,17 @@ with lib;
         layer = "top";
         position = "top";
         mode = "dock";
-        height = 32;
         exclusive = true;
         passthrough = false;
         gtk-layer-shell = true;
         ipc = true;
         fixed-center = true;
-        margin-top = 10;
-        margin-left = 10;
-        margin-right = 10;
-        margin-bottom = 0;
+        height = variables.topBar.height;
+        # Use same values as windows for consistence
+        margin-top = variables.window.gap;
+        margin-left = variables.window.gap;
+        margin-right = variables.window.gap;
+        margin-bottom = 0; # Use gaps_out configured in hyprland
 
         modules-left = [
           "hyprland/workspaces"
@@ -36,11 +42,11 @@ with lib;
 
         modules-center = [
           "mpris"
-          "idle_inhibitor"
           "clock"
         ];
 
         modules-right = [
+          "idle_inhibitor"
           "pulseaudio"
           "network"
           "bluetooth"
@@ -72,10 +78,12 @@ with lib;
         clock = {
           tooltip-format = "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>";
           format = "{:%a, %d %b, %H:%M}";
+          timezone = "Europe/Paris";
+          locale = "fr_FR.UTF-8";
         };
 
         tray = {
-          spacing = 8;
+          spacing = variables.topBar.gap;
         };
 
         pulseaudio = {
@@ -116,14 +124,10 @@ with lib;
         };
 
         privacy = {
-          icon-spacing = 4;
+          icon-spacing = variables.topBar.gap;
           modules = [
             {
               type = "screenshare";
-              tooltip = true;
-            }
-            {
-              type = "audio-out";
               tooltip = true;
             }
             {
@@ -135,51 +139,85 @@ with lib;
       };
     };
 
-    style = mkAfter ''
-      /* Custom section */
-      * {
-        margin: 0px;
-        padding: 0px;
-      }
+    style =
+      let
+        border.radius = toString variables.window.border.radius;
+        workspace.radius = toString (variables.window.border.radius / 2);
+        padding.x = toString (variables.window.gap * 2);
+        modules.gap = toString (variables.topBar.gap / 2);
+      in
+      mkAfter ''
+        /* Custom section */
+        * {
+          margin: 0px;
+          padding: 0px;
+        }
 
-      window#waybar {
-        transition-property: background-color;
-        transition-duration: 0.5s;
-        background: transparent;
-        border-radius: 10px;
-      }
+        window#waybar {
+          transition-property: background-color;
+          transition-duration: 0.5s;
+          background: transparent;
+          color: @base05;
+          font-size: ${toString variables.icon.size}px;
+        }
 
-      window#waybar.hidden {
-        opacity: 0.2;
-      }
+        tooltip {
+          border-radius: ${border.radius}px;
+          border-color: @base0D;
+        }
 
-      tooltip {
-        border-radius: 8px;
-      }
+        tooltip label {
+          color: @base05;
+          margin-right: 5px;
+          margin-left: 5px;
+        }
 
-      tooltip label {
-        margin-right: 5px;
-        margin-left: 5px;
-      }
+        .modules-left,
+        .modules-center,
+        .modules-right {
+          background: @base00;
+          padding-right: ${padding.x}px;
+          padding-left: ${padding.x}px;
+          border-radius: ${border.radius}px;
+        }
 
-      .modules-left {
-        background: @base00;
-        padding-right: 15px;
-        padding-left: 15px;
-        border-radius: 10px;
-      }
-      .modules-center {
-        background: @base00;
-        padding-right: 15px;
-        padding-left: 15px;
-        border-radius: 10px;
-      }
-      .modules-right {
-        background: @base00;
-        padding-right: 15px;
-        padding-left: 15px;
-        border-radius: 10px;
-      }
-    '';
+        /* Gap for all modules */
+        #clock,
+        #mpris,
+        #pulseaudio,
+        #network,
+        #bluetooth,
+        #privacy,
+        #idle_inhibitor,
+        #tray {
+            padding: 0 ${modules.gap}px;
+        }
+
+        /* Workspaces */
+        #workspaces button {
+            margin: ${modules.gap}px 0;
+            padding: 0 ${modules.gap}px;
+            color: @base03;
+            border: none;
+            transition: all 0.2s ease;
+            border-radius: ${workspace.radius}px;
+        }
+
+        #workspaces button.active,
+        #workspaces button.focused {
+            color: @base04;
+            background: alpha(@base01, 0.6);
+        }
+
+        #workspaces button:hover {
+            background: alpha(@base02, 0.4);
+            color: @base05;
+        }
+
+        #workspaces button.urgent {
+            background: @base08;
+            color: @base00;
+        }
+      '';
   };
 }

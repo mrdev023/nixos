@@ -14,7 +14,7 @@ let
       pkgs: with pkgs; [
         # For Unreal Engine Fab Plugin
         nspr
-        xorg.libXdamage
+        libxdamage
       ];
   };
 in
@@ -26,6 +26,6 @@ in
   };
 
   config = mkIf cfg.enable {
-    environment.systemPackages = with pkgs; [ lutris ];
+    environment.systemPackages = [ lutris ];
   };
 }

@@ -8,6 +8,7 @@
 with lib;
 let
   cfg = config.modules.home.desktop.hyprland;
+  variables = import ./variables.nix;
 
   hyprsplit = pkgs.hyprlandPlugins.hyprsplit.overrideAttrs {
     src = pkgs.fetchFromGitHub {
@@ -26,10 +27,10 @@ in
   };
   config = mkIf cfg.enable (mkMerge [
     (import ./programs/stylix/default.nix args)
-    (import ./programs/dunst/default.nix)
-    (import ./programs/hyprpaper/default.nix)
+    (import ./programs/dunst/default.nix args)
+    (import ./programs/hyprpaper/default.nix args)
     (import ./programs/waybar/default.nix args)
-    (import ./programs/wofi/default.nix)
+    (import ./programs/wofi/default.nix args)
     {
       modules.home.apps.kitty.enable = mkDefault true;
 
@@ -90,9 +91,10 @@ in
 
           # See https://wiki.hyprland.org/Configuring/Variables/ for more
           general = {
-            gaps_in = 5;
-            gaps_out = 20;
-            border_size = 3;
+            # Applied for each side of window so need to divide by 2
+            gaps_in = variables.window.gap / 2;
+            gaps_out = variables.window.gap;
+            border_size = variables.window.border.size;
 
             layout = "scrolling";
           };
@@ -101,7 +103,7 @@ in
           decoration = {
             active_opacity = 0.95;
             inactive_opacity = 0.75;
-            rounding = 10;
+            rounding = variables.window.border.radius;
 
             blur = {
               enabled = true;
@@ -154,7 +156,7 @@ in
             "$mainMod, E, exec, nautilus"
             "$mainMod, V, togglefloating,"
             "$mainMod, F, fullscreen, 0"
-            "$mainMod, D, exec, wofi -i -s ~/.config/hypr/wofi/style.css --show drun"
+            "$mainMod, D, exec, wofi -i -s ~/.config/wofi/style.css --show drun"
 
             # Move focus with mainMod + arrow keys
             "$mainMod, h, movefocus, l"

@@ -1,23 +1,29 @@
 {
+  ...
+}:
+
+let
+  variables = import ../../variables.nix;
+  offset.x = toString variables.window.gap;
+in
+{
   services.dunst = {
     enable = true;
     settings = {
       global = {
-        monitor = 0;
         follow = "keyboard";
+        shrink = "yes";
         width = 400;
         height = "(12, 300)";
-        notification_limit = 5;
-        offset = "(10, 48)";
+        offset = "(${offset.x}, 48)";
         origin = "top-right";
         indicate_hidden = "yes";
-        shrink = "yes";
-        transparency = 20;
-        separator_height = 2;
-        padding = 24;
-        horizontal_padding = 24;
-        frame_width = 2;
-        corner_radius = 3;
+        padding = variables.window.gap; # Padding top/bottom
+        horizontal_padding = variables.window.gap * 2; # Padding left/right
+        separator_height = variables.window.border.size;
+        frame_width = variables.window.border.size;
+        corner_radius = variables.window.border.radius;
+        notification_limit = 5;
 
         # Sort messages by urgency.
         sort = "yes";
