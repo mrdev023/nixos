@@ -278,6 +278,11 @@ in
               "match:pin" = true;
               border_size = general.border_size * 2;
             }
+            {
+              name = "focus_bitwarden_when_requested";
+              "match:initial_class" = "Bitwarden";
+              focus_on_activate = "on";
+            }
           ];
         };
       };
