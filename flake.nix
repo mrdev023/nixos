@@ -107,14 +107,17 @@
               disko.nixosModules.disko
               sops-nix.nixosModules.sops
 
-              {
-                nixpkgs.overlays = overlays;
-                home-manager.useGlobalPkgs = true;
-                home-manager.useUserPackages = true;
-                home-manager.extraSpecialArgs = { inherit inputs; };
-                home-manager.sharedModules = home-modules;
-                home-manager.backupFileExtension = "bak";
-              }
+              (
+                { lib, pkgs, ... }:
+                {
+                  nixpkgs.overlays = overlays;
+                  home-manager.useGlobalPkgs = true;
+                  home-manager.useUserPackages = true;
+                  home-manager.extraSpecialArgs = { inherit inputs; };
+                  home-manager.sharedModules = home-modules;
+                  home-manager.backupCommand = lib.getExe pkgs.trash-cli;
+                }
+              )
             ]
             ++ extraModules;
         };
