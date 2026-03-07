@@ -669,7 +669,8 @@
         "nvf": "nvf",
         "sops-nix": "sops-nix",
         "stylix": "stylix",
-        "systems": "systems_4"
+        "systems": "systems_4",
+        "zen-browser": "zen-browser"
       }
     },
     "rust-overlay": {
@@ -906,6 +907,29 @@
       "original": {
         "owner": "numtide",
         "repo": "treefmt-nix",
+        "type": "github"
+      }
+    },
+    "zen-browser": {
+      "inputs": {
+        "home-manager": [
+          "home-manager"
+        ],
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1772858378,
+        "narHash": "sha256-VPRlTud1REOz0GPjq3XQNjk5GpH/xNbeadiul4gkPGA=",
+        "owner": "0xc000022070",
+        "repo": "zen-browser-flake",
+        "rev": "42e1e9a1cb5b507789a51193113d56f8f1bb08d9",
+        "type": "github"
+      },
+      "original": {
+        "owner": "0xc000022070",
+        "repo": "zen-browser-flake",
         "type": "github"
       }
     }

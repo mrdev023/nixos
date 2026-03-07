@@ -11,5 +11,6 @@
     ./kitty.nix
     ./minecraft.nix
     ./scrcpy.nix
+    ./zen-browser.nix
   ];
 }

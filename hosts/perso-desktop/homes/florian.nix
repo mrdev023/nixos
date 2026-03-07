@@ -22,6 +22,7 @@ in
     apps.flatpak.enable = true;
     apps.discord.enable = true;
     apps.scrcpy.enable = true;
+    apps.zen-browser.enable = true;
 
     desktop.hyprland.enable = true;
 
