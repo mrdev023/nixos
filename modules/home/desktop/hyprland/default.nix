@@ -61,9 +61,14 @@ in
         settings = rec {
           "$mainMod" = "SUPER";
 
-          exec-once = [
-            "waybar"
-          ];
+          exec-once =
+            let
+              clipboard = import ./scripts/clipboard.nix args;
+            in
+            [
+              "waybar"
+              clipboard.watch
+            ];
 
           env = [
             "XCURSOR_SIZE,24"
@@ -150,6 +155,7 @@ in
           bind =
             let
               screenshot = import ./scripts/screenshot.nix args;
+              clipboard = import ./scripts/clipboard.nix args;
             in
             [
               # "SUPERSHIFT,R,hyprload,reload"
@@ -161,13 +167,14 @@ in
               "$mainMod SHIFT, C, exec, ${getExe pkgs.hyprpicker} -a -f hex"
               "$mainMod SHIFT, Q, exit,"
               "$mainMod, E, exec, ${getExe pkgs.nautilus}"
-              "$mainMod, V, togglefloating,"
+              "$mainMod, G, togglefloating,"
               "$mainMod, F, fullscreen, 0"
               "$mainMod, T, pin, active"
               # Already installed with programs.wofi.enable = true;
               "$mainMod, D, exec, wofi -i -s ~/.config/wofi/style.css --show drun"
               ", Print, exec, ${screenshot.fullscreen}"
               "SHIFT, Print, exec, ${screenshot.region}"
+              "$mainMod, V, exec, ${clipboard.select}"
 
               # Move focus with mainMod + arrow keys
               "$mainMod, h, movefocus, l"
