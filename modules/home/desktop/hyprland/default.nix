@@ -173,6 +173,7 @@ in
             "$mainMod SHIFT_L, l, movewindow, r"
             "$mainMod SHIFT_L, j, movewindow, u"
             "$mainMod SHIFT_L, k, movewindow, d"
+            "$mainMod SHIFT_L, s, swapnext,"
 
             "$mainMod ALT_L, v, exec, dunstctl context"
             "$mainMod ALT_L, c, exec, dunstctl close-all"
