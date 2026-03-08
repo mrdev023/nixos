@@ -31,12 +31,18 @@ in
             name = "Default";
             search.default = "qwant";
 
+            settings = {
+              "intl.accept_languages" = "fr-FR, fr, en-US, en";
+              "intl.locale.requested" = "fr-FR";
+            };
+
             extensions.packages = with pkgs.nur.repos.rycee.firefox-addons; [
               ublock-origin
               bitwarden
               floccus
               istilldontcareaboutcookies
               darkreader
+              sponsorblock
             ];
           };
         };
