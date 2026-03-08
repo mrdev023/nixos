@@ -18,14 +18,16 @@ in
     homeDirectory = "/home/florian";
   };
 
-  modules.home = {
-    apps.flatpak.enable = true;
-    apps.discord.enable = true;
-    apps.scrcpy.enable = true;
-    apps.zen-browser.enable = true;
-    apps.spotify.enable = true;
-    apps.obsidian.enable = true;
+  programs = {
+    obsidian.enable = true;
+    vesktop.enable = true;
+    spicetify.enable = true;
+    zen-browser.enable = true;
+  };
 
+  services.flatpak.enable = true;
+
+  modules.home = {
     desktop.hyprland.enable = true;
 
     profiles = [ "shell" ];

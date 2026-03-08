@@ -26,9 +26,12 @@ in
   config = mkMerge [
     # Install all default tools to work only from shell
     (mkIf (elem "shell" cfg.profiles) {
-      modules.home = {
-        apps.kitty.enable = true;
+      programs = {
+        kitty.enable = true;
+        helix.defaultEditor = true;
+      };
 
+      modules.home = {
         shell = {
           atuin.enable = true;
           difftastic.enable = true;
@@ -44,8 +47,6 @@ in
 
         editors.helix.enable = true;
       };
-
-      programs.helix.defaultEditor = true;
 
       home = {
         file.".ssh/import-agent-keys.sh" = {

@@ -32,7 +32,7 @@ in
     (import ./programs/waybar/default.nix args)
     (import ./programs/wofi/default.nix args)
     {
-      modules.home.apps.kitty.enable = mkDefault true;
+      programs.kitty.enable = mkDefault true;
 
       xdg.portal = {
         enable = true;

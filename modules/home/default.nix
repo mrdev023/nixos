@@ -3,12 +3,13 @@
 {
   imports = [
     ../common.nix
-    ./apps
     ./configs
     ./desktop
     ./editors
     ./profiles.nix
+    ./programs
     ./shell
+    ./services
   ];
 
   home.stateVersion = "26.05";

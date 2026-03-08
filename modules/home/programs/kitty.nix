@@ -1,30 +1,18 @@
 {
   config,
-  pkgs,
   lib,
   ...
 }:
 
 with lib;
 let
-  cfg = config.modules.home.apps.kitty;
   cfgFont = config.modules.home.shell.font;
   cfgStylix = config.stylix;
 in
 {
-  options.modules.home.apps.kitty = {
-    enable = mkEnableOption ''
-      Enable kitty with my custom configurations
-    '';
-
-    package = mkPackageOption pkgs "kitty" { };
-  };
-  config = mkIf cfg.enable {
+  config = {
     programs.kitty = mkMerge [
       {
-        enable = true;
-        inherit (cfg) package;
-
         keybindings = {
           "ctrl+shift+enter" = "new_window_with_cwd";
           "ctrl+shift+t" = "new_tab_with_cwd";

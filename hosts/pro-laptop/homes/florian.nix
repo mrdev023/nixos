@@ -10,11 +10,14 @@
     homeDirectory = "/home/florian";
   };
 
+  programs = {
+    obsidian.enable = true;
+    spicetify.enable = true;
+    zen-browser.enable = true;
+  };
+
   modules.home = {
     profiles = [ "shell" ];
-    apps.zen-browser.enable = true;
-    apps.spotify.enable = true;
-    apps.obsidian.enable = true;
 
     desktop.hyprland.enable = true;
   };
