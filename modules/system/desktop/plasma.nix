@@ -20,9 +20,7 @@ in
     '';
   };
   config = mkIf cfg.enable (mkMerge [
-    (mkIf cfgHyprland.enable {
-      services.displayManager.sddm.enable = true;
-    })
+    # hyprland already configure displayManager as sddm
     (mkIf (!cfgHyprland.enable) {
       services.displayManager.plasma-login-manager.enable = true;
     })

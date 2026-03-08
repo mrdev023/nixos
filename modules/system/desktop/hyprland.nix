@@ -11,6 +11,7 @@ in
     '';
   };
   config = mkIf cfg.enable {
+    services.displayManager.sddm.enable = true;
     programs.hyprland.enable = true;
   };
 }
