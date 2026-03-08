@@ -30,9 +30,9 @@
 
   home.sessionVariables.NH_FLAKE = "${config.home.homeDirectory}/Projets/Perso/nixos";
 
+  programs.k9s.enable = true;
   home.packages = with pkgs; [
     kubectl
     lazysql
-    k9s
   ];
 }
