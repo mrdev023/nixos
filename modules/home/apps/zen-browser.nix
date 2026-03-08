@@ -25,6 +25,8 @@ in
       programs.zen-browser = {
         enable = true;
 
+        languagePacks = [ "fr" ];
+
         profiles = {
           default = {
             isDefault = true;
@@ -34,6 +36,7 @@ in
             settings = {
               "intl.accept_languages" = "fr-FR, fr, en-US, en";
               "intl.locale.requested" = "fr-FR";
+              "dom.webgpu.enabled" = true;
             };
 
             extensions.packages = with pkgs.nur.repos.rycee.firefox-addons; [

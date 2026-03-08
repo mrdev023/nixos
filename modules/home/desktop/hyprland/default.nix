@@ -261,7 +261,7 @@ in
             {
               name = "set-zen-pip-to-float";
               "match:initial_class" = "zen-beta";
-              "match:initial_title" = "Picture-in-Picture";
+              "match:initial_title" = "Incrustation vidéo";
               float = "on";
               pin = "on";
             }
