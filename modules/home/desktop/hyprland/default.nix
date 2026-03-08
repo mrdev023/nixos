@@ -147,68 +147,74 @@ in
             "3, horizontal, workspace"
           ];
 
-          bind = [
-            # "SUPERSHIFT,R,hyprload,reload"
-            # "SUPERSHIFT,U,hyprload,update"
+          bind =
+            let
+              screenshot = import ./scripts/screenshot.nix args;
+            in
+            [
+              # "SUPERSHIFT,R,hyprload,reload"
+              # "SUPERSHIFT,U,hyprload,update"
 
-            # Example binds, see https://wiki.hyprland.org/Configuring/Binds/ for more
-            "$mainMod, RETURN, exec, kitty"
-            "$mainMod, C, killactive,"
-            "$mainMod SHIFT, C, exec, ${getExe pkgs.hyprpicker} -a -f hex"
-            "$mainMod SHIFT, Q, exit,"
-            "$mainMod, E, exec, ${getExe pkgs.nautilus}"
-            "$mainMod, V, togglefloating,"
-            "$mainMod, F, fullscreen, 0"
-            "$mainMod, T, pin, active"
-            # Already installed with programs.wofi.enable = true;
-            "$mainMod, D, exec, wofi -i -s ~/.config/wofi/style.css --show drun"
+              # Example binds, see https://wiki.hyprland.org/Configuring/Binds/ for more
+              "$mainMod, RETURN, exec, kitty"
+              "$mainMod, C, killactive,"
+              "$mainMod SHIFT, C, exec, ${getExe pkgs.hyprpicker} -a -f hex"
+              "$mainMod SHIFT, Q, exit,"
+              "$mainMod, E, exec, ${getExe pkgs.nautilus}"
+              "$mainMod, V, togglefloating,"
+              "$mainMod, F, fullscreen, 0"
+              "$mainMod, T, pin, active"
+              # Already installed with programs.wofi.enable = true;
+              "$mainMod, D, exec, wofi -i -s ~/.config/wofi/style.css --show drun"
+              ", Print, exec, ${screenshot.fullscreen}"
+              "SHIFT, Print, exec, ${screenshot.region}"
 
-            # Move focus with mainMod + arrow keys
-            "$mainMod, h, movefocus, l"
-            "$mainMod, l, movefocus, r"
-            "$mainMod, j, movefocus, u"
-            "$mainMod, k, movefocus, d"
+              # Move focus with mainMod + arrow keys
+              "$mainMod, h, movefocus, l"
+              "$mainMod, l, movefocus, r"
+              "$mainMod, j, movefocus, u"
+              "$mainMod, k, movefocus, d"
 
-            "$mainMod SHIFT_L, h, movewindow, l"
-            "$mainMod SHIFT_L, l, movewindow, r"
-            "$mainMod SHIFT_L, j, movewindow, u"
-            "$mainMod SHIFT_L, k, movewindow, d"
-            "$mainMod SHIFT_L, s, swapnext,"
+              "$mainMod SHIFT_L, h, movewindow, l"
+              "$mainMod SHIFT_L, l, movewindow, r"
+              "$mainMod SHIFT_L, j, movewindow, u"
+              "$mainMod SHIFT_L, k, movewindow, d"
+              "$mainMod SHIFT_L, s, swapnext,"
 
-            "$mainMod ALT_L, v, exec, dunstctl context"
-            "$mainMod ALT_L, c, exec, dunstctl close-all"
-            "$mainMod ALT_L, x, exec, dunstctl close"
+              "$mainMod ALT_L, v, exec, dunstctl context"
+              "$mainMod ALT_L, c, exec, dunstctl close-all"
+              "$mainMod ALT_L, x, exec, dunstctl close"
 
-            # Switch workspaces with mainMod + [0-9]
-            "$mainMod, 1, split:workspace, 1"
-            "$mainMod, 2, split:workspace, 2"
-            "$mainMod, 3, split:workspace, 3"
-            "$mainMod, 4, split:workspace, 4"
-            "$mainMod, 5, split:workspace, 5"
-            "$mainMod, 6, split:workspace, 6"
-            "$mainMod, 7, split:workspace, 7"
-            "$mainMod, 8, split:workspace, 8"
-            "$mainMod, 9, split:workspace, 9"
-            "$mainMod, 0, split:workspace, 10"
-            "$mainMod ALT_L, h, split:workspace, e-1"
-            "$mainMod ALT_L, l, split:workspace, e+1"
+              # Switch workspaces with mainMod + [0-9]
+              "$mainMod, 1, split:workspace, 1"
+              "$mainMod, 2, split:workspace, 2"
+              "$mainMod, 3, split:workspace, 3"
+              "$mainMod, 4, split:workspace, 4"
+              "$mainMod, 5, split:workspace, 5"
+              "$mainMod, 6, split:workspace, 6"
+              "$mainMod, 7, split:workspace, 7"
+              "$mainMod, 8, split:workspace, 8"
+              "$mainMod, 9, split:workspace, 9"
+              "$mainMod, 0, split:workspace, 10"
+              "$mainMod ALT_L, h, split:workspace, e-1"
+              "$mainMod ALT_L, l, split:workspace, e+1"
 
-            # Move active window to a workspace with mainMod + SHIFT + [0-9]
-            "$mainMod SHIFT, 1, split:movetoworkspace, 1"
-            "$mainMod SHIFT, 2, split:movetoworkspace, 2"
-            "$mainMod SHIFT, 3, split:movetoworkspace, 3"
-            "$mainMod SHIFT, 4, split:movetoworkspace, 4"
-            "$mainMod SHIFT, 5, split:movetoworkspace, 5"
-            "$mainMod SHIFT, 6, split:movetoworkspace, 6"
-            "$mainMod SHIFT, 7, split:movetoworkspace, 7"
-            "$mainMod SHIFT, 8, split:movetoworkspace, 8"
-            "$mainMod SHIFT, 9, split:movetoworkspace, 9"
-            "$mainMod SHIFT, 0, split:movetoworkspace, 10"
+              # Move active window to a workspace with mainMod + SHIFT + [0-9]
+              "$mainMod SHIFT, 1, split:movetoworkspace, 1"
+              "$mainMod SHIFT, 2, split:movetoworkspace, 2"
+              "$mainMod SHIFT, 3, split:movetoworkspace, 3"
+              "$mainMod SHIFT, 4, split:movetoworkspace, 4"
+              "$mainMod SHIFT, 5, split:movetoworkspace, 5"
+              "$mainMod SHIFT, 6, split:movetoworkspace, 6"
+              "$mainMod SHIFT, 7, split:movetoworkspace, 7"
+              "$mainMod SHIFT, 8, split:movetoworkspace, 8"
+              "$mainMod SHIFT, 9, split:movetoworkspace, 9"
+              "$mainMod SHIFT, 0, split:movetoworkspace, 10"
 
-            # Scroll through existing workspaces with mainMod + scroll
-            "$mainMod, mouse_down, workspace, e+1"
-            "$mainMod, mouse_up, workspace, e-1"
-          ];
+              # Scroll through existing workspaces with mainMod + scroll
+              "$mainMod, mouse_down, workspace, e+1"
+              "$mainMod, mouse_up, workspace, e-1"
+            ];
 
           bindm = [
             # Move/resize windows with mainMod + LMB/RMB and dragging
