@@ -46,6 +46,7 @@ in
         ];
 
         modules-right = [
+          "power-profiles-daemon"
           "idle_inhibitor"
           "pulseaudio"
           "network"
@@ -65,6 +66,18 @@ in
             playing = "";
           };
           max-length = 30;
+        };
+
+        power-profiles-daemon = {
+          format = "{icon}";
+          tooltip-format = "Power profile: {profile}\nDriver: {driver}";
+          tooltip = true;
+          format-icons = {
+            default = "󰗖";
+            performance = "󰓅";
+            balanced = "󰾅";
+            power-saver = "󰌪";
+          };
         };
 
         idle_inhibitor = {
