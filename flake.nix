@@ -95,6 +95,8 @@
         nixgl.overlay
       ];
 
+      extraSpecialArgs = { inherit inputs; };
+
       customNixosSystem =
         {
           name,
@@ -120,8 +122,11 @@
                   nixpkgs.overlays = overlays;
                   home-manager.useGlobalPkgs = true;
                   home-manager.useUserPackages = true;
-                  home-manager.extraSpecialArgs = { inherit inputs; };
-                  home-manager.sharedModules = home-modules;
+                  home-manager.extraSpecialArgs = extraSpecialArgs;
+                  home-manager.sharedModules = home-modules ++ [
+                    # Disable overlays for NixOS
+                    { stylix.overlays.enable = false; }
+                  ];
                   home-manager.backupCommand = lib.getExe pkgs.trash-cli;
                 }
               )
@@ -144,7 +149,7 @@
             ./hosts/${name}/home.nix
           ];
 
-          extraSpecialArgs = inputs;
+          extraSpecialArgs = extraSpecialArgs;
         };
     in
     {
