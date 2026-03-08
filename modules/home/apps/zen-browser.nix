@@ -37,6 +37,7 @@ in
               "intl.accept_languages" = "fr-FR, fr, en-US, en";
               "intl.locale.requested" = "fr-FR";
               "dom.webgpu.enabled" = true;
+              "signon.rememberSignons" = false;
             };
 
             extensions.packages = with pkgs.nur.repos.rycee.firefox-addons; [
