@@ -27,24 +27,21 @@ in
     # Install all default tools to work only from shell
     (mkIf (elem "shell" cfg.profiles) {
       programs = {
+        atuin.enable = true;
+        difftastic.enable = true;
+        direnv.enable = true;
         kitty.enable = true;
         helix.defaultEditor = true;
+        lazygit.enable = true;
+        mergiraf.enable = true;
+        git.enable = true;
+        jujutsu.enable = true;
+        superfile.enable = true;
+        zoxide.enable = true;
+        zsh.enable = true;
       };
 
       modules.home = {
-        shell = {
-          atuin.enable = true;
-          difftastic.enable = true;
-          direnv.enable = true;
-          git.enable = true;
-          jujutsu.enable = true;
-          lazygit.enable = true;
-          mergiraf.enable = true;
-          superfile.enable = true;
-          zsh.enable = true;
-          zoxide.enable = true;
-        };
-
         editors.helix.enable = true;
       };
 

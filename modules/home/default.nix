@@ -8,7 +8,6 @@
     ./editors
     ./profiles.nix
     ./programs
-    ./shell
     ./services
   ];
 

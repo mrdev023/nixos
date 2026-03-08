@@ -7,19 +7,13 @@
 
 with lib;
 let
-  cfg = config.modules.home.shell.git;
+  cfg = config.programs.git;
 in
 {
-  options.modules.home.shell.git = {
-    enable = mkEnableOption ''
-      Enable git with my custom configurations
-    '';
-  };
-  config = mkIf cfg.enable {
-    home.packages = with pkgs; [ gitflow ];
+  config = {
+    home.packages = optionals cfg.enable (with pkgs; [ gitflow ]);
 
     programs.git = {
-      enable = true;
       lfs.enable = true;
 
       signing = {
