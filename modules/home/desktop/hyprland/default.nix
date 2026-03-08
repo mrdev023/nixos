@@ -175,6 +175,7 @@ in
               ", Print, exec, ${screenshot.fullscreen}"
               "SHIFT, Print, exec, ${screenshot.region}"
               "$mainMod, V, exec, ${clipboard.select}"
+              "$mainMod SHIFT, V, exec, ${clipboard.wipe}"
 
               # Move focus with mainMod + arrow keys
               "$mainMod, h, movefocus, l"
