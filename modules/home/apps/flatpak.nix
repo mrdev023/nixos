@@ -30,10 +30,6 @@ in
 
         # Loisir
         {
-          appId = "com.spotify.Client";
-          origin = "flathub";
-        }
-        {
           appId = "org.videolan.VLC";
           origin = "flathub";
         }

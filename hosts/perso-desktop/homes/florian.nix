@@ -23,6 +23,7 @@ in
     apps.discord.enable = true;
     apps.scrcpy.enable = true;
     apps.zen-browser.enable = true;
+    apps.spotify.enable = true;
 
     desktop.hyprland.enable = true;
 

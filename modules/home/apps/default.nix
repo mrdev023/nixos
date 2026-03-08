@@ -11,6 +11,7 @@
     ./kitty.nix
     ./minecraft.nix
     ./scrcpy.nix
+    ./spotify.nix
     ./zen-browser.nix
   ];
 }

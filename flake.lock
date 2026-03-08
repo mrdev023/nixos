@@ -668,6 +668,7 @@
         "nur": "nur",
         "nvf": "nvf",
         "sops-nix": "sops-nix",
+        "spicetify-nix": "spicetify-nix",
         "stylix": "stylix",
         "systems": "systems_4",
         "zen-browser": "zen-browser"
@@ -711,6 +712,29 @@
       "original": {
         "owner": "Mic92",
         "repo": "sops-nix",
+        "type": "github"
+      }
+    },
+    "spicetify-nix": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ],
+        "systems": [
+          "systems"
+        ]
+      },
+      "locked": {
+        "lastModified": 1772494187,
+        "narHash": "sha256-6ksgNAFXVK+Cg/6ww7bB2nJUPZlnS75UwZC7G+L03EE=",
+        "owner": "Gerg-L",
+        "repo": "spicetify-nix",
+        "rev": "915ab06b046d05613041780c575c62a32fe67cea",
+        "type": "github"
+      },
+      "original": {
+        "owner": "Gerg-L",
+        "repo": "spicetify-nix",
         "type": "github"
       }
     },

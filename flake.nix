@@ -64,6 +64,12 @@
         home-manager.follows = "home-manager";
       };
     };
+
+    spicetify-nix = {
+      url = "github:Gerg-L/spicetify-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.systems.follows = "systems";
+    };
   };
 
   outputs =
@@ -81,6 +87,7 @@
         sops-nix.homeManagerModules.sops
         stylix.homeModules.stylix
         zen-browser.homeModules.beta
+        spicetify-nix.homeManagerModules.spicetify
       ];
 
       overlays = with inputs; [
