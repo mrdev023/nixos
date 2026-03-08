@@ -24,6 +24,7 @@ in
     apps.scrcpy.enable = true;
     apps.zen-browser.enable = true;
     apps.spotify.enable = true;
+    apps.obsidian.enable = true;
 
     desktop.hyprland.enable = true;
 

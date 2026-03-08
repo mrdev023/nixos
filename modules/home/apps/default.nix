@@ -9,6 +9,7 @@
     ./ghostty.nix
     ./jetbrains-toolbox.nix
     ./kitty.nix
+    ./obsidian.nix
     ./minecraft.nix
     ./scrcpy.nix
     ./spotify.nix
