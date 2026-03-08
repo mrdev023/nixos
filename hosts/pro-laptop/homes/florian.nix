@@ -12,6 +12,8 @@
 
   programs = {
     obsidian.enable = true;
+    k9s.enable = true;
+    lazysql.enable = true;
     spicetify.enable = true;
     zen-browser.enable = true;
   };
@@ -33,9 +35,7 @@
 
   home.sessionVariables.NH_FLAKE = "${config.home.homeDirectory}/Projets/Perso/nixos";
 
-  programs.k9s.enable = true;
   home.packages = with pkgs; [
     kubectl
-    lazysql
   ];
 }
