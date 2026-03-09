@@ -35,6 +35,11 @@ in
     {
       programs.kitty.enable = mkDefault true;
 
+      home.packages = with pkgs; [
+        # Required by clipboard script and hyprpicker
+        wl-clipboard
+      ];
+
       xdg.portal = {
         enable = true;
         extraPortals = with pkgs; [
