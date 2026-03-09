@@ -235,6 +235,8 @@ in
       };
     };
 
+    # Debug with:
+    #   GTK_DEBUG=interactive waybar
     style =
       let
         border.radius = toString variables.window.border.radius;
@@ -322,6 +324,12 @@ in
         #workspaces button.urgent {
           background: @base08;
           color: @base00;
+        }
+
+        #workspaces .workspace-label {
+          font-size: calc(${toString config.stylix.fonts.sizes.desktop}pt - ${
+            toString (variables.topBar.gap / 4)
+          }px);
         }
       '';
   };

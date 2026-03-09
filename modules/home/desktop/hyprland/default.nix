@@ -177,7 +177,6 @@ in
               "SHIFT, Print, exec, ${screenshot.region}"
               "$mainMod, V, exec, ${clipboard.select}"
               "$mainMod SHIFT, V, exec, ${clipboard.wipe}"
-              "$mainMod, L, exec, hyprlock" # Installed by programs.hyprlock
 
               # Move focus with mainMod + arrow keys
               "$mainMod, h, movefocus, l"
