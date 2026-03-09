@@ -50,7 +50,7 @@ in
         modules-right = [
           "power-profiles-daemon"
           "idle_inhibitor"
-          "pulseaudio"
+          "wireplumber"
           "network"
           "bluetooth"
           "privacy"
@@ -103,7 +103,7 @@ in
           icon-size = config.stylix.fonts.sizes.desktop;
         };
 
-        pulseaudio =
+        wireplumber =
           let
             volumes = import ../scripts/volume.nix args;
           in
@@ -279,7 +279,7 @@ in
         /* Gap for all modules */
         #clock,
         #mpris,
-        #pulseaudio,
+        #wireplumber,
         #network,
         #bluetooth,
         #privacy,
