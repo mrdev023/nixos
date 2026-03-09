@@ -52,6 +52,7 @@ in
           "network"
           "bluetooth"
           "privacy"
+          "battery"
           "tray"
         ];
 
@@ -59,11 +60,11 @@ in
           format = "{player_icon} {title} - {artist}";
           format-paused = "{status_icon} <i>{title} - {artist}</i>";
           player-icons = {
-            default = "";
+            default = "󰐊";
           };
           status-icons = {
-            paused = "⏸";
-            playing = "";
+            paused = "󰏤";
+            playing = "󰐊";
           };
           max-length = 30;
         };
@@ -103,22 +104,22 @@ in
           on-click = getExe pkgs.pavucontrol;
           scroll-step = 5;
           format = "{icon}";
-          format-muted = "";
+          format-muted = "󰝟";
           format-icons.default = [
-            ""
-            ""
-            ""
-            ""
+            "󰖁"
+            "󰕿"
+            "󰖀"
+            "󰕾"
           ];
         };
 
         network = {
           on-click = "${getExe pkgs.kitty} --title nmtui ${getExe' pkgs.networkmanager "nmtui"}";
           format = "{ifname}";
-          format-wifi = "";
+          format-wifi = "󰖩";
           format-ethernet = "󰈀";
           format-disconnected = "󰌙";
-          tooltip-format = "{ifname} via {gwaddr} 󰊗";
+          tooltip-format = "{ifname} via {gwaddr} 󰮂";
           tooltip-format-wifi = "<big>{essid}</big>\n<tt>{signalStrength}%</tt>";
           tooltip-format-ethernet = "<big>{ifname}</big>\n<tt>{ipaddr}/{cidr}</tt>";
           tooltip-format-disconnected = "Disconnected";
@@ -127,9 +128,10 @@ in
 
         bluetooth = {
           on-click = "${getExe pkgs.overskride}";
-          format = " {status}";
-          format-connected = " {device_alias}";
-          format-connected-battery = " {device_alias} {device_battery_percentage}%";
+          format = "󰂯";
+          format-off = "󰂲";
+          format-on = "󰂯";
+          format-connected = "󰂱";
           tooltip-format = "{controller_alias}\t{controller_address}\n\n{num_connections} connected";
           tooltip-format-connected = "{controller_alias}\t{controller_address}\n\n{num_connections} connected\n\n{device_enumerate}";
           tooltip-format-enumerate-connected = "{device_alias}\t{device_address}";
@@ -149,6 +151,40 @@ in
             }
           ];
         };
+
+        battery = {
+          interval = 60;
+          format = "{icon}";
+          tooltip-format = "{capacity}% • {power:.1f}W • {timeTo} • Health: {health}%";
+          format-icons = {
+            default = [
+              "󰂃"
+              "󰁺"
+              "󰁻"
+              "󰁼"
+              "󰁽"
+              "󰁾"
+              "󰁿"
+              "󰂀"
+              "󰂁"
+              "󰂂"
+              "󰁹"
+            ];
+            charging = [
+              "󰢟"
+              "󰢜"
+              "󰂆"
+              "󰂇"
+              "󰂈"
+              "󰢝"
+              "󰂉"
+              "󰢞"
+              "󰂊"
+              "󰂋"
+              "󰂅"
+            ];
+          };
+        };
       };
     };
 
@@ -159,7 +195,7 @@ in
         padding.x = toString (variables.window.gap * 2);
         modules.gap = toString (variables.topBar.gap / 2);
       in
-      mkAfter ''
+      ''
         /* Custom section */
         * {
           margin: 0px;
@@ -202,6 +238,8 @@ in
         #bluetooth,
         #privacy,
         #idle_inhibitor,
+        #battery,
+        #power-profiles-daemon,
         #tray {
             padding: 0 ${modules.gap}px;
         }

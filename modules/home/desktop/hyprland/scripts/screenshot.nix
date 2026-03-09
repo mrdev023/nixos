@@ -10,7 +10,7 @@ let
   slurp = getExe pkgs.slurp;
   xdg-user-dir = getExe' pkgs.xdg-user-dirs "xdg-user-dir";
   notify-send = getExe pkgs.libnotify;
-  date = getExe' pkgs.busybox "date";
+  date = getExe' pkgs.coreutils "date";
 
   fullscreen = pkgs.writeShellScriptBin "fullscreen_screenshot" ''
     file="$(${xdg-user-dir} PICTURES)/$(${date} +%Y%m%d_%H%M%S).png"
