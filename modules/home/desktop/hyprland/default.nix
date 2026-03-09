@@ -172,7 +172,7 @@ in
               "$mainMod, F, fullscreen, 0"
               "$mainMod, T, pin, active"
               # Already installed with programs.wofi.enable = true;
-              "$mainMod, D, exec, wofi -i -s ~/.config/wofi/style.css --show drun"
+              "$mainMod, D, exec, wofi -i --show drun"
               ", Print, exec, ${screenshot.fullscreen}"
               "SHIFT, Print, exec, ${screenshot.region}"
               "$mainMod, V, exec, ${clipboard.select}"

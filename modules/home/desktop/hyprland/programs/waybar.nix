@@ -8,6 +8,9 @@
 with lib;
 let
   variables = import ../variables.nix;
+
+  confirmCommand =
+    msg: command: "echo -e 'Non\nOui' | wofi -d --prompt='${msg}' | grep -q 'Oui' && ${command}";
 in
 {
   stylix.targets.waybar.addCss = false;
@@ -97,11 +100,7 @@ in
           tooltip-format = "<big>{:L%Y %B}</big>\n<tt><small>{calendar}</small></tt>";
         };
 
-        tray = {
-          spacing = variables.topBar.gap;
-          # See https://github.com/nix-community/stylix/blob/c4b8e80a1020e09a1f081ad0f98ce804a6e85acf/modules/waybar/hm.nix#L66
-          icon-size = config.stylix.fonts.sizes.desktop;
-        };
+        tray.spacing = variables.topBar.gap;
 
         wireplumber =
           let
@@ -212,25 +211,25 @@ in
         "custom/quit" = {
           format = "󰍃";
           tooltip-format = "Se déconnecter";
-          on-click = "hyprctl dispatch exit";
+          on-click = confirmCommand "Se déconnecter ?" "hyprctl dispatch exit";
         };
 
         "custom/lock" = {
           format = "󰌾";
           tooltip-format = "Verrouiller la session";
-          on-click = "hyprlock"; # Installed by programs.hyprlock
+          on-click = confirmCommand "Verrouiller la session ?" "hyprlock"; # Installed by programs.hyprlock
         };
 
         "custom/reboot" = {
           format = "󰜉";
-          tooltip-format = "Redémarrer";
-          on-click = "reboot";
+          tooltip-format = "Redémarrer le système";
+          on-click = confirmCommand "Redémarrer le système ?" "reboot";
         };
 
         "custom/power" = {
           format = "󰐥";
           tooltip-format = "Arrêter le système";
-          on-click = "shutdown now";
+          on-click = confirmCommand "Arrêter le système ?" "shutdown now";
         };
       };
     };

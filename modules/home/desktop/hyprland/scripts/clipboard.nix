@@ -9,7 +9,6 @@ let
   wl-paste = getExe' pkgs.wl-clipboard "wl-paste";
   wl-copy = getExe' pkgs.wl-clipboard "wl-copy";
   cliphist = getExe pkgs.cliphist;
-  wofi = getExe pkgs.wofi;
   notify-send = getExe pkgs.libnotify;
 
   clip_watch = pkgs.writeShellScriptBin "run_cliphist" ''
@@ -21,7 +20,7 @@ let
   '';
 
   clip_wofi = pkgs.writeShellScriptBin "run_wofi" ''
-    value=$(${cliphist} list | ${wofi} -S dmenu | ${cliphist} decode)
+    value=$(${cliphist} list | wofi -S dmenu | ${cliphist} decode)
     if [[ -n "$value" ]]; then
       echo "$value" | ${wl-copy}
       ${notify-send} -u low "Élément copié dans le presse papier"
