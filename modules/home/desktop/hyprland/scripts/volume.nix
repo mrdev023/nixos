@@ -12,10 +12,10 @@ let
     function notify-volume() {
       current_volume=$(LC_ALL=C ${wpctl} get-volume @DEFAULT_SINK@)
       if echo "$current_volume" | grep -qi "muted"; then
-        ${notify-send} "Volume" -h int:value:0
+        ${notify-send} -u low "Volume" -h int:value:0
       else
         current_volume=$(echo "$current_volume" | awk '{print int($2 * 100)}')
-        ${notify-send} "Volume" -h int:value:"$current_volume"
+        ${notify-send} -u low "Volume" -h int:value:"$current_volume"
       fi
     }
 

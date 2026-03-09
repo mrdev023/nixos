@@ -9,7 +9,7 @@ let
   fonts = config.stylix.fonts;
 
   # Custom
-  variables = import ../../variables.nix;
+  variables = import ../variables.nix;
   border = {
     radius = toString variables.window.border.radius;
     size = toString variables.window.border.size;

@@ -12,6 +12,4 @@
     height = 32;
     gap = 16;
   };
-
-  icon.size = 16;
 }

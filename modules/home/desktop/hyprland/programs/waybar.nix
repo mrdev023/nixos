@@ -1,4 +1,5 @@
 {
+  config,
   lib,
   pkgs,
   ...
@@ -6,10 +7,11 @@
 
 with lib;
 let
-  variables = import ../../variables.nix;
+  variables = import ../variables.nix;
 in
 {
   stylix.targets.waybar.addCss = false;
+  home.packages = with pkgs; [ playerctl ]; # required by mpris
 
   programs.waybar = {
     enable = true;
@@ -91,19 +93,19 @@ in
         };
 
         clock = {
-          tooltip-format = "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>";
-          format = "{:%a, %d %b, %H:%M}";
-          timezone = "Europe/Paris";
-          locale = "fr_FR.UTF-8";
+          format = "{:L%A %d %b, %H:%M}";
+          tooltip-format = "<big>{:L%Y %B}</big>\n<tt><small>{calendar}</small></tt>";
         };
 
         tray = {
           spacing = variables.topBar.gap;
+          # See https://github.com/nix-community/stylix/blob/c4b8e80a1020e09a1f081ad0f98ce804a6e85acf/modules/waybar/hm.nix#L66
+          icon-size = config.stylix.fonts.sizes.desktop;
         };
 
         pulseaudio =
           let
-            volumes = import ../../scripts/volume.nix args;
+            volumes = import ../scripts/volume.nix args;
           in
           {
             on-click = getExe pkgs.pavucontrol;
@@ -252,7 +254,6 @@ in
           transition-duration: 0.5s;
           background: transparent;
           color: @base05;
-          font-size: ${toString variables.icon.size}px;
         }
 
         tooltip {

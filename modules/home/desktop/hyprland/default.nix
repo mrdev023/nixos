@@ -26,16 +26,14 @@ in
     '';
   };
   config = mkIf cfg.enable (mkMerge [
-    (import ./programs/stylix/default.nix args)
-    (import ./programs/dunst/default.nix args)
-    (import ./programs/hyprpaper/default.nix args)
-    (import ./programs/waybar/default.nix args)
-    (import ./programs/wofi/default.nix args)
+    (import ./programs/stylix.nix args)
+    (import ./programs/dunst.nix args)
+    (import ./programs/hyprlock.nix args)
+    (import ./programs/hyprpaper.nix args)
+    (import ./programs/waybar.nix args)
+    (import ./programs/wofi.nix args)
     {
-      programs = {
-        kitty.enable = mkDefault true;
-        hyprlock.enable = mkDefault true;
-      };
+      programs.kitty.enable = mkDefault true;
 
       xdg.portal = {
         enable = true;

@@ -3,7 +3,7 @@
 }:
 
 let
-  variables = import ../../variables.nix;
+  variables = import ../variables.nix;
   offset.x = toString variables.window.gap;
 in
 {
@@ -76,17 +76,17 @@ in
 
       urgency_low = {
         timeout = 8;
-        format = "<span size='x-large'> </span><b>%s %p</b>\\n%b";
+        format = "<span size='large'> </span><b>%s %p</b>\\n%b";
       };
 
       urgency_normal = {
         timeout = 10;
-        format = "<span size='x-large'>󰂞 </span><b>%s %p</b>\\n%b";
+        format = "<span size='large'>󰂞 </span><b>%s %p</b>\\n%b";
       };
 
       urgency_critical = {
         timeout = 0;
-        format = "<span size='x-large'>󰵙 </span><b>%s %p</b>\\n%b";
+        format = "<span size='large'>󰵙 </span><b>%s %p</b>\\n%b";
       };
     };
   };
