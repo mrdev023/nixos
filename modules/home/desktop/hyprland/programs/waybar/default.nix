@@ -2,7 +2,7 @@
   lib,
   pkgs,
   ...
-}:
+}@args:
 
 with lib;
 let
@@ -54,6 +54,7 @@ in
           "privacy"
           "battery"
           "tray"
+          "group/group_power"
         ];
 
         mpris = {
@@ -100,18 +101,24 @@ in
           spacing = variables.topBar.gap;
         };
 
-        pulseaudio = {
-          on-click = getExe pkgs.pavucontrol;
-          scroll-step = 5;
-          format = "{icon}";
-          format-muted = "󰝟";
-          format-icons.default = [
-            "󰖁"
-            "󰕿"
-            "󰖀"
-            "󰕾"
-          ];
-        };
+        pulseaudio =
+          let
+            volumes = import ../../scripts/volume.nix args;
+          in
+          {
+            on-click = getExe pkgs.pavucontrol;
+            format = "{icon}";
+            format-muted = "󰝟";
+            format-icons.default = [
+              "󰖁"
+              "󰕿"
+              "󰖀"
+              "󰕾"
+            ];
+            on-click-middle = volumes.toggleMute;
+            on-scroll-up = volumes.raiseVolume;
+            on-scroll-down = volumes.lowerVolume;
+          };
 
         network = {
           on-click = "${getExe pkgs.kitty} --title nmtui ${getExe' pkgs.networkmanager "nmtui"}";
@@ -185,6 +192,44 @@ in
             ];
           };
         };
+
+        "group/group_power" = {
+          orientation = "inherit";
+          drawer = {
+            transition = 500;
+            transition-left-to-right = false;
+          };
+          modules = [
+            "custom/power"
+            "custom/quit"
+            "custom/lock"
+            "custom/reboot"
+          ];
+        };
+
+        "custom/quit" = {
+          format = "󰍃";
+          tooltip-format = "Se déconnecter";
+          on-click = "hyprctl dispatch exit";
+        };
+
+        "custom/lock" = {
+          format = "󰌾";
+          tooltip-format = "Verrouiller la session";
+          on-click = "hyprlock"; # Installed by programs.hyprlock
+        };
+
+        "custom/reboot" = {
+          format = "󰜉";
+          tooltip-format = "Redémarrer";
+          on-click = "reboot";
+        };
+
+        "custom/power" = {
+          format = "󰐥";
+          tooltip-format = "Arrêter le système";
+          on-click = "shutdown now";
+        };
       };
     };
 
@@ -240,34 +285,42 @@ in
         #idle_inhibitor,
         #battery,
         #power-profiles-daemon,
-        #tray {
-            padding: 0 ${modules.gap}px;
+        #tray,
+        #custom-quit,
+        #custom-lock,
+        #custom-reboot,
+        #custom-power {
+          padding: 0 ${modules.gap}px;
+        }
+
+        #custom-power {
+          color: @base08;
         }
 
         /* Workspaces */
         #workspaces button {
-            margin: ${modules.gap}px 0;
-            padding: 0 ${modules.gap}px;
-            color: @base03;
-            border: none;
-            transition: all 0.2s ease;
-            border-radius: ${workspace.radius}px;
+          margin: ${modules.gap}px 0;
+          padding: 0 ${modules.gap}px;
+          color: @base03;
+          border: none;
+          transition: all 0.2s ease;
+          border-radius: ${workspace.radius}px;
         }
 
         #workspaces button.active,
         #workspaces button.focused {
-            color: @base04;
-            background: alpha(@base01, 0.6);
+          color: @base04;
+          background: alpha(@base01, 0.6);
         }
 
         #workspaces button:hover {
-            background: alpha(@base02, 0.4);
-            color: @base05;
+          background: alpha(@base02, 0.4);
+          color: @base05;
         }
 
         #workspaces button.urgent {
-            background: @base08;
-            color: @base00;
+          background: @base08;
+          color: @base00;
         }
       '';
   };

@@ -32,7 +32,10 @@ in
     (import ./programs/waybar/default.nix args)
     (import ./programs/wofi/default.nix args)
     {
-      programs.kitty.enable = mkDefault true;
+      programs = {
+        kitty.enable = mkDefault true;
+        hyprlock.enable = mkDefault true;
+      };
 
       xdg.portal = {
         enable = true;
@@ -176,6 +179,7 @@ in
               "SHIFT, Print, exec, ${screenshot.region}"
               "$mainMod, V, exec, ${clipboard.select}"
               "$mainMod SHIFT, V, exec, ${clipboard.wipe}"
+              "$mainMod, L, exec, hyprlock" # Installed by programs.hyprlock
 
               # Move focus with mainMod + arrow keys
               "$mainMod, h, movefocus, l"
