@@ -8,7 +8,6 @@
 with lib;
 let
   cfgTop = config.modules.home.editors;
-  cfg = cfgTop.helix;
   cfgStylix = config.stylix;
 
   utils = import ./utils.nix {
@@ -18,14 +17,8 @@ let
   inherit (utils) cfgHasLanguage cfgHasAnyOfLanguages;
 in
 {
-  options.modules.home.editors.helix = {
-    enable = mkEnableOption ''
-      Enable helix with my custom configurations
-    '';
-  };
-  config.programs.helix = mkIf cfg.enable (mkMerge [
+  config.programs.helix = mkMerge [
     {
-      enable = true;
       settings = {
         editor = {
           bufferline = "always";
@@ -418,5 +411,5 @@ in
         }
       ];
     })
-  ]);
+  ];
 }

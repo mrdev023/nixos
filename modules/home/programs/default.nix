@@ -12,7 +12,6 @@
     ./spicetify.nix
     ./superfile.nix
     ./obsidian.nix
-    ./zed-editor.nix
     ./zen-browser.nix
     ./zsh
   ];

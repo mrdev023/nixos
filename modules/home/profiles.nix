@@ -31,7 +31,10 @@ in
         difftastic.enable = true;
         direnv.enable = true;
         kitty.enable = true;
-        helix.defaultEditor = true;
+        helix = {
+          enable = true;
+          defaultEditor = true;
+        };
         lazygit.enable = true;
         mergiraf.enable = true;
         git.enable = true;
@@ -39,10 +42,6 @@ in
         superfile.enable = true;
         zoxide.enable = true;
         zsh.enable = true;
-      };
-
-      modules.home = {
-        editors.helix.enable = true;
       };
 
       home = {
