@@ -7,7 +7,7 @@
 
 with lib;
 let
-  cfg = config.modules.home.desktop.hyprland;
+  cfg = config.wayland.windowManager.hyprland;
   variables = import ./variables.nix;
 
   hyprsplit = pkgs.hyprlandPlugins.hyprsplit.overrideAttrs {
@@ -20,11 +20,6 @@ let
   };
 in
 {
-  options.modules.home.desktop.hyprland = {
-    enable = mkEnableOption ''
-      Enable hyprland with my custom configurations
-    '';
-  };
   config = mkIf cfg.enable (mkMerge [
     (import ./programs/stylix.nix args)
     (import ./programs/dunst.nix args)
@@ -53,8 +48,6 @@ in
       };
 
       wayland.windowManager.hyprland = {
-        enable = true;
-
         plugins = [
           hyprsplit
         ];

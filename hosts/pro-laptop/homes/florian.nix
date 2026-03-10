@@ -18,11 +18,9 @@
     zen-browser.enable = true;
   };
 
-  modules.home = {
-    profiles = [ "shell" ];
+  wayland.windowManager.hyprland.enable = true;
 
-    desktop.hyprland.enable = true;
-  };
+  modules.home.profiles = [ "shell" ];
 
   stylix.image = ../../../assets/backgrounds/4k.jpg;
 

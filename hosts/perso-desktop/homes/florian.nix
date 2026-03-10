@@ -28,11 +28,9 @@ in
 
   services.flatpak.enable = true;
 
-  modules.home = {
-    desktop.hyprland.enable = true;
+  wayland.windowManager.hyprland.enable = true;
 
-    profiles = [ "shell" ];
-  };
+  modules.home.profiles = [ "shell" ];
 
   stylix.image = ../../../assets/backgrounds/ultra_wide.jpg;
 
