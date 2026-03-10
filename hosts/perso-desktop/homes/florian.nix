@@ -23,6 +23,7 @@ in
     vesktop.enable = true;
     spicetify.enable = true;
     zen-browser.enable = true;
+    zed-editor.enable = true;
   };
 
   services.flatpak.enable = true;
