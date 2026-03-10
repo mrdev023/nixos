@@ -5,13 +5,9 @@
 }:
 with lib;
 let
-  cfgTop = config.modules.home.editors;
   cfgStylix = config.stylix;
 
-  utils = import ./utils.nix {
-    config = cfgTop;
-    lib = lib;
-  };
+  utils = import ./utils.nix { inherit config lib; };
   inherit (utils) cfgHasLanguage;
 in
 {

@@ -1,6 +1,9 @@
 { config, lib }:
 
 with lib;
+let
+  cfgEditors = config.modules.home.editors;
+in
 {
   /**
     Check if editors configuration contains the language
@@ -22,7 +25,7 @@ with lib;
 
     :::
   */
-  cfgHasLanguage = language: elem language config.languages;
+  cfgHasLanguage = language: elem language cfgEditors.languages;
 
   /**
     Check if editors configuration contains any of languages
@@ -44,5 +47,5 @@ with lib;
 
     :::
   */
-  cfgHasAnyOfLanguages = languages: any (l: elem l languages) config.languages;
+  cfgHasAnyOfLanguages = languages: any (l: elem l languages) cfgEditors.languages;
 }
