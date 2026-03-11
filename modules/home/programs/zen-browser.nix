@@ -31,6 +31,7 @@
             istilldontcareaboutcookies
             darkreader
             sponsorblock
+            tridactyl
           ];
         };
       };
