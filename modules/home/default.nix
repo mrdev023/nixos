@@ -11,6 +11,11 @@
     ./services
   ];
 
+  age = {
+    identityPaths = [ "${config.home.homeDirectory}/.ssh/nixos_configuration" ];
+    secrets.ai_secrets.file = ../../secrets/ai_secrets.age;
+  };
+
   home.stateVersion = "26.05";
   programs.home-manager.enable = true;
 

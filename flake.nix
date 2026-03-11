@@ -45,9 +45,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    sops-nix = {
-      url = "github:Mic92/sops-nix";
+    agenix = {
+      url = "github:ryantm/agenix";
       inputs.nixpkgs.follows = "nixpkgs";
+      inputs.home-manager.follows = "home-manager";
+      inputs.systems.follows = "systems";
     };
 
     nix-citizen.url = "github:LovingMelody/nix-citizen";
@@ -84,7 +86,7 @@
       home-modules = with inputs; [
         nix-flatpak.homeManagerModules.nix-flatpak
         nvf.homeManagerModules.default
-        sops-nix.homeManagerModules.sops
+        agenix.homeManagerModules.default
         stylix.homeModules.stylix
         zen-browser.homeModules.beta
         spicetify-nix.homeManagerModules.spicetify
@@ -114,7 +116,7 @@
               home-manager.nixosModules.home-manager
               lanzaboote.nixosModules.lanzaboote
               disko.nixosModules.disko
-              sops-nix.nixosModules.sops
+              agenix.nixosModules.default
 
               (
                 { lib, pkgs, ... }:
@@ -159,10 +161,6 @@
       #####################################################################
       #####################################################################
       nixosConfigurations = {
-        nixos-homeserver = customNixosSystem {
-          name = "homeserver";
-          system = "x86_64-linux";
-        };
         nixos-desktop-perso = customNixosSystem {
           name = "perso-desktop";
           system = "x86_64-linux";
@@ -203,6 +201,7 @@
       system:
       let
         pkgs = import nixpkgs { inherit system; };
+        agenix = inputs.agenix.packages.${system}.default;
       in
       {
         devShells = {
@@ -210,7 +209,7 @@
             packages = with pkgs; [
               nixd
               nil
-              sops
+              agenix
             ];
           };
         };

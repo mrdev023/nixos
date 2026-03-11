@@ -54,6 +54,7 @@ in
             ssh-add -L | while read -r type key comment; do
               filename=$(echo "$comment" | tr ' ' '_' | tr '[:upper:]' '[:lower:]').pub
               echo "$type $key $comment" > ~/.ssh/"$filename"
+              chmod 600 ~/.ssh/"$filename"
               echo "Imported: ~/.ssh/$filename"
             done
           '';
