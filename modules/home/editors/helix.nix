@@ -20,7 +20,23 @@ in
           bufferline = "always";
           line-number = "relative";
 
-          cursor-shape.insert = "bar";
+          end-of-line-diagnostics = "hint";
+          inline-diagnostics = {
+            cursor-line = "warning";
+            other-lines = "hint";
+          };
+          lsp = {
+            display-progress-messages = true;
+            display-inlay-hints = true;
+          };
+
+          cursor-shape = {
+            insert = "bar";
+            normal = "block";
+            select = "underline";
+          };
+
+          color-modes = true;
         };
       };
     }
