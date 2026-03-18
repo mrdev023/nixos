@@ -28,6 +28,7 @@ in
     (mkIf (elem "shell" cfg.profiles) {
       programs = {
         atuin.enable = true;
+        claude-code.enable = true;
         difftastic.enable = true;
         direnv.enable = true;
         kitty.enable = true;
@@ -62,7 +63,6 @@ in
 
         packages = with pkgs; [
           tldr # Alternative à man
-          claude-code
           npins
         ];
 
