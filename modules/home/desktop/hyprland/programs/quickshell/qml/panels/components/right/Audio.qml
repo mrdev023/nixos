@@ -1,5 +1,6 @@
 import QtQuick
 import QtQuick.Layouts as QQL
+import Quickshell.Hyprland as QSH
 import Quickshell.Services.Pipewire as QSSP
 
 import "../../../components"
@@ -75,14 +76,9 @@ Item {
             }
             onWheel: event => {
                 if (event.angleDelta.y > 0) {
-                    if (root.node.audio.muted) {
-                        root.node.audio.muted = false;
-                    } else {
-                        let newValue = root.node.audio.volume + 0.05;
-                        root.node.audio.volume = Math.min(newValue, 1.0);
-                    }
+                    root.volumeUp();
                 } else {
-                    root.node.audio.volume -= 0.05;
+                    root.volumeDown();
                 }
             }
         }
@@ -194,5 +190,40 @@ Item {
                 }
             }
         }
+    }
+
+    QSH.GlobalShortcut {
+        name: "volume_up"
+        onPressed: {
+            if (root.kind !== Audio.Sink) {
+                return;
+            }
+
+            root.volumeUp();
+        }
+    }
+
+    QSH.GlobalShortcut {
+        name: "volume_down"
+        onPressed: {
+            if (root.kind !== Audio.Sink) {
+                return;
+            }
+
+            root.volumeDown();
+        }
+    }
+
+    function volumeUp(): void {
+        if (root.node.audio.muted) {
+            root.node.audio.muted = false;
+        } else {
+            let newValue = root.node.audio.volume + 0.05;
+            root.node.audio.volume = Math.min(newValue, 1.0);
+        }
+    }
+
+    function volumeDown(): void {
+        root.node.audio.volume -= 0.05;
     }
 }

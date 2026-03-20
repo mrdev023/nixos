@@ -236,20 +236,15 @@ in
             "$mainMod, mouse:273, resizewindow"
           ];
 
-          binde =
-            let
-              volume = (import ./scripts/volume.nix args);
-            in
-            [
-              "$mainMod CTRL_L, h, resizeactive, -50 0"
-              "$mainMod CTRL_L, l, resizeactive, 50 0"
-              "$mainMod CTRL_L, j, resizeactive, 0 -50"
-              "$mainMod CTRL_L, k, resizeactive, 0 50"
+          binde = [
+            "$mainMod CTRL_L, h, resizeactive, -50 0"
+            "$mainMod CTRL_L, l, resizeactive, 50 0"
+            "$mainMod CTRL_L, j, resizeactive, 0 -50"
+            "$mainMod CTRL_L, k, resizeactive, 0 50"
 
-              # Use pactl to adjust volume in PulseAudio.
-              ", XF86AudioRaiseVolume, exec, ${volume.raiseVolume}"
-              ", XF86AudioLowerVolume, exec, ${volume.lowerVolume}"
-            ];
+            ", XF86AudioRaiseVolume, global, quickshell:volume_up"
+            ", XF86AudioLowerVolume, global, quickshell:volume_down"
+          ];
 
           bindl =
             let
