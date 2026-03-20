@@ -1,8 +1,9 @@
 import QtQuick
 import Quickshell.Io as QSIO
 
-import "../popups"
-import "../singletons"
+import "../../../components"
+import "../../../popups"
+import "../../../singletons"
 
 Row {
     Item {
@@ -21,28 +22,6 @@ Row {
             }
         }
 
-        component PowerAction: DesktopText {
-            id: powerAction
-
-            property alias message: confirmDialog.message
-            property alias command: process.command
-
-            QSIO.Process {
-                id: process
-            }
-
-            ConfirmPopup {
-                id: confirmDialog
-                onConfirmed: process.running = true
-            }
-            
-            MouseArea {
-                anchors.fill: parent
-                cursorShape: Qt.PointingHandCursor
-                onClicked: confirmDialog.open()
-            }
-        }
-
         ConfirmPopup {
             id: confirmDialog
         }
@@ -54,22 +33,24 @@ Row {
             PowerAction {
                 id: logout
                 text: "󰍃"
-                color: Colors.base05
+                variant: DesktopText.Bigtext
                 message: "Se déconnecter ?"
                 command: ["hyprctl", "dispatch", "exit"]
             }
+
             PowerAction {
                 id: lock
                 text: "󰌾"
-                color: Colors.base05
+                variant: DesktopText.Bigtext
                 message: "Verrouiller la session ?"
 
                 command: ["hyprlock"]
             }
+
             PowerAction {
                 id: reboot
                 text: "󰜉"
-                color: Colors.base05
+                variant: DesktopText.Bigtext
                 message: "Redémarrer le système ?"
 
                 command: ["reboot"]
@@ -77,15 +58,40 @@ Row {
         }
     }
 
+    component PowerAction: DesktopText {
+        id: powerAction
+
+        property alias message: confirmDialog.message
+        property alias command: process.command
+
+        QSIO.Process {
+            id: process
+        }
+
+        ConfirmPopup {
+            id: confirmDialog
+            onConfirmed: process.running = true
+        }
+
+        TapHandler {
+            onTapped: confirmDialog.open()
+        }
+
+        HoverHandler {
+            cursorShape: Qt.PointingHandCursor
+        }
+    }
+
     Item {
         id: main
         implicitWidth: shutdown.implicitWidth
         implicitHeight: shutdown.implicitHeight
-    
+
         PowerAction {
             id: shutdown
             text: "󰐥"
             color: Colors.base08
+            variant: DesktopText.Bigtext
             message: "Arrêter le système ?"
             command: ["shutdown", "now"]
         }

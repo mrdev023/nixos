@@ -2,6 +2,7 @@ import QtQuick
 import Quickshell.Services.SystemTray as QSSST
 
 import "../components"
+import "./components/right"
 import "../singletons"
 
 Panel {
@@ -12,9 +13,14 @@ Panel {
         spacing: Variables.windowGap
         anchors.horizontalCenter: parent.horizontalCenter
 
-        PowerProfile { }
-        AudioSink { }
-        Bluetooth { }
+        PowerProfile {}
+        Audio {
+            kind: Audio.Sink
+        }
+        Audio {
+            kind: Audio.Source
+        }
+        Bluetooth {}
 
         Repeater {
             model: QSSST.SystemTray.items
@@ -26,6 +32,6 @@ Panel {
             }
         }
 
-        Power { }
+        Power {}
     }
 }

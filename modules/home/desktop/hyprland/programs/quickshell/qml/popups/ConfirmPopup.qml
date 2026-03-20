@@ -18,33 +18,11 @@ QS.FloatingWindow {
     visible: false
 
     function open(): void {
-        visible = true
+        visible = true;
     }
 
     function close(): void {
-        visible = false
-    }
-
-    component ActionButton: Button {
-        property string buttonText
-
-        background: Rectangle {
-            color: hover.hovered
-                ? Colors.base01
-                : Colors.withOpacity(Colors.base02, 0.4)
-            radius: Variables.windowRadius / 2
-        }
-
-        contentItem: DesktopText {
-            text: buttonText
-            color: hover.hovered
-                ? Colors.base04
-                : Colors.base05
-        }
-
-        HoverHandler {
-            id: hover
-        }
+        visible = false;
     }
 
     Rectangle {
@@ -66,21 +44,21 @@ QS.FloatingWindow {
                 spacing: 12
                 anchors.horizontalCenter: parent.horizontalCenter
 
-                ActionButton {
+                DesktopButton {
                     buttonText: "Non"
-                    
+
                     onClicked: {
-                        root.close()
-                        root.cancelled()
+                        root.close();
+                        root.cancelled();
                     }
                 }
 
-                ActionButton {
+                DesktopButton {
                     buttonText: "Oui"
 
                     onClicked: {
-                        root.close()
-                        root.confirmed()
+                        root.close();
+                        root.confirmed();
                     }
                 }
             }
