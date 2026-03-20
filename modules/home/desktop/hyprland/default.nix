@@ -33,7 +33,7 @@ in
     (import ./programs/hyprlock.nix args)
     (import ./programs/hyprpaper.nix args)
     (import ./programs/quickshell args)
-    (import ./programs/waybar.nix args)
+    # (import ./programs/waybar.nix args)
     (import ./programs/wofi.nix args)
     {
       programs.kitty.enable = mkDefault true;
@@ -73,7 +73,6 @@ in
               clipboard = import ./scripts/clipboard.nix args;
             in
             [
-              "waybar"
               clipboard.watch
             ];
 
@@ -285,6 +284,11 @@ in
               "match:initial_title" = "Incrustation vidéo";
               float = "on";
               pin = "on";
+            }
+            {
+              name = "set-quickshell-to-float";
+              "match:initial_class" = "org.quickshell";
+              float = "on";
             }
             {
               name = "set-pavucontrol-to-float";

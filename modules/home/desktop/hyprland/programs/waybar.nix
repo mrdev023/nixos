@@ -15,6 +15,7 @@ in
 {
   stylix.targets.waybar.addCss = false;
   home.packages = with pkgs; [ playerctl ]; # required by mpris
+  wayland.windowManager.hyprland.settings.exec-once = [ "waybar" ];
 
   programs.waybar = {
     enable = true;

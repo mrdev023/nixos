@@ -1,5 +1,7 @@
 import QtQuick
+import Quickshell.Io as QSIO
 
+import "../popups"
 import "../singletons"
 
 Row {
@@ -19,24 +21,58 @@ Row {
             }
         }
 
+        component PowerAction: DesktopText {
+            id: powerAction
+
+            property alias message: confirmDialog.message
+            property alias command: process.command
+
+            QSIO.Process {
+                id: process
+            }
+
+            ConfirmPopup {
+                id: confirmDialog
+                onConfirmed: process.running = true
+            }
+            
+            MouseArea {
+                anchors.fill: parent
+                cursorShape: Qt.PointingHandCursor
+                onClicked: confirmDialog.open()
+            }
+        }
+
+        ConfirmPopup {
+            id: confirmDialog
+        }
+
         Row {
             id: drawer
             spacing: Variables.windowGap
 
-            DesktopText {
+            PowerAction {
                 id: logout
                 text: "󰍃"
                 color: Colors.base05
+                message: "Se déconnecter ?"
+                command: ["hyprctl", "dispatch", "exit"]
             }
-            DesktopText {
+            PowerAction {
                 id: lock
                 text: "󰌾"
                 color: Colors.base05
+                message: "Verrouiller la session ?"
+
+                command: ["hyprlock"]
             }
-            DesktopText {
+            PowerAction {
                 id: reboot
                 text: "󰜉"
                 color: Colors.base05
+                message: "Redémarrer le système ?"
+
+                command: ["reboot"]
             }
         }
     }
@@ -46,10 +82,12 @@ Row {
         implicitWidth: shutdown.implicitWidth
         implicitHeight: shutdown.implicitHeight
     
-        DesktopText {
+        PowerAction {
             id: shutdown
             text: "󰐥"
             color: Colors.base08
+            message: "Arrêter le système ?"
+            command: ["shutdown", "now"]
         }
     }
 
