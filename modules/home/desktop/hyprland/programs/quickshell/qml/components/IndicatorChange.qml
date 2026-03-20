@@ -1,12 +1,11 @@
 import QtQuick
 import QtQuick.Layouts as QQL
-import Quickshell as QS
 
+import "../components"
 import "../singletons"
 
-QS.PopupWindow {
+DesktopPopup {
     id: root
-    color: "transparent"
 
     implicitWidth: _container.implicitWidth
     implicitHeight: _container.implicitHeight
@@ -17,39 +16,17 @@ QS.PopupWindow {
     default property alias content: _content.children
     property alias spacing: _content.spacing
 
-
-    anchor {
-        window: topBar // Top parent bar
-        edges: QS.Edges.Top | QS.Edges.Right
-        gravity: QS.Edges.Bottom | QS.Edges.Left
-        rect {
-            x: topBar.width
-            y: topBar.height
-        }
-        margins {
-            top: Variables.windowGap
-            right: Variables.windowGap
-        }
-    }
-
-    Rectangle {
+    Panel {
         id: _container
-        color: Colors.base00
-        radius: Variables.windowRadius
+        opacity: root.opened ? 1.0 : 0.0
+
         implicitWidth: _content.implicitWidth + Variables.windowGap * 4
         implicitHeight: _content.implicitHeight + Variables.windowGap * 4
-        opacity: root.opened ? 1.0 : 0.0
-        
         Behavior on opacity {
             NumberAnimation {
                 duration: 250
                 easing.type: Easing.OutCubic
             }
-        }
-
-        border {
-            width: Variables.windowBorder
-            color: Colors.base0D
         }
 
         QQL.ColumnLayout {

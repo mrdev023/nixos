@@ -12,7 +12,6 @@ Panel {
     property QSH.HyprlandMonitor monitor
 
     implicitWidth: workspaces.implicitWidth + Variables.windowGap * 2
-    implicitHeight: workspaces.implicitHeight
 
     Row {
         id: workspaces
@@ -26,6 +25,7 @@ Panel {
 
             delegate: WorkspaceButton {
                 workspace: modelData
+                height: root.height - Variables.windowGap * 2
                 anchors.verticalCenter: parent.verticalCenter
             }
         }

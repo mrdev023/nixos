@@ -1,12 +1,11 @@
 import QtQuick
 import QtQuick.Layouts as QQL
-import Quickshell as QS
 
+import "../components"
 import "../singletons"
 
-QS.PopupWindow {
+DesktopPopup {
     id: root
-    color: "transparent"
     // If is completely hidden, switch to not visible
     // to avoid block event on others PanelDrawer
     // WARN: Binding loop detected for property "visible"
@@ -31,34 +30,12 @@ QS.PopupWindow {
         }
     }
 
-    anchor {
-        window: topBar // Top parent bar
-        edges: QS.Edges.Top | QS.Edges.Right
-        gravity: QS.Edges.Bottom | QS.Edges.Left
-        rect {
-            x: topBar.width
-            y: topBar.height
-        }
-        margins {
-            top: Variables.windowGap
-            right: Variables.windowGap
-        }
-    }
-
-    Rectangle {
+    Panel {
         id: _container
-        color: Colors.base00
-        radius: Variables.windowRadius
         implicitWidth: _content.implicitWidth + Variables.windowGap * 4
         implicitHeight: _content.implicitHeight + Variables.windowGap * 4
-
         transform: Translate {
             x: root._slideOffset
-        }
-
-        border {
-            width: Variables.windowBorder
-            color: Colors.base0D
         }
 
         QQL.ColumnLayout {

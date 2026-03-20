@@ -14,17 +14,17 @@ QS.PanelWindow {
         right: true
     }
 
-    margins {
-        top: Variables.windowGap
-        left: Variables.windowGap
-        right: Variables.windowGap
-    }
-
     color: "transparent"
-    implicitHeight: Variables.topBarHeight + Variables.windowGap
+    implicitHeight: Variables.topBarHeight + Variables.windowGap * 2
 
     Item {
-        anchors.fill: parent
+        anchors {
+            fill: parent
+
+            leftMargin: Variables.windowGap
+            topMargin: Variables.windowGap
+            rightMargin: Variables.windowGap
+        }
 
         LeftPanel {
             height: parent.height

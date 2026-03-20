@@ -8,14 +8,16 @@ QQC.Button {
     leftPadding: Variables.windowGap * 1.5
     rightPadding: leftPadding
 
+    opacity: hover.hovered ? 0.7 : 1.0
+
     background: Rectangle {
-        color: hover.hovered ? Colors.base01 : Colors.withOpacity(Colors.base02, 0.4)
+        color: Colors.base0B
         radius: Variables.windowRadius / 2
     }
 
     contentItem: DesktopText {
         id: desktopText
-        color: hover.hovered ? Colors.base04 : Colors.base05
+        color: Colors.base00
     }
 
     HoverHandler {

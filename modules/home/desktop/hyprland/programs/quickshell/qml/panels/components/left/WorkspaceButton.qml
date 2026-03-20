@@ -5,12 +5,13 @@ import "../../../components"
 import "../../../singletons"
 
 Rectangle {
+    id: root
     property QSH.HyprlandWorkspace workspace
 
     radius: Variables.windowRadius / 2
-    implicitWidth: text.implicitWidth + Variables.windowGap * 2
-    implicitHeight: text.implicitHeight + Variables.windowGap / 2
-    color: _applyColor(Colors.base00, Colors.base01, Colors.base01, Colors.base08, Colors.withOpacity(Colors.base02, 0.4))
+    width: root.height + Variables.windowGap
+    opacity: hover.hovered ? 0.7 : 1.0
+    color: _backgroundColor()
 
     Behavior on opacity {
         NumberAnimation {
@@ -37,20 +38,24 @@ Rectangle {
     DesktopText {
         id: text
         text: workspace.name
-        anchors.centerIn: parent
+        anchors.centerIn: root
         variant: DesktopText.Variant.Subtitle
-        color: _applyColor(Colors.base03, Colors.base04, Colors.base04, Colors.base00, Colors.base05)
+        color: _textColor()
     }
 
-    function _applyColor(normal, active, focused, urgent, hovered) {
-        if (hover.hovered)
-            return hovered;
+    function _textColor() {
         if (workspace.urgent)
-            return urgent;
-        if (workspace.focused)
-            return focused;
-        if (workspace.active)
-            return active;
-        return normal;
+            return Colors.base00;
+        if (workspace.active || workspace.focused)
+            return Colors.base04;
+        return Colors.base03;
+    }
+
+    function _backgroundColor() {
+        if (workspace.urgent)
+            return Colors.base08;
+        if (workspace.active || workspace.focused)
+            return Colors.base01;
+        return Colors.base00;
     }
 }

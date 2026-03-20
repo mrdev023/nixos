@@ -90,7 +90,7 @@ Row {
         PowerAction {
             id: shutdown
             text: "󰐥"
-            color: Colors.base08
+            color: Colors.base03
             variant: DesktopText.Bigtext
             message: "Arrêter le système ?"
             command: ["shutdown", "now"]

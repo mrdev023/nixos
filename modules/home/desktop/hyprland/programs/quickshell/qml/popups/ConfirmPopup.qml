@@ -25,9 +25,8 @@ QS.FloatingWindow {
         visible = false;
     }
 
-    Rectangle {
+    Panel {
         anchors.fill: parent
-        color: Colors.base00
 
         Column {
             anchors.centerIn: parent
@@ -35,7 +34,6 @@ QS.FloatingWindow {
 
             DesktopText {
                 text: root.message
-                color: Colors.base05
                 font.pixelSize: 15
                 anchors.horizontalCenter: parent.horizontalCenter
             }

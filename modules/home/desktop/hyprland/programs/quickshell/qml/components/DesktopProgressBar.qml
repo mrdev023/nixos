@@ -13,7 +13,7 @@ QQC.ProgressBar {
 
     contentItem: Rectangle {
         radius: Variables.windowRadius / 2
-        color: Colors.base0B
+        color: Colors.base05
         width: parent.visualPosition * parent.width
         height: parent.height
 

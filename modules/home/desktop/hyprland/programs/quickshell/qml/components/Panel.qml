@@ -2,7 +2,6 @@ import QtQuick
 
 import "../singletons"
 
-
 Rectangle {
     id: root
     readonly property real _padding: Variables.windowGap
