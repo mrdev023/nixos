@@ -84,7 +84,7 @@ Item {
         }
     }
 
-    PanelDrawer {
+    DesktopPopup {
         id: detailsWindow
         spacing: Variables.windowGap
 
@@ -158,7 +158,7 @@ Item {
         }
     }
 
-    IndicatorChange {
+    DesktopPopup {
         id: indicator
 
         QQL.RowLayout {

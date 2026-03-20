@@ -47,7 +47,7 @@ Item {
         }
     }
 
-    PanelDrawer {
+    DesktopPopup {
         id: detailsWindow
         spacing: Variables.windowGap
 
