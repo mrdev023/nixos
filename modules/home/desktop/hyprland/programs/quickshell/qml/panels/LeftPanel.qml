@@ -1,4 +1,5 @@
 import QtQuick
+import Quickshell as QS
 import Quickshell.Hyprland as QSH
 
 import "../components"
@@ -18,7 +19,9 @@ Panel {
 
         Repeater {
             id: repeater
-            model: QSH.Hyprland.workspaces.values.filter(w => w.monitor == root.monitor)
+            model: QS.ScriptModel {
+                values: QSH.Hyprland.workspaces.values.filter(w => w.monitor == root.monitor)
+            }
 
             delegate: WorkspaceButton {
                 workspace: modelData

@@ -7,9 +7,9 @@ Rectangle {
     property QSH.HyprlandWorkspace workspace
     
     radius: Variables.windowRadius / 2
-    implicitWidth: text.implicitWidth + Variables.windowGap
-    implicitHeight: text.implicitHeight + Variables.windowGap / 1.5
-    color: _applyColor(Colors.base00, Colors.base01, Colors.base01, Colors.base00, Colors.withOpacity(Colors.base02, 0.4))
+    implicitWidth: text.implicitWidth + Variables.windowGap * 2
+    implicitHeight: text.implicitHeight + Variables.windowGap / 2
+    color: _applyColor(Colors.base00, Colors.base01, Colors.base01, Colors.base08, Colors.withOpacity(Colors.base02, 0.4))
 
     Behavior on opacity {
         NumberAnimation {
@@ -39,14 +39,14 @@ Rectangle {
         anchors.centerIn: parent
         innerPadding: Variables.topBarGap / 4
         font.bold: true
-        color: _applyColor(Colors.base03, Colors.base04, Colors.base04, Colors.base08, Colors.base05)
+        color: _applyColor(Colors.base03, Colors.base04, Colors.base04, Colors.base00, Colors.base05)
     }
 
     function _applyColor(normal, active, focused, urgent, hovered) {
         if (hover.hovered)     return hovered
+        if (workspace.urgent)  return urgent
         if (workspace.focused) return focused
         if (workspace.active)  return active
-        if (workspace.urgent)  return urgent
         return normal
     }
 }

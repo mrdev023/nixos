@@ -39,6 +39,8 @@ Panel {
                 text: parent.player ? `${parent.player.trackTitle} - ${parent.player.trackArtist}` : ""
                 color: Colors.base05
                 font.italic: !!!parent.player?.isPlaying
+                elide: Text.ElideRight
+                width: Math.min(implicitWidth, 350)
             }
 
         }

@@ -5,26 +5,27 @@ import "../components"
 import "../singletons"
 
 Panel {
-    implicitWidth: tray.implicitWidth + Variables.windowGap * 2
+    implicitWidth: tray.implicitWidth + Variables.windowGap * 4
 
     Row {
         id: tray
         spacing: Variables.windowGap
+        anchors.horizontalCenter: parent.horizontalCenter
+
+        PowerProfile { }
+        AudioSink { }
+        Bluetooth { }
 
         Repeater {
             model: QSSST.SystemTray.items
 
-            delegate: Image {
-                source: modelData.icon
-
-                width: Fonts.ptToPx(Fonts.desktopSize, topBar.screen)
-                fillMode: Image.PreserveAspectFit
-                anchors.verticalCenter: parent.verticalCenter
-
-                TapHandler {
-                    onTapped: modelData.activate()
-                }
+            delegate: TrayItem {
+                required property var modelData
+                trayItem: modelData
+                anchors.verticalCenter: tray.verticalCenter
             }
         }
+
+        Power { }
     }
 }
