@@ -215,6 +215,38 @@
               agenix
             ];
           };
+
+          quickshell =
+            let
+              qtbase = pkgs.kdePackages.qtbase;
+
+              qtPluginPath = pkgs.lib.makeSearchPathOutput "out" qtbase.qtPluginPrefix (
+                with pkgs.kdePackages;
+                [
+                  qtbase
+                  qtsvg
+                  qtdeclarative
+                  qtwayland
+                ]
+              );
+              qtQmlPath = pkgs.lib.makeSearchPathOutput "out" qtbase.qtQmlPrefix (
+                with pkgs;
+                [
+                  kdePackages.qtdeclarative
+                  kdePackages.qtwayland
+                  quickshell
+                ]
+              );
+            in
+            pkgs.mkShell {
+              packages = with pkgs; [
+                quickshell
+              ];
+
+              QT_PLUGIN_PATH = qtPluginPath;
+              QML_IMPORT_PATH = qtQmlPath;
+              QML2_IMPORT_PATH = qtQmlPath;
+            };
         };
         formatter = pkgs.nixfmt-tree;
       }
