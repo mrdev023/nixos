@@ -67,6 +67,7 @@ Item {
 
             DesktopSwitch {
                 checked: root._adapter.state === QSB.BluetoothAdapterState.Enabled
+                onClicked: root._adapter.enabled = !root._adapter.enabled
             }
         }
 
@@ -187,12 +188,12 @@ Item {
 
     function filterConnectedDevice(device: QSB.BluetoothDevice): bool {
         switch (device.state) {
-            case QSB.BluetoothDeviceState.Connecting:
-            case QSB.BluetoothDeviceState.Connected:
-            case QSB.BluetoothDeviceState.Disconnecting:
-                return true;
-            default:
-                return false;
+        case QSB.BluetoothDeviceState.Connecting:
+        case QSB.BluetoothDeviceState.Connected:
+        case QSB.BluetoothDeviceState.Disconnecting:
+            return true;
+        default:
+            return false;
         }
     }
 }
