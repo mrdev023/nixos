@@ -12,7 +12,8 @@ in
   };
   config = mkIf cfg.enable {
     services.displayManager.sddm.enable = mkDefault true;
-    services.displayManager.sddm.wayland.enable = mkDefault true;
+    services.displayManager.sddm.wayland.enable = true;
+    services.power-profiles-daemon.enable = true;
     programs.hyprland.enable = true;
   };
 }
