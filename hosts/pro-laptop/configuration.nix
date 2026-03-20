@@ -50,7 +50,6 @@
     hardware = {
       audio.pipewire.enable = true;
       bluetooth.enable = true;
-      gamingKernel.enable = true;
       graphics.nvidia.enable = true;
       keymaps.layout = "fr";
       secure-boot.enable = true;

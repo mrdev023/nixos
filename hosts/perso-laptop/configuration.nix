@@ -57,7 +57,6 @@
 
     hardware = {
       bluetooth.enable = true;
-      gamingKernel.enable = true;
       keymaps.layout = "fr";
       graphics.nvidia.enable = true;
       audio.pipewire.enable = true;

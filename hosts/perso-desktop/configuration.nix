@@ -43,7 +43,6 @@
 
     hardware = {
       bluetooth.enable = true;
-      gamingKernel.enable = true;
       keymaps.layout = "us";
       graphics.amdgpu.enable = true;
       audio.pipewire.enable = true;

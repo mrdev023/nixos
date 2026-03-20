@@ -30,7 +30,6 @@
     };
 
     hardware = {
-      gamingKernel.enable = true;
       keymaps.layout = "us";
       audio.pipewire.enable = true;
       printing.enable = true;

@@ -4,7 +4,7 @@
   imports = [
     ./audio
     ./bluetooth.nix
-    ./gaming-kernel.nix
+    ./kernel.nix
     ./keymaps
     ./graphics
     ./printing.nix
