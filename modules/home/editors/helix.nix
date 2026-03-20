@@ -359,10 +359,18 @@ in
       extraPackages = with pkgs.kdePackages; [
         qtdeclarative
       ];
-
-      languages.language-server.qmlls = {
-        command = "qmlls";
-        args = [ "-E" ];
+      languages = {
+        language = [
+          {
+            name = "qml";
+            language-servers = [ "qmlls" ];
+            auto-format = true;
+          }
+        ];
+        language-server.qmlls = {
+          command = "qmlls";
+          args = [ "-E" ];
+        };
       };
     })
     (mkIf (cfgHasLanguage "rust") {
