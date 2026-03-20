@@ -14,8 +14,9 @@ DesktopPopup {
     //   → qui recalcule visible
     visible: _slideOffset < root.width
 
-    implicitWidth: _container.implicitWidth
-    implicitHeight: _container.implicitHeight
+    // Variables.windowGap * 2 -> Keep spaces for Shadow
+    implicitWidth: _container.implicitWidth + Variables.windowGap * 2
+    implicitHeight: _container.implicitHeight + Variables.windowGap * 2
 
     property bool opened
     property real _slideOffset: opened ? 0 : root.width
@@ -32,6 +33,7 @@ DesktopPopup {
 
     Panel {
         id: _container
+        anchors.centerIn: parent
         implicitWidth: _content.implicitWidth + Variables.windowGap * 4
         implicitHeight: _content.implicitHeight + Variables.windowGap * 4
         transform: Translate {

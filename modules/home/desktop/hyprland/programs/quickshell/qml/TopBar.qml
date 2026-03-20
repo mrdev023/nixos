@@ -15,7 +15,8 @@ QS.PanelWindow {
     }
 
     color: "transparent"
-    implicitHeight: Variables.topBarHeight + Variables.windowGap * 2
+    // TODO: Refactor this for better topBarHeight process
+    implicitHeight: Variables.topBarHeight * 1.40 + Variables.windowGap * 2
 
     Item {
         anchors {
@@ -24,6 +25,7 @@ QS.PanelWindow {
             leftMargin: Variables.windowGap
             topMargin: Variables.windowGap
             rightMargin: Variables.windowGap
+            bottomMargin: Variables.windowGap
         }
 
         LeftPanel {
