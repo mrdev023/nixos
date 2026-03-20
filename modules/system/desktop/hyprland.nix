@@ -1,8 +1,14 @@
-{ config, lib, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 with lib;
 let
   cfg = config.modules.system.desktop.hyprland;
+  hasPlasma = config.services.desktopManager.plasma6.enable;
 in
 {
   options.modules.system.desktop.hyprland = {
@@ -10,19 +16,27 @@ in
       Enable hyprland with my custom configurations
     '';
   };
-  config = mkIf cfg.enable {
-    services.displayManager.sddm = {
-      enable = mkDefault true;
-      wayland = {
+  config = mkIf cfg.enable (mkMerge [
+    {
+      services.displayManager.sddm.enable = mkDefault true;
+      services.power-profiles-daemon.enable = true;
+      programs.hyprland = {
         enable = true;
-        # weston 15 crashes on RDNA4 (gfx1201) due to duplicate DRM modifiers
+        withUWSM = true;
+      };
+    }
+    (mkIf (!hasPlasma) {
+      services.displayManager.sddm.wayland = {
+        enable = true;
+        # weston 15 crashe sur RDNA4 (gfx1201) à cause de modifiers DRM dupliqués
         compositor = "kwin";
       };
-    };
-    services.power-profiles-daemon.enable = true;
-    programs.hyprland = {
-      enable = true;
-      withUWSM = true;
-    };
-  };
+      environment.systemPackages = [ pkgs.kdePackages.breeze ];
+      services.displayManager.sddm.settings.Theme.CursorTheme = "breeze_cursors";
+      environment.variables = {
+        XCURSOR_THEME = "breeze_cursors";
+        XCURSOR_SIZE = "24";
+      };
+    })
+  ]);
 }
