@@ -1,40 +1,14 @@
-import Quickshell
-import Quickshell.Hyprland as QSH
-
 import QtQuick
+import Quickshell as QS
 
-PanelWindow {
-    anchors {
-        top: true
-        left: true
-        right: true
-    }
+import "panels"
+import "singletons"
 
-    margins {
-        top: 10
-        left: 10
-        right: 10
-    }
-
-    color: "transparent"
-    implicitHeight: 30
-
-    Item {
-        anchors.fill: parent
-
-        LeftPanel {
-            height: parent.height
-            anchors.left: parent.left
-        }
-
-        CenterPanel {
-            height: parent.height
-            anchors.centerIn: parent
-        }
-
-        RightPanel {
-            height: parent.height
-            anchors.right: parent.right
-        }
+QS.Variants {
+    model: QS.Quickshell.screens
+    
+    TopBar {
+        required property var modelData
+        screen: modelData
     }
 }

@@ -241,6 +241,7 @@
             pkgs.mkShell {
               packages = with pkgs; [
                 quickshell
+                gammaray
               ];
 
               QT_PLUGIN_PATH = qtPluginPath;
