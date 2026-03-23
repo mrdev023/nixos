@@ -29,6 +29,7 @@ in
       programs = {
         atuin.enable = true;
         claude-code.enable = true;
+        mistral-vibe.enable = true;
         difftastic.enable = true;
         direnv.enable = true;
         kitty.enable = true;
