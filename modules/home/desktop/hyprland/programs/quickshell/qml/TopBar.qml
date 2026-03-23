@@ -22,27 +22,6 @@ QS.PanelWindow {
     LauncherPanel {}
     ClipboardPanel {}
 
-    QSH.GlobalShortcut {
-        name: "launcher_toggle"
-        onPressed: {
-            if (Launcher.opened) Launcher.close();
-            else Launcher.open();
-        }
-    }
-
-    QSH.GlobalShortcut {
-        name: "clipboard_toggle"
-        onPressed: {
-            if (Clipboard.opened) Clipboard.close();
-            else Clipboard.open();
-        }
-    }
-
-    QSH.GlobalShortcut {
-        name: "clipboard_wipe"
-        onPressed: Clipboard.wipe()
-    }
-
     Item {
         anchors {
             fill: parent

@@ -1,5 +1,6 @@
 import QtQuick
 import Quickshell as QS
+import Quickshell.Hyprland as QSH
 
 import "./components"
 import "./components/launcher"
@@ -8,7 +9,7 @@ import "../singletons"
 PickerPanel {
     id: root
 
-    pickerOpened: Launcher.opened
+    pickerOpened: Launcher.opened && QSH.Hyprland.monitorFor(topBar.screen) === QSH.Hyprland.focusedMonitor
     placeholderText: "Rechercher une application..."
 
     model: QS.ScriptModel {
