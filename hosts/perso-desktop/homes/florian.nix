@@ -32,8 +32,6 @@ in
 
   modules.home.profiles = [ "shell" ];
 
-  stylix.image = ../../../assets/backgrounds/ultra_wide.jpg;
-
   wayland.windowManager.hyprland.settings.monitor = [
     "DP-1, 5120x1440@240, 0x0, 1, vrr, 1, bitdepth, 10, cm, hdr, sdrbrightness, 1.3, sdrsaturation, 0.97"
   ];

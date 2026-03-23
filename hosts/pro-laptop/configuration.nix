@@ -24,6 +24,11 @@
 
   services.udev.packages = [ pkgs.wooting-udev-rules ];
 
+  stylix = {
+    enable = true;
+    image = ../../assets/backgrounds/4k.jpg;
+  };
+
   hardware.nvidia.prime = {
     offload = {
       enable = true;

@@ -21,7 +21,14 @@ let
 in
 {
   config = mkIf cfg.enable (mkMerge [
-    (import ./programs/stylix.nix args)
+    {
+      assertions = [
+        {
+          assertion = cfg.enable -> config.stylix.enable;
+          message = "Hyprland requires stylix to be enabled too";
+        }
+      ];
+    }
     (import ./programs/dunst.nix args)
     (import ./programs/hyprlock.nix args)
     (import ./programs/hyprpaper.nix args)

@@ -22,8 +22,6 @@
 
   modules.home.profiles = [ "shell" ];
 
-  stylix.image = ../../../assets/backgrounds/4k.jpg;
-
   # hyprland monitors
   # hyprctl monitors all
   wayland.windowManager.hyprland.settings.monitor = [

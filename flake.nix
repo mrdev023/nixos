@@ -87,7 +87,6 @@
         nix-flatpak.homeManagerModules.nix-flatpak
         nvf.homeManagerModules.default
         agenix.homeManagerModules.default
-        stylix.homeModules.stylix
         zen-browser.homeModules.beta
         spicetify-nix.homeManagerModules.spicetify
       ];
@@ -110,6 +109,7 @@
           modules =
             with inputs;
             [
+              ./modules/stylix.nix
               ./hosts/${name}/configuration.nix
               ./hosts/${name}/home.nix
 
@@ -117,6 +117,7 @@
               lanzaboote.nixosModules.lanzaboote
               disko.nixosModules.disko
               agenix.nixosModules.default
+              stylix.nixosModules.stylix
 
               (
                 { lib, pkgs, ... }:
@@ -148,6 +149,8 @@
 
           modules = home-modules ++ [
             { nix.package = pkgs.nix; }
+            stylix.homeModules.stylix
+            ./modules/stylix.nix
             ./hosts/${name}/home.nix
           ];
 

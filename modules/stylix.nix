@@ -1,9 +1,9 @@
-{ pkgs, ... }:
+{ pkgs, lib, ... }:
 
+with lib;
 {
   stylix = {
-    enable = true;
-    polarity = "dark";
+    polarity = mkDefault "dark";
     fonts = {
       serif = {
         package = pkgs.dejavu_fonts;

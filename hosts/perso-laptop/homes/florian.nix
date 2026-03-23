@@ -23,7 +23,5 @@
 
   modules.home.profiles = [ "shell" ];
 
-  stylix.image = ../../../assets/backgrounds/4k.jpg;
-
   home.sessionVariables.NH_FLAKE = "${config.home.homeDirectory}/Projets/Perso/nixos";
 }
