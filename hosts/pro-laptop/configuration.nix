@@ -13,6 +13,19 @@
     ./disko-config.nix
   ];
 
+  warnings = [
+    "Remove extraConfig of wireplumber when https://gitlab.freedesktop.org/pipewire/pipewire/-/work_items/5197 is resolved."
+  ];
+  services.pipewire.wireplumber.extraConfig."51-bluez-codecs" = {
+    "monitor.bluez.properties" = {
+      "bluez5.codecs" = [
+        "sbc"
+        "sbc_xq"
+        "aac"
+      ];
+    };
+  };
+
   # Bootloader.
   boot.loader.efi.canTouchEfiVariables = true;
 

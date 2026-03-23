@@ -15,6 +15,7 @@
     k9s.enable = true;
     lazysql.enable = true;
     spicetify.enable = true;
+    zed-editor.enable = true;
     zen-browser.enable = true;
   };
 
