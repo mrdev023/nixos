@@ -3,7 +3,7 @@
 {
   imports = [
     ./chromium.nix
-    ./claude-code
+    ./assistant-code
     ./difftastic.nix
     ./kitty.nix
     ./firefox.nix
