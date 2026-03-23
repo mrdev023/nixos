@@ -33,6 +33,7 @@ let
 
     # System
     "rust"
+    "qml"
     "c_cpp"
 
     # Autres

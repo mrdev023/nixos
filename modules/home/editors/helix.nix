@@ -355,6 +355,16 @@ in
     (mkIf (cfgHasLanguage "c_cpp") {
       extraPackages = with pkgs; [ clang-tools ];
     })
+    (mkIf (cfgHasLanguage "qml") {
+      extraPackages = with pkgs.kdePackages; [
+        qtdeclarative
+      ];
+
+      languages.language-server.qmlls = {
+        command = "qmlls";
+        args = [ "-E" ];
+      };
+    })
     (mkIf (cfgHasLanguage "rust") {
       extraPackages = with pkgs; [
         rust-analyzer
