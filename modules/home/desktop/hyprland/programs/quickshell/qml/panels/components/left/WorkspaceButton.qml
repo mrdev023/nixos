@@ -29,6 +29,7 @@ Rectangle {
 
     HoverHandler {
         id: hover
+        cursorShape: Qt.PointingHandCursor
     }
 
     TapHandler {
