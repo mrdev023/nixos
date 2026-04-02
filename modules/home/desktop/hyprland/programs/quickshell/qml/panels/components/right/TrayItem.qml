@@ -1,5 +1,4 @@
 import QtQuick
-import Quickshell as QS
 import Quickshell.Services.SystemTray as QSSST
 
 import "../../../singletons"
@@ -12,13 +11,9 @@ Image {
     height: Fonts.ptToPx(Fonts.desktopSize, topBar.screen)
     fillMode: Image.PreserveAspectFit
 
-    QS.QsMenuAnchor {
-        id: menuAnchor
-        menu: root.trayItem.menu
-        anchor.window: topBar
-        anchor.rect: Qt.rect(root.mapToItem(null, 0, 0).x, topBar.height, root.width, 0)
-        anchor.edges: QS.Edges.Bottom
-        anchor.gravity: QS.Edges.Bottom | QS.Edges.Right
+    TrayMenuPopup {
+        id: menuPopup
+        trayItem: root.trayItem
     }
 
     MouseArea {
@@ -28,7 +23,7 @@ Image {
         onClicked: (mouse) => {
             if (mouse.button === Qt.RightButton) {
                 if (root.trayItem.hasMenu)
-                    menuAnchor.open()
+                    menuPopup.opened = true
             } else {
                 root.trayItem.activate()
             }
