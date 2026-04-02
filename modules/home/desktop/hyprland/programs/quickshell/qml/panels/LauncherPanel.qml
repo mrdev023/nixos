@@ -23,8 +23,7 @@ QS.PopupWindow {
         }
     }
 
-    onVisibleChanged: if (!visible)
-        Launcher.close()
+    onVisibleChanged: if (!visible) Launcher.close()
 
     QSH.HyprlandFocusGrab {
         id: _grab
@@ -93,101 +92,110 @@ QS.PopupWindow {
                 }
             }
 
-            ListView {
-                id: _appList
-
+            Item {
                 QQL.Layout.fillWidth: true
                 QQL.Layout.fillHeight: true
-                clip: true
-                spacing: Variables.windowGap / 2
-                highlightMoveDuration: 100
-                currentIndex: -1
 
-                onCountChanged: currentIndex = count > 0 ? 0 : -1
+                ListView {
+                    id: _appList
 
-                model: QS.ScriptModel {
-                    id: _appModel
-                    values: QS.DesktopEntries.applications.values.filter(root._matchesSearch).sort((a, b) => a.name.localeCompare(b.name))
-                }
+                    anchors.fill: parent
+                    clip: true
+                    spacing: Variables.windowGap / 2
+                    highlightMoveDuration: 100
+                    currentIndex: -1
+                    visible: count > 0
 
-                highlight: Rectangle {
-                    color: Colors.base01
-                    radius: Variables.windowRadius / 2
-                    opacity: 0.7
-                }
+                    onCountChanged: currentIndex = count > 0 ? 0 : -1
 
-                delegate: Item {
-                    id: _delegate
+                    model: QS.ScriptModel {
+                        id: _appModel
+                        values: QS.DesktopEntries.applications.values
+                            .filter(root._matchesSearch)
+                            .sort((a, b) => {
+                                if (Launcher.searchText === "")
+                                    return a.name.localeCompare(b.name);
+                                return root._appScore(b) - root._appScore(a);
+                            })
+                    }
 
-                    required property QS.DesktopEntry modelData
-                    required property int index
+                    highlight: Rectangle {
+                        color: Colors.base01
+                        radius: Variables.windowRadius / 2
+                        opacity: 0.7
+                    }
 
-                    width: _appList.width
-                    height: Variables.topBarHeight
+                    delegate: Item {
+                        id: _delegate
 
-                    QQL.RowLayout {
-                        anchors {
-                            fill: parent
-                            leftMargin: Variables.windowGap
-                            rightMargin: Variables.windowGap
+                        required property QS.DesktopEntry modelData
+                        required property int index
+
+                        width: _appList.width
+                        height: Variables.topBarHeight
+
+                        QQL.RowLayout {
+                            anchors {
+                                fill: parent
+                                leftMargin: Variables.windowGap
+                                rightMargin: Variables.windowGap
+                            }
+                            spacing: Variables.windowGap
+
+                            Image {
+                                width: 20
+                                height: 20
+                                sourceSize: Qt.size(20, 20)
+                                visible: _delegate.modelData.icon !== ""
+                                source: _delegate.modelData.icon !== "" ? ("image://icon/" + _delegate.modelData.icon) : ""
+                                fillMode: Image.PreserveAspectFit
+                            }
+
+                            DesktopText {
+                                QQL.Layout.fillWidth: true
+                                text: _delegate.modelData.name
+                                variant: DesktopText.Variant.Text
+                                elide: Text.ElideRight
+                            }
                         }
-                        spacing: Variables.windowGap
 
-                        Image {
-                            width: 20
-                            height: 20
-                            sourceSize: Qt.size(20, 20)
-                            visible: _delegate.modelData.icon !== ""
-                            source: _delegate.modelData.icon !== "" ? ("image://icon/" + _delegate.modelData.icon) : ""
-                            fillMode: Image.PreserveAspectFit
+                        TapHandler {
+                            onTapped: {
+                                _delegate.modelData.execute();
+                                Launcher.close();
+                            }
                         }
 
-                        DesktopText {
-                            QQL.Layout.fillWidth: true
-                            text: _delegate.modelData.name
-                            variant: DesktopText.Variant.Text
-                            elide: Text.ElideRight
+                        HoverHandler {
+                            cursorShape: Qt.PointingHandCursor
+                            onHoveredChanged: if (hovered) _appList.currentIndex = _delegate.index
                         }
                     }
 
-                    TapHandler {
-                        onTapped: {
-                            _delegate.modelData.execute();
+                    Keys.onEscapePressed: Launcher.close()
+                    Keys.onReturnPressed: {
+                        if (currentItem) {
+                            currentItem.modelData.execute();
                             Launcher.close();
                         }
                     }
-
-                    HoverHandler {
-                        cursorShape: Qt.PointingHandCursor
-                        onHoveredChanged: if (hovered)
-                            _appList.currentIndex = _delegate.index
+                    Keys.onUpPressed: {
+                        if (currentIndex <= 0) {
+                            currentIndex = -1;
+                            _search.forceActiveFocus();
+                        } else {
+                            decrementCurrentIndex();
+                        }
                     }
                 }
 
-                Keys.onEscapePressed: Launcher.close()
-                Keys.onReturnPressed: {
-                    if (currentItem) {
-                        currentItem.modelData.execute();
-                        Launcher.close();
-                    }
+                DesktopText {
+                    anchors.centerIn: parent
+                    visible: _appList.count === 0 && Launcher.searchText !== ""
+                    text: "Aucun résultat"
+                    variant: DesktopText.Variant.Subtitle
+                    color: Colors.base03
                 }
-                Keys.onUpPressed: {
-                    if (currentIndex <= 0) {
-                        currentIndex = -1;
-                        _search.forceActiveFocus();
-                    } else {
-                        decrementCurrentIndex();
-                    }
-                }
-            }
-
-            DesktopText {
-                QQL.Layout.fillWidth: true
-                visible: _appList.count === 0 && Launcher.searchText !== ""
-                text: "Aucun résultat"
-                variant: DesktopText.Variant.Subtext
-                color: Colors.base03
-                horizontalAlignment: Text.AlignHCenter
             }
         }
     }
@@ -202,18 +210,60 @@ QS.PopupWindow {
         }
     }
 
+    // Returns a fuzzy match score for `str` against `query`.
+    // Characters of query must appear in order (subsequence).
+    // Higher score = better match. Returns -1 if no match.
+    function _fuzzyScore(str: string, query: string): int {
+        const s = str.toLowerCase();
+        const q = query.toLowerCase();
+
+        let si = 0, qi = 0, score = 0, consecutive = 0;
+
+        while (si < s.length && qi < q.length) {
+            if (s[si] === q[qi]) {
+                // Bonus: start of string
+                if (si === 0)
+                    score += 10;
+                // Bonus: word boundary (preceded by separator)
+                else if (" -_.".includes(s[si - 1]))
+                    score += 8;
+                // Bonus: consecutive chars
+                score += consecutive * 4;
+                consecutive++;
+                qi++;
+            } else {
+                consecutive = 0;
+            }
+            si++;
+        }
+
+        if (qi < q.length)
+            return -1;
+
+        // Prefer shorter strings (less noise)
+        score -= Math.floor(s.length / 4);
+
+        return score;
+    }
+
+    // Best fuzzy score across name, genericName and keywords.
+    function _appScore(app: QS.DesktopEntry): int {
+        const q = Launcher.searchText;
+        let best = _fuzzyScore(app.name, q);
+
+        if (app.genericName !== "")
+            best = Math.max(best, _fuzzyScore(app.genericName, q));
+
+        for (const k of app.keywords)
+            best = Math.max(best, _fuzzyScore(k, q));
+
+        return best;
+    }
+
     function _matchesSearch(app: QS.DesktopEntry): bool {
-        const q = Launcher.searchText.toLowerCase();
-
-        if (q === "")
-            return true;
-        if (app.name.toLowerCase().includes(q))
-            return true;
-        if (app.genericName !== "" && app.genericName.toLowerCase().includes(q))
-            return true;
-        if (app.keywords.some(k => k.toLowerCase().includes(q)))
+        if (Launcher.searchText === "")
             return true;
 
-        return false;
+        return _appScore(app) >= 0;
     }
 }
