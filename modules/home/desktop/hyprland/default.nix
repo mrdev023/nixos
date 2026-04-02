@@ -34,7 +34,7 @@ in
     (import ./programs/hyprpaper.nix args)
     (import ./programs/quickshell args)
     # (import ./programs/waybar.nix args)
-    (import ./programs/wofi.nix args)
+    # (import ./programs/wofi.nix args)
     {
       programs.kitty.enable = mkDefault true;
 

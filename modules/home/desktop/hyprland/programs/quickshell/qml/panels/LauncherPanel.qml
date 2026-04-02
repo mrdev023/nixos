@@ -156,12 +156,26 @@ QS.PopupWindow {
         }
     }
 
+    // WORKAROUND: forceActiveFocus() must be deferred until Wayland has confirmed
+    // focus transfer to this surface (wl_keyboard.enter + text-input activation),
+    // which takes multiple round-trips (~10-30ms). Qt.callLater() is not enough
+    // and produces the following warnings:
+    //   WARN qt.qpa.wayland.textinput: enableSurface(0x…launcher) with focusing surface(0x…topbar)
+    //   WARN qt.qpa.wayland.textinput: enableSurface(0x…clipboard) with focusing surface(0x…launcher)
+    //   WARN qt.qpa.wayland.textinput: enableSurface(0x…launcher) with focusing surface(0x…clipboard)
+    // PopupWindow does not expose onActiveChanged to detect the actual focus arrival.
+    Timer {
+        id: _focusTimer
+        interval: 50
+        onTriggered: _search.forceActiveFocus()
+    }
+
     Connections {
         target: Launcher
         function onOpenedChanged(): void {
             if (Launcher.opened) {
                 _search.text = "";
-                Qt.callLater(() => _search.forceActiveFocus());
+                _focusTimer.restart();
             }
         }
     }
