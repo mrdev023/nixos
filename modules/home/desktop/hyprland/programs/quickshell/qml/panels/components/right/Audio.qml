@@ -160,6 +160,7 @@ Item {
 
     DesktopPopup {
         id: indicator
+        closeOnFocusLost: false
 
         QQL.RowLayout {
             spacing: Variables.windowGap

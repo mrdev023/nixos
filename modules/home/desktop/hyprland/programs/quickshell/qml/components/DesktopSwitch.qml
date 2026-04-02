@@ -15,8 +15,8 @@ QQC.Switch {
         radius: Variables.windowRadius / 2
         anchors.verticalCenter: parent.verticalCenter
 
-        color: root.checked ? Colors.base0B : Colors.base01
-        border.color: root.checked ? Colors.base03 : Colors.base02
+        color: root.checked ? Colors.base0D : Colors.base01
+        border.color: root.checked ? Colors.base0E : Colors.base02
         border.width: 2
 
         Behavior on color {

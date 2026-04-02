@@ -1,19 +1,26 @@
 import QtQuick
 import QtQuick.Layouts as QQL
 import Quickshell as QS
+import Quickshell.Hyprland as QSH
 
 import "../singletons"
 
 QS.PopupWindow {
     id: root
+
+    property bool opened
+    property bool closeOnFocusLost: true
+    default property alias content: _content.children
+    property alias spacing: _content.spacing
+
+    // When not interactive, pass all pointer/scroll events through to windows below
+    mask: closeOnFocusLost ? null : _passthroughMask
+
     color: "transparent"
     // Variables.windowGap * 2 -> Keep spaces for Shadow
     implicitWidth: _container.implicitWidth + Variables.windowGap * 2
     implicitHeight: _container.implicitHeight + Variables.windowGap * 2
     visible: _container.opacity > 0
-    property bool opened
-    default property alias content: _content.children
-    property alias spacing: _content.spacing
 
     anchor {
         window: topBar // Top parent bar
@@ -27,6 +34,16 @@ QS.PopupWindow {
             top: Variables.windowGap
             right: Variables.windowGap
         }
+    }
+
+    QS.Region {
+        id: _passthroughMask
+    }
+
+    QSH.HyprlandFocusGrab {
+        windows: [root]
+        active: root.opened && root.closeOnFocusLost
+        onCleared: root.opened = false
     }
 
     Panel {

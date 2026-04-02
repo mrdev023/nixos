@@ -8,11 +8,13 @@ QQC.Button {
     leftPadding: Variables.windowGap * 1.5
     rightPadding: leftPadding
 
-    opacity: hover.hovered ? 0.7 : 1.0
-
     background: Rectangle {
-        color: Colors.base0B
+        color: hover.hovered ? Colors.base0E : Colors.base0D
         radius: Variables.windowRadius / 2
+
+        Behavior on color {
+            ColorAnimation { duration: 150 }
+        }
     }
 
     contentItem: DesktopText {
