@@ -90,13 +90,22 @@ QS.PopupWindow {
                 Keys.onEscapePressed: root.closeRequested()
                 Keys.onDownPressed: {
                     if (_list.count > 0) {
-                        _list.currentIndex = 0;
+                        _list.incrementCurrentIndex();
                         _list.forceActiveFocus();
                     }
                 }
                 Keys.onReturnPressed: {
                     if (_list.count > 0)
                         root.itemActivated(_list.currentItem.modelData);
+                }
+                Keys.onPressed: event => {
+                    if (event.modifiers & Qt.ControlModifier && event.key === Qt.Key_J) {
+                        if (_list.count > 0) {
+                            _list.incrementCurrentIndex();
+                            _list.forceActiveFocus();
+                        }
+                        event.accepted = true;
+                    }
                 }
             }
 
@@ -135,6 +144,35 @@ QS.PopupWindow {
                             _search.forceActiveFocus();
                         } else {
                             decrementCurrentIndex();
+                        }
+                    }
+                    Keys.onPressed: event => {
+                        // Vim-like navigation: Ctrl+J = down, Ctrl+K = up
+                        if (event.modifiers & Qt.ControlModifier) {
+                            // Move to next item
+                            if (event.key === Qt.Key_J) {
+                                incrementCurrentIndex();
+                                event.accepted = true;
+                            // Move to previous item, or back to search field if at top
+                            } else if (event.key === Qt.Key_K) {
+                                if (currentIndex <= 0) {
+                                    currentIndex = -1;
+                                    _search.forceActiveFocus();
+                                } else {
+                                    decrementCurrentIndex();
+                                }
+                                event.accepted = true;
+                            }
+                        // Backspace: delete last char and refocus search
+                        } else if (event.key === Qt.Key_Backspace) {
+                            _search.text = _search.text.slice(0, -1);
+                            _search.forceActiveFocus();
+                            event.accepted = true;
+                        // Printable character: forward to search field (charCode >= 32 excludes control chars)
+                        } else if (event.text.length > 0 && event.text.charCodeAt(0) >= 32) {
+                            _search.insert(_search.cursorPosition, event.text);
+                            _search.forceActiveFocus();
+                            event.accepted = true;
                         }
                     }
                 }
