@@ -10,10 +10,42 @@ Panel {
 
     required property QSN.Notification notification
 
+    readonly property string _urgencyIcon: {
+        switch (root.notification.urgency) {
+        case QSN.NotificationUrgency.Low:      return "";
+        case QSN.NotificationUrgency.Critical: return "󰵙";
+        default:                               return "󰂞";
+        }
+    }
+
+    readonly property color _urgencyColor: {
+        switch (root.notification.urgency) {
+        case QSN.NotificationUrgency.Low:      return Colors.base03;
+        case QSN.NotificationUrgency.Critical: return Colors.base08;
+        default:                               return Colors.base0D;
+        }
+    }
+
+    readonly property int _urgencyTimeout: {
+        switch (root.notification.urgency) {
+        case QSN.NotificationUrgency.Low:      return 8000;
+        case QSN.NotificationUrgency.Critical: return 0;
+        default:                               return 10000;
+        }
+    }
+
+    readonly property int _timeout: {
+        if (root.notification.expireTimeout > 0)
+            return root.notification.expireTimeout;
+        if (root.notification.transient && root._urgencyTimeout === 0)
+            return 10000;
+        return root._urgencyTimeout;
+    }
+
     property Timer _dismissTimer: Timer {
-        interval: root.notification.expireTimeout > 0 ? root.notification.expireTimeout : 5000
+        interval: root._timeout
         repeat: false
-        running: true
+        running: root._timeout > 0
         onTriggered: root.notification.expire()
     }
 
@@ -64,11 +96,24 @@ Panel {
             }
         }
 
-        DesktopText {
+        QQL.RowLayout {
             QQL.Layout.fillWidth: true
-            text: root.notification.summary
-            variant: DesktopText.Variant.Subtitle
-            wrapMode: Text.WordWrap
+            spacing: Variables.windowGap / 2
+
+            DesktopText {
+                visible: root._urgencyIcon !== ""
+                text: root._urgencyIcon
+                variant: DesktopText.Bigtext
+                color: root._urgencyColor
+            }
+
+            DesktopText {
+                QQL.Layout.fillWidth: true
+                text: root.notification.summary
+                variant: DesktopText.Variant.Subtitle
+                color: root._urgencyColor
+                wrapMode: Text.WordWrap
+            }
         }
 
         DesktopText {
@@ -79,8 +124,16 @@ Panel {
             wrapMode: Text.WordWrap
         }
 
+        DesktopProgressBar {
+            QQL.Layout.fillWidth: true
+            QQL.Layout.topMargin: Variables.windowGap
+            visible: root.notification.hints["value"] !== undefined
+            value: (root.notification.hints["value"] ?? 0) / 100
+        }
+
         QQL.RowLayout {
             QQL.Layout.fillWidth: true
+            QQL.Layout.topMargin: Variables.windowGap
             visible: root.notification.actions.length > 0
             spacing: Variables.windowGap / 2
 
@@ -91,6 +144,27 @@ Panel {
                     buttonText: modelData.text
                     onClicked: modelData.invoke()
                 }
+            }
+        }
+
+        DesktopProgressBar {
+            id: _timeoutBar
+            QQL.Layout.fillWidth: true
+            QQL.Layout.topMargin: Variables.windowGap
+            visible: root._timeout > 0
+            variant: DesktopProgressBar.Secondary
+            fillColor: root._urgencyColor
+            value: 1.0
+
+            Component.onCompleted: _timeoutAnim.start()
+
+            NumberAnimation {
+                id: _timeoutAnim
+                target: _timeoutBar
+                property: "value"
+                from: 1.0
+                to: 0.0
+                duration: root._timeout
             }
         }
     }
