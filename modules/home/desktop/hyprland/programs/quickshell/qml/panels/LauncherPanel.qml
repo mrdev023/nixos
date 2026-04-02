@@ -146,7 +146,7 @@ QS.PopupWindow {
                                 width: 20
                                 height: 20
                                 sourceSize: Qt.size(20, 20)
-                                visible: _delegate.modelData.icon !== ""
+                                visible: _delegate.modelData.icon !== "" && status !== Image.Error
                                 source: _delegate.modelData.icon !== "" ? ("image://icon/" + _delegate.modelData.icon) : ""
                                 fillMode: Image.PreserveAspectFit
                             }
@@ -205,7 +205,7 @@ QS.PopupWindow {
         function onOpenedChanged(): void {
             if (Launcher.opened) {
                 _search.text = "";
-                _search.forceActiveFocus();
+                Qt.callLater(() => _search.forceActiveFocus());
             }
         }
     }
