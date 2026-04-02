@@ -176,8 +176,7 @@ in
               "$mainMod, G, togglefloating,"
               "$mainMod, F, fullscreen, 0"
               "$mainMod, T, pin, active"
-              # Already installed with programs.wofi.enable = true;
-              "$mainMod, D, exec, wofi -i --show drun"
+              "$mainMod, D, global, quickshell:launcher_toggle"
               ", Print, exec, ${screenshot.fullscreen}"
               "SHIFT, Print, exec, ${screenshot.region}"
               "$mainMod, V, exec, ${clipboard.select}"

@@ -19,6 +19,15 @@ QS.PanelWindow {
     implicitHeight: Variables.topBarHeight * 1.40 + Variables.windowGap * 2
 
     NotificationPanel {}
+    LauncherPanel {}
+
+    QSH.GlobalShortcut {
+        name: "launcher_toggle"
+        onPressed: {
+            if (Launcher.opened) Launcher.close();
+            else Launcher.open();
+        }
+    }
 
     Item {
         anchors {
