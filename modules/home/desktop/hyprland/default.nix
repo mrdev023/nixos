@@ -29,7 +29,7 @@ in
         }
       ];
     }
-    (import ./programs/dunst.nix args)
+    # (import ./programs/dunst.nix args)
     (import ./programs/hyprlock.nix args)
     (import ./programs/hyprpaper.nix args)
     (import ./programs/quickshell args)

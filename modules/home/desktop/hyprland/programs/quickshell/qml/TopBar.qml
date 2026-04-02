@@ -18,6 +18,8 @@ QS.PanelWindow {
     // TODO: Refactor this for better topBarHeight process
     implicitHeight: Variables.topBarHeight * 1.40 + Variables.windowGap * 2
 
+    NotificationPanel {}
+
     Item {
         anchors {
             fill: parent
