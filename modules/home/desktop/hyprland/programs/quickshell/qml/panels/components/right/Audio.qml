@@ -29,21 +29,12 @@ RightBarItem {
     iconText: kind === Audio.Sink ? _iconSink() : _iconSource()
 
     onTapped: detailsWindow.opened = !detailsWindow.opened
-
-    // Middle click to mute
-    TapHandler {
-        acceptedButtons: Qt.MiddleButton
-        onTapped: root.node.audio.muted = !root.node.audio.muted
-    }
-
-    // Scroll to adjust volume
-    WheelHandler {
-        onWheel: event => {
-            if (event.angleDelta.y > 0)
-                root.volumeUp();
-            else
-                root.volumeDown();
-        }
+    onMiddleTapped: root.node.audio.muted = !root.node.audio.muted
+    onWheeled: delta => {
+        if (delta > 0)
+            root.volumeUp();
+        else
+            root.volumeDown();
     }
 
     DesktopPopup {
@@ -55,13 +46,13 @@ RightBarItem {
             QQL.Layout.bottomMargin: Variables.windowGap
 
             DesktopText {
-                text: kind === Audio.Sink ? "󰕾" : ""
+                text: root.kind === Audio.Sink ? "󰕾" : ""
                 variant: DesktopText.Variant.Title
             }
 
             DesktopText {
                 QQL.Layout.fillWidth: true
-                text: kind === Audio.Sink ? "Sortie audio" : "Entrée audio"
+                text: root.kind === Audio.Sink ? "Sortie audio" : "Entrée audio"
                 variant: DesktopText.Variant.Title
             }
         }
@@ -113,7 +104,7 @@ RightBarItem {
             spacing: Variables.windowGap
 
             DesktopText {
-                text: root.kind === Audio.Sink ? "󰕾" : ""
+                text: root.kind === Audio.Sink ? "󰕾" : ""
                 variant: DesktopText.Variant.Text
             }
 
