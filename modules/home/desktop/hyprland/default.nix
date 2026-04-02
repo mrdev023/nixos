@@ -161,7 +161,6 @@ in
           bind =
             let
               screenshot = import ./scripts/screenshot.nix args;
-              clipboard = import ./scripts/clipboard.nix args;
             in
             [
               # "SUPERSHIFT,R,hyprload,reload"
@@ -179,8 +178,8 @@ in
               "$mainMod, D, global, quickshell:launcher_toggle"
               ", Print, exec, ${screenshot.fullscreen}"
               "SHIFT, Print, exec, ${screenshot.region}"
-              "$mainMod, V, exec, ${clipboard.select}"
-              "$mainMod SHIFT, V, exec, ${clipboard.wipe}"
+              "$mainMod, V, global, quickshell:clipboard_toggle"
+              "$mainMod SHIFT, V, global, quickshell:clipboard_wipe"
 
               # Move focus with mainMod + arrow keys
               "$mainMod, h, movefocus, l"

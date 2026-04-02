@@ -7,6 +7,9 @@
   home = {
     packages = with pkgs; [
       quickshell
+      cliphist
+      wl-clipboard
+      libnotify
     ];
     file.".config/quickshell/colors.json".source = config.stylix.generated.json;
     file.".config/quickshell/variables.json".text = builtins.toJSON (import ../../variables.nix);

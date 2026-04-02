@@ -5,7 +5,7 @@ import Quickshell as QS
 import Quickshell.Hyprland as QSH
 
 import "../components"
-import "./components/launcher"
+import "./components/clipboard"
 import "../singletons"
 
 QS.PopupWindow {
@@ -14,7 +14,7 @@ QS.PopupWindow {
     color: "transparent"
     implicitWidth: 500
     implicitHeight: 450
-    visible: Launcher.opened || _container.opacity > 0
+    visible: Clipboard.opened || _container.opacity > 0
 
     anchor {
         window: topBar
@@ -24,13 +24,13 @@ QS.PopupWindow {
         }
     }
 
-    onVisibleChanged: if (!visible) Launcher.close()
+    onVisibleChanged: if (!visible) Clipboard.close()
 
     QSH.HyprlandFocusGrab {
         id: _grab
         windows: [root]
-        active: Launcher.opened
-        onCleared: Launcher.close()
+        active: Clipboard.opened
+        onCleared: Clipboard.close()
     }
 
     Panel {
@@ -40,7 +40,7 @@ QS.PopupWindow {
             fill: parent
             margins: Variables.windowGap
         }
-        opacity: Launcher.opened ? 1.0 : 0.0
+        opacity: Clipboard.opened ? 1.0 : 0.0
 
         Behavior on opacity {
             NumberAnimation {
@@ -57,7 +57,7 @@ QS.PopupWindow {
                 id: _search
 
                 QQL.Layout.fillWidth: true
-                placeholderText: "Rechercher une application..."
+                placeholderText: "Rechercher dans le presse-papier..."
                 color: Colors.base05
                 placeholderTextColor: Colors.base03
                 selectionColor: Colors.base0D
@@ -76,20 +76,18 @@ QS.PopupWindow {
                     radius: Variables.windowRadius / 2
                 }
 
-                onTextChanged: Launcher.searchText = text
+                onTextChanged: Clipboard.searchText = text
 
-                Keys.onEscapePressed: Launcher.close()
+                Keys.onEscapePressed: Clipboard.close()
                 Keys.onDownPressed: {
-                    if (_appList.count > 0) {
-                        _appList.currentIndex = 0;
-                        _appList.forceActiveFocus();
+                    if (_clipList.count > 0) {
+                        _clipList.currentIndex = 0;
+                        _clipList.forceActiveFocus();
                     }
                 }
                 Keys.onReturnPressed: {
-                    if (_appList.count > 0) {
-                        _appModel.values[0].execute();
-                        Launcher.close();
-                    }
+                    if (_clipList.count > 0)
+                        Clipboard.select(_clipModel.values[0]);
                 }
             }
 
@@ -98,7 +96,7 @@ QS.PopupWindow {
                 QQL.Layout.fillHeight: true
 
                 ListView {
-                    id: _appList
+                    id: _clipList
 
                     anchors.fill: parent
                     clip: true
@@ -110,14 +108,8 @@ QS.PopupWindow {
                     onCountChanged: currentIndex = count > 0 ? 0 : -1
 
                     model: QS.ScriptModel {
-                        id: _appModel
-                        values: QS.DesktopEntries.applications.values
-                            .filter(root._matchesSearch)
-                            .sort((a, b) => {
-                                if (Launcher.searchText === "")
-                                    return a.name.localeCompare(b.name);
-                                return root._appScore(b) - root._appScore(a);
-                            })
+                        id: _clipModel
+                        values: Clipboard.entries.filter(root._matchesSearch)
                     }
 
                     highlight: Rectangle {
@@ -126,14 +118,12 @@ QS.PopupWindow {
                         opacity: 0.7
                     }
 
-                    delegate: AppItem {}
+                    delegate: ClipItem {}
 
-                    Keys.onEscapePressed: Launcher.close()
+                    Keys.onEscapePressed: Clipboard.close()
                     Keys.onReturnPressed: {
-                        if (currentItem) {
-                            currentItem.modelData.execute();
-                            Launcher.close();
-                        }
+                        if (currentItem)
+                            Clipboard.select(currentItem.modelData);
                     }
                     Keys.onUpPressed: {
                         if (currentIndex <= 0) {
@@ -147,8 +137,16 @@ QS.PopupWindow {
 
                 DesktopText {
                     anchors.centerIn: parent
-                    visible: _appList.count === 0 && Launcher.searchText !== ""
+                    visible: _clipList.count === 0 && Clipboard.searchText !== ""
                     text: "Aucun résultat"
+                    variant: DesktopText.Variant.Subtitle
+                    color: Colors.base03
+                }
+
+                DesktopText {
+                    anchors.centerIn: parent
+                    visible: _clipList.count === 0 && Clipboard.searchText === "" && Clipboard.opened
+                    text: "Presse-papier vide"
                     variant: DesktopText.Variant.Subtitle
                     color: Colors.base03
                 }
@@ -157,69 +155,21 @@ QS.PopupWindow {
     }
 
     Connections {
-        target: Launcher
+        target: Clipboard
         function onOpenedChanged(): void {
-            if (Launcher.opened) {
+            if (Clipboard.opened) {
                 _search.text = "";
                 Qt.callLater(() => _search.forceActiveFocus());
             }
         }
     }
 
-    // Returns a fuzzy match score for `str` against `query`.
-    // Characters of query must appear in order (subsequence).
-    // Higher score = better match. Returns -1 if no match.
-    function _fuzzyScore(str: string, query: string): int {
-        const s = str.toLowerCase();
-        const q = query.toLowerCase();
-
-        let si = 0, qi = 0, score = 0, consecutive = 0;
-
-        while (si < s.length && qi < q.length) {
-            if (s[si] === q[qi]) {
-                // Bonus: start of string
-                if (si === 0)
-                    score += 10;
-                // Bonus: word boundary (preceded by separator)
-                else if (" -_.".includes(s[si - 1]))
-                    score += 8;
-                // Bonus: consecutive chars
-                score += consecutive * 4;
-                consecutive++;
-                qi++;
-            } else {
-                consecutive = 0;
-            }
-            si++;
-        }
-
-        if (qi < q.length)
-            return -1;
-
-        // Prefer shorter strings (less noise)
-        score -= Math.floor(s.length / 4);
-
-        return score;
-    }
-
-    // Best fuzzy score across name, genericName and keywords.
-    function _appScore(app: QS.DesktopEntry): int {
-        const q = Launcher.searchText;
-        let best = _fuzzyScore(app.name, q);
-
-        if (app.genericName !== "")
-            best = Math.max(best, _fuzzyScore(app.genericName, q));
-
-        for (const k of app.keywords)
-            best = Math.max(best, _fuzzyScore(k, q));
-
-        return best;
-    }
-
-    function _matchesSearch(app: QS.DesktopEntry): bool {
-        if (Launcher.searchText === "")
+    function _matchesSearch(line: string): bool {
+        if (Clipboard.searchText === "")
             return true;
 
-        return _appScore(app) >= 0;
+        const tabIdx = line.indexOf('\t');
+        const content = tabIdx >= 0 ? line.substring(tabIdx + 1) : line;
+        return content.toLowerCase().includes(Clipboard.searchText.toLowerCase());
     }
 }
