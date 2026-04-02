@@ -1,3 +1,4 @@
+//@ pragma UseQApplication
 import QtQuick
 import Quickshell as QS
 import Quickshell.Hyprland as QSH
