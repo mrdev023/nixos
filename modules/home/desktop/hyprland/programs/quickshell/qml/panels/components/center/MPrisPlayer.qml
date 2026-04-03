@@ -134,7 +134,8 @@ Item {
 
             DesktopButton {
                 buttonText: root._player?.isPlaying ? "󰏤" : "󰐊"
-                onClicked: root._player?.playPause()
+                enabled: root._player?.canTogglePlaying ?? false
+                onClicked: root._player?.togglePlaying()
             }
 
             DesktopButton {
