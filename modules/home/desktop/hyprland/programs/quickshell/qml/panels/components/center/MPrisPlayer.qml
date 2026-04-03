@@ -8,10 +8,23 @@ import "../../../singletons"
 Item {
     id: root
 
-    property QSSM.MprisPlayer _player: {
+    property var _players: {
         const players = [...QSSM.Mpris.players.values];
-        return players.sort((a, b) => playerScore(b) - playerScore(a))[0];
+        return players.sort((a, b) => playerScore(b) - playerScore(a));
     }
+
+    property int _playerIndex: 0
+    property int _playerCount: 0
+
+    Component.onCompleted: _playerCount = _players.length
+
+    on_PlayersChanged: {
+        if (_players.length < _playerCount)
+            _playerIndex = 0;
+        _playerCount = _players.length;
+    }
+
+    readonly property QSSM.MprisPlayer _player: _players.length > 0 ? _players[Math.min(_playerIndex, _players.length - 1)] : null
 
     implicitWidth: _row.implicitWidth
     implicitHeight: _row.implicitHeight
@@ -58,6 +71,33 @@ Item {
         position: DesktopPopup.Position.TopCenter
         spacing: Variables.windowGap
 
+        QQL.RowLayout {
+            QQL.Layout.fillWidth: true
+            QQL.Layout.preferredWidth: 280
+            visible: root._players.length > 1
+
+            DesktopButton {
+                buttonText: "󰒮"
+                enabled: root._playerIndex > 0
+                onClicked: root._playerIndex--
+            }
+
+            DesktopText {
+                QQL.Layout.fillWidth: true
+                text: root._player?.identity ?? ""
+                variant: DesktopText.Variant.Subtext
+                color: Colors.base03
+                horizontalAlignment: Text.AlignHCenter
+                elide: Text.ElideRight
+            }
+
+            DesktopButton {
+                buttonText: "󰒭"
+                enabled: root._playerIndex < root._players.length - 1
+                onClicked: root._playerIndex++
+            }
+        }
+
         QQL.ColumnLayout {
             QQL.Layout.fillWidth: true
             QQL.Layout.preferredWidth: 280
@@ -89,18 +129,18 @@ Item {
 
         DesktopProgressBar {
             QQL.Layout.fillWidth: true
-            value: root._player && root._player.length > 0
-                ? root._player.position / root._player.length
-                : 0
+            value: root._player && root._player.length > 0 ? root._player.position / root._player.length : 0
 
             TapHandler {
-                onTapped: (eventPoint) => {
+                onTapped: eventPoint => {
                     if (root._player && root._player.length > 0)
-                        root._player.position = (eventPoint.position.x / parent.width) * root._player.length
+                        root._player.position = (eventPoint.position.x / parent.width) * root._player.length;
                 }
             }
 
-            HoverHandler { cursorShape: Qt.PointingHandCursor }
+            HoverHandler {
+                cursorShape: Qt.PointingHandCursor
+            }
         }
 
         QQL.RowLayout {
@@ -112,7 +152,9 @@ Item {
                 color: Colors.base03
             }
 
-            Item { QQL.Layout.fillWidth: true }
+            Item {
+                QQL.Layout.fillWidth: true
+            }
 
             DesktopText {
                 text: _formatTime(root._player?.length ?? 0)
@@ -124,7 +166,9 @@ Item {
         QQL.RowLayout {
             QQL.Layout.fillWidth: true
 
-            Item { QQL.Layout.fillWidth: true }
+            Item {
+                QQL.Layout.fillWidth: true
+            }
 
             DesktopButton {
                 buttonText: "󰒮"
@@ -144,16 +188,18 @@ Item {
                 onClicked: root._player?.next()
             }
 
-            Item { QQL.Layout.fillWidth: true }
+            Item {
+                QQL.Layout.fillWidth: true
+            }
         }
     }
 
     function _formatTime(seconds: real): string {
         if (!seconds || seconds <= 0)
-            return "0:00"
-        const m = Math.floor(seconds / 60)
-        const s = Math.floor(seconds % 60)
-        return `${m}:${s.toString().padStart(2, "0")}`
+            return "0:00";
+        const m = Math.floor(seconds / 60);
+        const s = Math.floor(seconds % 60);
+        return `${m}:${s.toString().padStart(2, "0")}`;
     }
 
     function playerScore(player: QSSM.MprisPlayer): int {
