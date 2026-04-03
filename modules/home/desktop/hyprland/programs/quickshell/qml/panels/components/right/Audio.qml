@@ -107,7 +107,7 @@ RightBarItem {
 
     DesktopPopup {
         id: indicator
-        closeOnFocusLost: false
+        passthrough: true
 
         QQL.RowLayout {
             spacing: Variables.windowGap

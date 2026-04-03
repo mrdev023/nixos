@@ -8,31 +8,65 @@ import "../singletons"
 QS.PopupWindow {
     id: root
 
+    enum Position {
+        TopLeft,
+        TopCenter,
+        TopRight,
+        Center
+    }
+
+    property int position: DesktopPopup.Position.TopRight
     property bool opened
-    property bool closeOnFocusLost: true
-    default property alias content: _content.children
+    // When true, pointer/scroll events pass through to windows below (no focus capture)
+    property bool passthrough: false
+    default property alias content: _content.data
     property alias spacing: _content.spacing
 
-    // When not interactive, pass all pointer/scroll events through to windows below
-    mask: closeOnFocusLost ? null : _passthroughMask
+    signal focusLost()
+    onFocusLost: opened = false
+
+    mask: passthrough ? _passthroughMask : null
 
     color: "transparent"
-    // Variables.windowGap * 2 -> Keep spaces for Shadow
     implicitWidth: _container.implicitWidth + Variables.windowGap * 2
     implicitHeight: _container.implicitHeight + Variables.windowGap * 2
-    visible: _container.opacity > 0
+    visible: root.opened || _container.opacity > 0
 
     anchor {
-        window: topBar // Top parent bar
-        edges: QS.Edges.Top | QS.Edges.Right
-        gravity: QS.Edges.Bottom | QS.Edges.Left
+        window: topBar
+        edges: {
+            switch (root.position) {
+            case DesktopPopup.Position.TopLeft:   return QS.Edges.Top | QS.Edges.Left;
+            case DesktopPopup.Position.TopCenter: return QS.Edges.Top | QS.Edges.Right;
+            case DesktopPopup.Position.TopRight:  return QS.Edges.Top | QS.Edges.Right;
+            default:                              return QS.Edges.Top | QS.Edges.Left;
+            }
+        }
+        gravity: {
+            switch (root.position) {
+            case DesktopPopup.Position.TopLeft:   return QS.Edges.Bottom | QS.Edges.Right;
+            case DesktopPopup.Position.TopCenter: return QS.Edges.Bottom | QS.Edges.Left;
+            case DesktopPopup.Position.TopRight:  return QS.Edges.Bottom | QS.Edges.Left;
+            default:                              return QS.Edges.Bottom | QS.Edges.Right;
+            }
+        }
         rect {
-            x: topBar.width
-            y: topBar.height
+            x: {
+                switch (root.position) {
+                case DesktopPopup.Position.TopLeft:   return 0;
+                case DesktopPopup.Position.TopCenter: return topBar.width / 2 + root.width / 2;
+                case DesktopPopup.Position.TopRight:  return topBar.width;
+                default:                              return topBar.width / 2 - root.width / 2;
+                }
+            }
+            y: root.position === DesktopPopup.Position.Center
+                ? topBar.screen.height / 2 - root.height / 2
+                : topBar.height
         }
         margins {
-            top: Variables.windowGap
-            right: Variables.windowGap
+            top: root.position === DesktopPopup.Position.Center ? 0 : Variables.windowGap
+            right: root.position === DesktopPopup.Position.TopRight ? Variables.windowGap : 0
+            left: root.position === DesktopPopup.Position.TopLeft ? Variables.windowGap : 0
         }
     }
 
@@ -42,8 +76,8 @@ QS.PopupWindow {
 
     QSH.HyprlandFocusGrab {
         windows: [root]
-        active: root.opened && root.closeOnFocusLost
-        onCleared: root.opened = false
+        active: root.opened && !root.passthrough
+        onCleared: root.focusLost()
     }
 
     Panel {

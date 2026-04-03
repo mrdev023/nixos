@@ -1,13 +1,11 @@
 import QtQuick
 import QtQuick.Controls as QQC
 import QtQuick.Layouts as QQL
-import Quickshell as QS
-import Quickshell.Hyprland as QSH
 
 import "../../components"
 import "../../singletons"
 
-QS.PopupWindow {
+DesktopPopup {
     id: root
 
     property bool pickerOpened: false
@@ -20,43 +18,16 @@ QS.PopupWindow {
     signal searchUpdated(string text)
     signal itemActivated(var modelData)
 
-    color: "transparent"
-    implicitWidth: 500
-    implicitHeight: 450
-    visible: pickerOpened || _container.opacity > 0
+    position: DesktopPopup.Position.Center
+    opened: pickerOpened
 
-    anchor {
-        window: topBar
-        rect {
-            x: topBar.width / 2 - root.width / 2
-            y: topBar.screen.height / 2 - root.height / 2
-        }
-    }
-
+    onFocusLost: closeRequested()
     onVisibleChanged: if (!visible) closeRequested()
 
-    QSH.HyprlandFocusGrab {
-        id: _grab
-        windows: [root]
-        active: root.pickerOpened
-        onCleared: root.closeRequested()
-    }
-
-    Panel {
-        id: _container
-
-        anchors {
-            fill: parent
-            margins: Variables.windowGap
-        }
-        opacity: root.pickerOpened ? 1.0 : 0.0
-
-        Behavior on opacity {
-            NumberAnimation {
-                duration: 250
-                easing.type: Easing.OutCubic
-            }
-        }
+    // Single Item wrapper: drives popup size via content (popup = content + gap*6)
+    Item {
+        QQL.Layout.preferredWidth: 500 - Variables.windowGap * 6
+        QQL.Layout.preferredHeight: 450 - Variables.windowGap * 6
 
         QQL.ColumnLayout {
             anchors.fill: parent
@@ -149,11 +120,9 @@ QS.PopupWindow {
                     Keys.onPressed: event => {
                         // Vim-like navigation: Ctrl+J = down, Ctrl+K = up
                         if (event.modifiers & Qt.ControlModifier) {
-                            // Move to next item
                             if (event.key === Qt.Key_J) {
                                 incrementCurrentIndex();
                                 event.accepted = true;
-                            // Move to previous item, or back to search field if at top
                             } else if (event.key === Qt.Key_K) {
                                 if (currentIndex <= 0) {
                                     currentIndex = -1;
@@ -163,12 +132,10 @@ QS.PopupWindow {
                                 }
                                 event.accepted = true;
                             }
-                        // Backspace: delete last char and refocus search
                         } else if (event.key === Qt.Key_Backspace) {
                             _search.text = _search.text.slice(0, -1);
                             _search.forceActiveFocus();
                             event.accepted = true;
-                        // Printable character: forward to search field (charCode >= 32 excludes control chars)
                         } else if (event.text.length > 0 && event.text.charCodeAt(0) >= 32) {
                             _search.insert(_search.cursorPosition, event.text);
                             _search.forceActiveFocus();
