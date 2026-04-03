@@ -91,32 +91,17 @@ RightBarItem {
         }
     }
 
-    component AudioItem: QQL.RowLayout {
-        id: audioItem
+    component AudioItem: DesktopRadioButton {
         required property QSSP.PwNode node
 
-        spacing: Variables.windowGap
+        text: node.nickname || node.description || node.name
+        selected: root.kind === Audio.Sink ? QSSP.Pipewire.defaultAudioSink === node : QSSP.Pipewire.defaultAudioSource === node
 
-        DesktopText {
-            QQL.Layout.fillWidth: true
-            text: audioItem.node.nickname || audioItem.node.description || audioItem.node.name
-            variant: DesktopText.Text
-        }
-
-        DesktopSwitch {
-            checked: switch (root.kind) {
-            case Audio.Sink:
-                return QSSP.Pipewire.defaultAudioSink === audioItem.node;
-            case Audio.Source:
-                return QSSP.Pipewire.defaultAudioSource === audioItem.node;
-            }
-
-            onClicked: {
-                if (root.kind === Audio.Sink)
-                    QSSP.Pipewire.preferredDefaultAudioSink = audioItem.node;
-                else
-                    QSSP.Pipewire.preferredDefaultAudioSource = audioItem.node;
-            }
+        onClicked: {
+            if (root.kind === Audio.Sink)
+                QSSP.Pipewire.preferredDefaultAudioSink = node;
+            else
+                QSSP.Pipewire.preferredDefaultAudioSource = node;
         }
     }
 
@@ -204,9 +189,9 @@ RightBarItem {
         if (!root.node.audio)
             return "󱦉";
         if (root.node.audio.muted || root.node.audio.volume === 0)
-            return "";
+            return "";
         if (root.node.audio.volume <= 0.5)
             return "󰍮";
-        return "";
+        return "";
     }
 }
