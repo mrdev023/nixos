@@ -30,14 +30,14 @@ RightBarItem {
 
     onTapped: detailsWindow.opened = !detailsWindow.opened
 
-    // Middle click to mute, scroll to adjust volume
-    MouseArea {
-        anchors.fill: parent
+    // Middle click to mute
+    TapHandler {
         acceptedButtons: Qt.MiddleButton
-        onClicked: mouse => {
-            if (mouse.button === Qt.MiddleButton)
-                root.node.audio.muted = !root.node.audio.muted;
-        }
+        onTapped: root.node.audio.muted = !root.node.audio.muted
+    }
+
+    // Scroll to adjust volume
+    WheelHandler {
         onWheel: event => {
             if (event.angleDelta.y > 0)
                 root.volumeUp();
