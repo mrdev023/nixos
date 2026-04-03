@@ -13,6 +13,7 @@ Panel {
         spacing: Variables.windowGap
         anchors.horizontalCenter: parent.horizontalCenter
 
+        Battery {}
         PowerProfile {}
         Audio {
             kind: Audio.Sink

@@ -19,6 +19,7 @@ in
   config = mkIf cfg.enable (mkMerge [
     {
       services.displayManager.sddm.enable = mkDefault true;
+      services.upower.enable = true;
       services.power-profiles-daemon.enable = true;
       programs.hyprland = {
         enable = true;

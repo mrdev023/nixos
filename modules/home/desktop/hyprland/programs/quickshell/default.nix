@@ -35,7 +35,6 @@
       builtins.toJSON (
         {
           inherit (fonts) sizes;
-
         }
         // fontNames
       );

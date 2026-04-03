@@ -5,47 +5,15 @@ import Quickshell.Bluetooth as QSB
 import "../../../components"
 import "../../../singletons"
 
-Item {
+RightBarItem {
     id: root
+
     property QSB.BluetoothAdapter _adapter: QSB.Bluetooth.defaultAdapter
 
     visible: !!_adapter
-    implicitWidth: name.implicitWidth
-    implicitHeight: name.implicitHeight
+    iconText: _icon()
 
-    DesktopText {
-        id: name
-        text: icon()
-        variant: DesktopText.Bigtext
-        verticalAlignment: Text.AlignVCenter
-
-        function icon(): string {
-            let connectedDevice = root._adapter?.devices.values.filter(d => d.connected).length;
-            if (connectedDevice)
-                return "󰂱";
-
-            switch (root._adapter.state) {
-            case QSB.BluetoothAdapterState.Disabled:
-                return "󰂲";
-            case QSB.BluetoothAdapterState.Enabling:
-            case QSB.BluetoothAdapterState.Disabling:
-            case QSB.BluetoothAdapterState.Enabled:
-                return "󰂯";
-            case QSB.BluetoothAdapterState.Blocked:
-                return "󰗖";
-            default:
-                return "󰂯";
-            }
-        }
-
-        TapHandler {
-            onTapped: detailsWindow.opened = !detailsWindow.opened
-        }
-
-        HoverHandler {
-            cursorShape: Qt.PointingHandCursor
-        }
-    }
+    onTapped: detailsWindow.opened = !detailsWindow.opened
 
     DesktopPopup {
         id: detailsWindow
@@ -73,13 +41,14 @@ Item {
 
         QQL.RowLayout {
             visible: connectedRepeater.count > 0
+            QQL.Layout.topMargin: Variables.windowGap
+            QQL.Layout.bottomMargin: Variables.windowGap
+
             DesktopText {
                 QQL.Layout.fillWidth: true
                 text: "Connecté"
                 variant: DesktopText.Subtitle
             }
-            QQL.Layout.topMargin: Variables.windowGap
-            QQL.Layout.bottomMargin: Variables.windowGap
         }
 
         Repeater {
@@ -93,13 +62,14 @@ Item {
 
         QQL.RowLayout {
             visible: disconnectedRepeater.count > 0
+            QQL.Layout.topMargin: Variables.windowGap
+            QQL.Layout.bottomMargin: Variables.windowGap
+
             DesktopText {
                 QQL.Layout.fillWidth: true
                 text: "Disponibles"
                 variant: DesktopText.Subtitle
             }
-            QQL.Layout.topMargin: Variables.windowGap
-            QQL.Layout.bottomMargin: Variables.windowGap
         }
 
         Repeater {
@@ -115,9 +85,6 @@ Item {
     component BluetoothDeviceItem: QQL.RowLayout {
         required property QSB.BluetoothDevice device
         spacing: Variables.windowGap
-        // Image {
-        //     source: QS.Quickshell.iconPath(modelData.icon)
-        // }
 
         QQL.ColumnLayout {
             DesktopText {
@@ -194,6 +161,25 @@ Item {
             return true;
         default:
             return false;
+        }
+    }
+
+    function _icon(): string {
+        let connectedDevice = root._adapter?.devices.values.filter(d => d.connected).length;
+        if (connectedDevice)
+            return "󰂱";
+
+        switch (root._adapter.state) {
+        case QSB.BluetoothAdapterState.Disabled:
+            return "󰂲";
+        case QSB.BluetoothAdapterState.Enabling:
+        case QSB.BluetoothAdapterState.Disabling:
+        case QSB.BluetoothAdapterState.Enabled:
+            return "󰂯";
+        case QSB.BluetoothAdapterState.Blocked:
+            return "󰗖";
+        default:
+            return "󰂯";
         }
     }
 }

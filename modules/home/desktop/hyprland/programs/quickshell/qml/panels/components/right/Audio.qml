@@ -6,7 +6,7 @@ import Quickshell.Services.Pipewire as QSSP
 import "../../../components"
 import "../../../singletons"
 
-Item {
+RightBarItem {
     id: root
 
     enum Kind {
@@ -26,61 +26,23 @@ Item {
         objects: [root.node]
     }
 
-    implicitWidth: name.implicitWidth
-    implicitHeight: name.implicitHeight
+    iconText: kind === Audio.Sink ? _iconSink() : _iconSource()
 
-    DesktopText {
-        id: name
-        text: kind === Audio.Sink ? iconSink() : iconSource()
-        variant: DesktopText.Bigtext
-        verticalAlignment: Text.AlignVCenter
+    onTapped: detailsWindow.opened = !detailsWindow.opened
 
-        function iconSink(): string {
-            if (!root.node)
-                return "󰝟";
-            if (!root.node.audio)
-                return "󰝟";
-            if (root.node.audio.muted || root.node.audio.volume === 0)
-                return "󰖁";
-            if (root.node.audio.volume <= 0.33)
-                return "󰕿";
-            if (root.node.audio.volume <= 0.66)
-                return "󰖀";
-            return "󰕾";
+    // Middle click to mute, scroll to adjust volume
+    MouseArea {
+        anchors.fill: parent
+        acceptedButtons: Qt.MiddleButton
+        onClicked: mouse => {
+            if (mouse.button === Qt.MiddleButton)
+                root.node.audio.muted = !root.node.audio.muted;
         }
-
-        function iconSource(): string {
-            if (!root.node)
-                return "󱦉";
-            if (!root.node.audio)
-                return "󱦉";
-            if (root.node.audio.muted || root.node.audio.volume === 0)
-                return "";
-            if (root.node.audio.volume <= 0.5)
-                return "󰍮";
-            return "";
-        }
-
-        TapHandler {
-            onTapped: detailsWindow.opened = !detailsWindow.opened
-        }
-
-        MouseArea {
-            anchors.fill: parent
-            cursorShape: Qt.PointingHandCursor
-            acceptedButtons: Qt.MiddleButton
-            onClicked: mouse => {
-                if (mouse.button === Qt.MiddleButton) {
-                    root.node.audio.muted = !root.node.audio.muted;
-                }
-            }
-            onWheel: event => {
-                if (event.angleDelta.y > 0) {
-                    root.volumeUp();
-                } else {
-                    root.volumeDown();
-                }
-            }
+        onWheel: event => {
+            if (event.angleDelta.y > 0)
+                root.volumeUp();
+            else
+                root.volumeDown();
         }
     }
 
@@ -91,8 +53,9 @@ Item {
         QQL.RowLayout {
             QQL.Layout.fillWidth: true
             QQL.Layout.bottomMargin: Variables.windowGap
+
             DesktopText {
-                text: kind === Audio.Sink ? "󰕾" : ""
+                text: kind === Audio.Sink ? "󰕾" : ""
                 variant: DesktopText.Variant.Title
             }
 
@@ -113,7 +76,6 @@ Item {
             }
 
             function filterNode(node: QSSP.PwNode): bool {
-                // If not a hardware node
                 if (node.isStream)
                     return false;
 
@@ -134,6 +96,7 @@ Item {
         required property QSSP.PwNode node
 
         spacing: Variables.windowGap
+
         DesktopText {
             QQL.Layout.fillWidth: true
             text: audioItem.node.nickname || audioItem.node.description || audioItem.node.name
@@ -149,11 +112,10 @@ Item {
             }
 
             onClicked: {
-                if (root.kind === Audio.Sink) {
+                if (root.kind === Audio.Sink)
                     QSSP.Pipewire.preferredDefaultAudioSink = audioItem.node;
-                } else {
+                else
                     QSSP.Pipewire.preferredDefaultAudioSource = audioItem.node;
-                }
             }
         }
     }
@@ -166,7 +128,7 @@ Item {
             spacing: Variables.windowGap
 
             DesktopText {
-                text: root.kind === Audio.Sink ? "󰕾" : ""
+                text: root.kind === Audio.Sink ? "󰕾" : ""
                 variant: DesktopText.Variant.Text
             }
 
@@ -186,9 +148,7 @@ Item {
                 id: indicatorTimer
                 interval: 2000
                 repeat: false
-                onTriggered: {
-                    indicator.opened = false;
-                }
+                onTriggered: indicator.opened = false
             }
         }
     }
@@ -196,10 +156,8 @@ Item {
     QSH.GlobalShortcut {
         name: "volume_up"
         onPressed: {
-            if (root.kind !== Audio.Sink) {
+            if (root.kind !== Audio.Sink)
                 return;
-            }
-
             root.volumeUp();
         }
     }
@@ -207,10 +165,8 @@ Item {
     QSH.GlobalShortcut {
         name: "volume_down"
         onPressed: {
-            if (root.kind !== Audio.Sink) {
+            if (root.kind !== Audio.Sink)
                 return;
-            }
-
             root.volumeDown();
         }
     }
@@ -226,5 +182,31 @@ Item {
 
     function volumeDown(): void {
         root.node.audio.volume -= 0.05;
+    }
+
+    function _iconSink(): string {
+        if (!root.node)
+            return "󰝟";
+        if (!root.node.audio)
+            return "󰝟";
+        if (root.node.audio.muted || root.node.audio.volume === 0)
+            return "󰖁";
+        if (root.node.audio.volume <= 0.33)
+            return "󰕿";
+        if (root.node.audio.volume <= 0.66)
+            return "󰖀";
+        return "󰕾";
+    }
+
+    function _iconSource(): string {
+        if (!root.node)
+            return "󱦉";
+        if (!root.node.audio)
+            return "󱦉";
+        if (root.node.audio.muted || root.node.audio.volume === 0)
+            return "";
+        if (root.node.audio.volume <= 0.5)
+            return "󰍮";
+        return "";
     }
 }
