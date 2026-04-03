@@ -35,39 +35,18 @@ RightBarItem {
             }
         }
 
-        PowerProfileItem {
-            profile: QSSU.PowerProfile.PowerSaver
-            label: "Économie d'énergie"
-        }
-
-        PowerProfileItem {
-            profile: QSSU.PowerProfile.Balanced
-            label: "Équilibré"
-        }
-
-        PowerProfileItem {
-            profile: QSSU.PowerProfile.Performance
-            label: "Performance"
-        }
-    }
-
-    component PowerProfileItem: QQL.RowLayout {
-        id: item
-
-        required property int profile
-        required property string label
-
-        spacing: Variables.windowGap
-
-        DesktopText {
+        DesktopStepSelector {
             QQL.Layout.fillWidth: true
-            text: item.label
-            variant: DesktopText.Text
-        }
-
-        DesktopSwitch {
-            checked: root.profile === item.profile
-            onClicked: QSSU.PowerProfiles.profile = item.profile
+            icons: ["󰌪", "󰾅", "󰓅"]
+            activeIndex: {
+                const profiles = [QSSU.PowerProfile.PowerSaver, QSSU.PowerProfile.Balanced, QSSU.PowerProfile.Performance]
+                const idx = profiles.indexOf(root.profile)
+                return idx >= 0 ? idx : 0
+            }
+            onActivated: (index) => {
+                const profiles = [QSSU.PowerProfile.PowerSaver, QSSU.PowerProfile.Balanced, QSSU.PowerProfile.Performance]
+                QSSU.PowerProfiles.profile = profiles[index]
+            }
         }
     }
 
