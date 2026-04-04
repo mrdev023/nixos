@@ -136,7 +136,6 @@ in
     (mkIf (cfgHasLanguage "js_ts") {
       extraPackages = with pkgs; [
         typescript
-        nodePackages.typescript-language-server
       ];
 
       languages = {
