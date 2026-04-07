@@ -9,15 +9,6 @@ with lib;
 let
   cfg = config.wayland.windowManager.hyprland;
   variables = import ./variables.nix;
-
-  hyprsplit = pkgs.hyprlandPlugins.hyprsplit.overrideAttrs {
-    src = pkgs.fetchFromGitHub {
-      owner = "shezdy";
-      repo = "hyprsplit";
-      rev = "v0.54.1";
-      hash = "sha256-IksjbT24cgWl2h6ZV4bPxoORmHCQ7h/M/OLQ4epReAE=";
-    };
-  };
 in
 {
   config = mkIf cfg.enable (mkMerge [
@@ -56,7 +47,7 @@ in
       };
 
       wayland.windowManager.hyprland = {
-        plugins = [
+        plugins = with pkgs.hyprlandPlugins; [
           hyprsplit
         ];
 
