@@ -142,11 +142,13 @@
           name,
           system,
         }:
-        home-manager.lib.homeManagerConfiguration rec {
+        let
           pkgs = import nixpkgs {
             inherit overlays system;
           };
-
+        in
+        home-manager.lib.homeManagerConfiguration {
+          inherit pkgs;
           modules = home-modules ++ [
             { nix.package = pkgs.nix; }
             stylix.homeModules.stylix
