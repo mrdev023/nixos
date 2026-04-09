@@ -144,6 +144,17 @@ in
             new_status = "master";
           };
 
+          # See https://wiki.hyprland.org/Configuring/Variables/#group for more
+          group = {
+            groupbar = {
+              font_size = 10;
+              height = 16;
+              gradients = false;
+              render_titles = true;
+              scrolling = true;
+            };
+          };
+
           # See https://wiki.hyprland.org/Configuring/Variables/ for more
           gesture = [
             "3, horizontal, workspace"
@@ -171,7 +182,7 @@ in
               "SHIFT, Print, exec, ${screenshot.region}"
               "$mainMod, V, global, quickshell:clipboard_toggle"
               "$mainMod SHIFT, V, global, quickshell:clipboard_wipe"
-              "$mainMod, Delete, global, quickshell:session_lock"
+              "Control, L, global, quickshell:session_lock"
 
               # Move focus with mainMod + arrow keys
               "$mainMod, h, movefocus, l"
@@ -179,11 +190,18 @@ in
               "$mainMod, j, movefocus, u"
               "$mainMod, k, movefocus, d"
 
-              "$mainMod SHIFT_L, h, movewindow, l"
-              "$mainMod SHIFT_L, l, movewindow, r"
-              "$mainMod SHIFT_L, j, movewindow, u"
-              "$mainMod SHIFT_L, k, movewindow, d"
-              "$mainMod SHIFT_L, s, swapnext,"
+              "$mainMod SHIFT_L, h, swapwindow, l"
+              "$mainMod SHIFT_L, l, swapwindow, r"
+              "$mainMod SHIFT_L, j, swapwindow, u"
+              "$mainMod SHIFT_L, k, swapwindow, d"
+
+              # Group management
+              "ALT_L, G, togglegroup,"
+              "ALT_L, H, moveintogroup, l"
+              "ALT_L, L, moveintogroup, r"
+              "ALT_L, B, moveoutofgroup,"
+              "ALT_L, bracketleft, changegroupactive, b"
+              "ALT_L, bracketright, changegroupactive, f"
 
               # Switch workspaces with mainMod + [0-9]
               "$mainMod, 1, split:workspace, 1"
