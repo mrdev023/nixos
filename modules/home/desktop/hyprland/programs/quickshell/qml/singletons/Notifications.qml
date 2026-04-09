@@ -13,6 +13,7 @@ Singleton {
 
         actionsSupported: true
         bodyMarkupSupported: true
+        inlineReplySupported: true
 
         onNotification: notif => {
             notif.tracked = true;

@@ -22,13 +22,10 @@ Item {
         }
         spacing: Variables.windowGap
 
-        Image {
+        DesktopIcon {
+            iconSource: "image://icon/" + root.modelData.icon
             width: 20
             height: 20
-            sourceSize: Qt.size(20, 20)
-            visible: root.modelData.icon !== "" && status !== Image.Error
-            source: root.modelData.icon !== "" ? ("image://icon/" + root.modelData.icon) : ""
-            fillMode: Image.PreserveAspectFit
         }
 
         DesktopText {

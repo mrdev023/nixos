@@ -1,8 +1,8 @@
 import QtQuick
 import QtQuick.Layouts as QQL
 import Quickshell as QS
+import Quickshell.Hyprland as QSH
 
-import "../components"
 import "./components/notification"
 import "../singletons"
 
@@ -11,6 +11,11 @@ QS.PopupWindow {
 
     color: "transparent"
     visible: Notifications.trackedNotifications.values.length > 0
+
+    QSH.HyprlandFocusGrab {
+        windows: [root]
+        active: Notifications.trackedNotifications.values.some(v => v.hasInlineReply)
+    }
 
     anchor {
         window: topBar

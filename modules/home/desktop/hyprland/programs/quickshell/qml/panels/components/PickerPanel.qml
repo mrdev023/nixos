@@ -14,7 +14,7 @@ DesktopPopup {
     property alias model: _list.model
     property Component delegate
 
-    signal closeRequested()
+    signal closeRequested
     signal searchUpdated(string text)
     signal itemActivated(var modelData)
 
@@ -22,7 +22,8 @@ DesktopPopup {
     opened: pickerOpened
 
     onFocusLost: closeRequested()
-    onVisibleChanged: if (!visible) closeRequested()
+    onVisibleChanged: if (!visible)
+        closeRequested()
 
     // Single Item wrapper: drives popup size via content (popup = content + gap*6)
     Item {
@@ -33,28 +34,11 @@ DesktopPopup {
             anchors.fill: parent
             spacing: Variables.windowGap
 
-            QQC.TextField {
+            DesktopTextArea {
                 id: _search
 
                 QQL.Layout.fillWidth: true
                 placeholderText: root.placeholderText
-                color: Colors.base05
-                placeholderTextColor: Colors.base03
-                selectionColor: Colors.base0D
-                leftPadding: Variables.windowGap
-                rightPadding: Variables.windowGap
-                topPadding: Variables.windowGap / 2
-                bottomPadding: Variables.windowGap / 2
-
-                font {
-                    family: Fonts.monospace
-                    pixelSize: Fonts.ptToPx(Fonts.desktopSize, topBar.screen)
-                }
-
-                background: Rectangle {
-                    color: Colors.base01
-                    radius: Variables.windowRadius / 2
-                }
 
                 onTextChanged: root.searchUpdated(text)
 

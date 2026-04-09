@@ -1,4 +1,5 @@
 import QtQuick
+import QtQuick.Controls as QQC
 import QtQuick.Layouts as QQL
 import Quickshell.Services.Notifications as QSN
 
@@ -12,25 +13,34 @@ Panel {
 
     readonly property string _urgencyIcon: {
         switch (root.notification.urgency) {
-        case QSN.NotificationUrgency.Low:      return "";
-        case QSN.NotificationUrgency.Critical: return "󰵙";
-        default:                               return "󰂞";
+        case QSN.NotificationUrgency.Low:
+            return "";
+        case QSN.NotificationUrgency.Critical:
+            return "󰵙";
+        default:
+            return "󰂞";
         }
     }
 
     readonly property color _urgencyColor: {
         switch (root.notification.urgency) {
-        case QSN.NotificationUrgency.Low:      return Colors.base03;
-        case QSN.NotificationUrgency.Critical: return Colors.base08;
-        default:                               return Colors.base0D;
+        case QSN.NotificationUrgency.Low:
+            return Colors.base03;
+        case QSN.NotificationUrgency.Critical:
+            return Colors.base08;
+        default:
+            return Colors.base0D;
         }
     }
 
     readonly property int _urgencyTimeout: {
         switch (root.notification.urgency) {
-        case QSN.NotificationUrgency.Low:      return 8000;
-        case QSN.NotificationUrgency.Critical: return 0;
-        default:                               return 10000;
+        case QSN.NotificationUrgency.Low:
+            return 8000;
+        case QSN.NotificationUrgency.Critical:
+            return 0;
+        default:
+            return 10000;
         }
     }
 
@@ -66,17 +76,30 @@ Panel {
         id: _layout
         width: 300
         anchors.centerIn: parent
-        spacing: Variables.windowGap / 2
+        spacing: Variables.windowGap
 
+        // Ligne AppIcon + AppName (fillWidth) + CloseIcon
         QQL.RowLayout {
             QQL.Layout.fillWidth: true
             spacing: Variables.windowGap / 2
 
-            DesktopText {
+            QQL.RowLayout {
                 QQL.Layout.fillWidth: true
-                text: root.notification.appName
-                variant: DesktopText.Variant.Subtext
-                elide: Text.ElideRight
+                spacing: Variables.windowGap
+                DesktopIcon {
+                    id: _appIcon
+                    iconSource: "image://icon/" + root.notification.appIcon
+                    width: height
+                    height: appName.height
+                }
+
+                DesktopText {
+                    id: appName
+                    QQL.Layout.fillWidth: true
+                    text: root.notification.appName
+                    variant: DesktopText.Variant.Subtext
+                    elide: Text.ElideRight
+                }
             }
 
             DesktopText {
@@ -98,7 +121,7 @@ Panel {
 
         QQL.RowLayout {
             QQL.Layout.fillWidth: true
-            spacing: Variables.windowGap / 2
+            spacing: Variables.windowGap
 
             DesktopText {
                 visible: root._urgencyIcon !== ""
@@ -126,24 +149,74 @@ Panel {
 
         DesktopProgressBar {
             QQL.Layout.fillWidth: true
-            QQL.Layout.topMargin: Variables.windowGap
+
             visible: root.notification.hints["value"] !== undefined
             value: (root.notification.hints["value"] ?? 0) / 100
         }
 
         QQL.RowLayout {
+            id: actionsRow
             QQL.Layout.fillWidth: true
             QQL.Layout.topMargin: Variables.windowGap
-            visible: root.notification.actions.length > 0
-            spacing: Variables.windowGap / 2
+            property list<QSN.NotificationAction> actions: root.notification.actions.filter(actionIsValid)
+
+            visible: actions.length > 0
+            spacing: Variables.windowGap
 
             Repeater {
-                model: root.notification.actions
+                model: actionsRow.actions
                 delegate: DesktopButton {
                     required property QSN.NotificationAction modelData
                     buttonText: modelData.text
                     onClicked: modelData.invoke()
                 }
+            }
+
+            function actionIsValid(action: QSN.NotificationAction): bool {
+                return action.identifier !== "default" && action.identifier !== "inline-reply" && action.text !== "";
+            }
+        }
+
+        QQL.FlexboxLayout {
+            id: replyRow
+            QQL.Layout.fillWidth: true
+            QQL.Layout.topMargin: Variables.windowGap
+            visible: root.notification.hasInlineReply
+            gap: Variables.windowGap
+            direction: _replyField.lineCount > 1 ? QQL.FlexboxLayout.Column : QQL.FlexboxLayout.Row
+            readonly property bool isColumn: direction === QQL.FlexboxLayout.Column
+
+            function sendReply(): void {
+                root.notification.sendInlineReply(_replyField.text);
+            }
+
+            DesktopTextArea {
+                id: _replyField
+                QQL.Layout.fillWidth: true
+                placeholderText: root.notification.inlineReplyPlaceholder ?? ""
+                wrapMode: QQC.TextArea.Wrap
+
+                Keys.onPressed: {
+                    _dismissTimer.restart();
+                    _timeoutAnim.restart();
+                }
+                Keys.onReturnPressed: event => {
+                    if (event.modifiers & Qt.ShiftModifier) {
+                        replyRow.sendReply();
+                    } else {
+                        event.accepted = false;
+                    }
+                }
+            }
+
+            DesktopButton {
+                QQL.Layout.fillHeight: !replyRow.isColumn
+                QQL.Layout.fillWidth: replyRow.isColumn
+                horizontalAlignment: replyRow.isColumn ? Text.AlignHCenter : Text.AlignLeft
+                topPadding: replyRow.isColumn ? Variables.windowGap : 0
+                bottomPadding: replyRow.isColumn ? Variables.windowGap : 0
+                buttonText: ""
+                onClicked: replyRow.sendReply()
             }
         }
 
