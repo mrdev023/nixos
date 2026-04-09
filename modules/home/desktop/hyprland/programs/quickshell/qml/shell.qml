@@ -34,4 +34,9 @@ QtObject {
         name: "clipboard_wipe"
         onPressed: Clipboard.wipe()
     }
+
+    property var _sessionLock: QSH.GlobalShortcut {
+        name: "session_lock"
+        onPressed: SessionLock.lock()
+    }
 }

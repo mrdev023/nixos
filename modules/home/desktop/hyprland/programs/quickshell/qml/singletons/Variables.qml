@@ -21,4 +21,6 @@ Singleton {
     readonly property int windowRadius:   _data.window?.border?.radius ?? 10
     readonly property int windowBorder:   _data.window?.border?.size   ?? 3
     readonly property int windowGap:      _data.window?.gap            ?? 10
+
+    readonly property string wallpaper:   _data.wallpaper              ?? ""
 }

@@ -43,8 +43,7 @@ Row {
                 text: "󰌾"
                 variant: DesktopText.Bigtext
                 message: "Verrouiller la session ?"
-
-                command: ["hyprlock"]
+                onConfirmed: SessionLock.lock()
             }
 
             PowerAction {
@@ -63,6 +62,7 @@ Row {
 
         property alias message: confirmDialog.message
         property alias command: process.command
+        signal confirmed()
 
         QSIO.Process {
             id: process
@@ -70,7 +70,10 @@ Row {
 
         ConfirmPopup {
             id: confirmDialog
-            onConfirmed: process.running = true
+            onConfirmed: {
+                if (process.command.length > 0) process.running = true
+                powerAction.confirmed()
+            }
         }
 
         TapHandler {

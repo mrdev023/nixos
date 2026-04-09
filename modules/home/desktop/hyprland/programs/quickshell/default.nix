@@ -12,7 +12,9 @@
       libnotify
     ];
     file.".config/quickshell/colors.json".source = config.stylix.generated.json;
-    file.".config/quickshell/variables.json".text = builtins.toJSON (import ../../variables.nix);
+    file.".config/quickshell/variables.json".text = builtins.toJSON (
+      (import ../../variables.nix) // { wallpaper = toString config.stylix.image; }
+    );
     file.".config/quickshell/fonts.json".text =
       let
         fonts = config.stylix.fonts;

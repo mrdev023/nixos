@@ -21,7 +21,7 @@ in
       ];
     }
     # (import ./programs/dunst.nix args)
-    (import ./programs/hyprlock.nix args)
+    # (import ./programs/hyprlock.nix args)
     (import ./programs/hyprpaper.nix args)
     (import ./programs/quickshell args)
     # (import ./programs/waybar.nix args)
@@ -171,6 +171,7 @@ in
               "SHIFT, Print, exec, ${screenshot.region}"
               "$mainMod, V, global, quickshell:clipboard_toggle"
               "$mainMod SHIFT, V, global, quickshell:clipboard_wipe"
+              "$mainMod, Delete, global, quickshell:session_lock"
 
               # Move focus with mainMod + arrow keys
               "$mainMod, h, movefocus, l"
@@ -183,10 +184,6 @@ in
               "$mainMod SHIFT_L, j, movewindow, u"
               "$mainMod SHIFT_L, k, movewindow, d"
               "$mainMod SHIFT_L, s, swapnext,"
-
-              "$mainMod ALT_L, v, exec, dunstctl context"
-              "$mainMod ALT_L, c, exec, dunstctl close-all"
-              "$mainMod ALT_L, x, exec, dunstctl close"
 
               # Switch workspaces with mainMod + [0-9]
               "$mainMod, 1, split:workspace, 1"
