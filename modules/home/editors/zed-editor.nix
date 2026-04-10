@@ -29,6 +29,7 @@ in
       ])
       {
         extraPackages = with pkgs; [ lldb ];
+        userSettings.dap.CodeLLDB.binary = getExe' pkgs.lldb "lldb-dap";
       }
     )
 
@@ -46,13 +47,23 @@ in
     (mkIf (cfgHasLanguage "c_cpp") {
       extraPackages = with pkgs; [ clang-tools ];
     })
+    (mkIf (cfgHasLanguage "qml") {
+      extensions = [ "qml" ];
+      extraPackages = with pkgs.kdePackages; [
+        qtdeclarative
+      ];
+      userSettings.lsp.qml.binary = {
+        path = getExe' pkgs.kdePackages.qtdeclarative "qmlls";
+        arguments = [ "-E" ];
+      };
+    })
     (mkIf (cfgHasLanguage "rust") {
       extraPackages = with pkgs; [
         rust-analyzer
         clippy
       ];
+      userSettings.lsp.rust-analyzer.binary.path = getExe pkgs.rust-analyzer;
     })
-
     # Autres
     (mkIf (cfgHasLanguage "zig") {
       extraPackages = with pkgs; [

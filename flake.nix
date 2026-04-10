@@ -207,49 +207,31 @@
       let
         pkgs = import nixpkgs { inherit system; };
         agenix = inputs.agenix.packages.${system}.default;
+        qtEnv =
+          with pkgs;
+          qt6.env "qt-env-${qt6.qtbase.version}" (
+            with kdePackages;
+            [
+              qtsvg
+              qtdeclarative
+              qtwayland
+              quickshell
+            ]
+          );
+        qtPluginPath = "${qtEnv}/${pkgs.qt6.qtbase.qtPluginPrefix}";
+        qtQmlPath = "${qtEnv}/${pkgs.qt6.qtbase.qtQmlPrefix}";
       in
       {
-        devShells = {
-          default = pkgs.mkShell {
-            packages = with pkgs; [
-              nixd
-              nil
-              agenix
-            ];
-          };
+        devShells.default = pkgs.mkShell {
+          packages = with pkgs; [
+            nixd
+            nil
+            agenix
+          ];
 
-          quickshell =
-            let
-              qtbase = pkgs.kdePackages.qtbase;
-
-              qtPluginPath = pkgs.lib.makeSearchPathOutput "out" qtbase.qtPluginPrefix (
-                with pkgs.kdePackages;
-                [
-                  qtbase
-                  qtsvg
-                  qtdeclarative
-                  qtwayland
-                ]
-              );
-              qtQmlPath = pkgs.lib.makeSearchPathOutput "out" qtbase.qtQmlPrefix (
-                with pkgs;
-                [
-                  kdePackages.qtdeclarative
-                  kdePackages.qtwayland
-                  quickshell
-                ]
-              );
-            in
-            pkgs.mkShell {
-              packages = with pkgs; [
-                quickshell
-                gammaray
-              ];
-
-              QT_PLUGIN_PATH = qtPluginPath;
-              QML_IMPORT_PATH = qtQmlPath;
-              QML2_IMPORT_PATH = qtQmlPath;
-            };
+          QT_PLUGIN_PATH = qtPluginPath;
+          QML_IMPORT_PATH = qtQmlPath;
+          QML2_IMPORT_PATH = qtQmlPath;
         };
         formatter = pkgs.nixfmt-tree;
       }
