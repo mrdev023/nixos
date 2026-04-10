@@ -9,7 +9,9 @@ import "../singletons"
 PickerPanel {
     id: root
 
-    pickerOpened: Clipboard.opened && QSH.Hyprland.monitorFor(topBar.screen) === QSH.Hyprland.focusedMonitor
+    property bool _isActive: Clipboard.opened && QSH.Hyprland.monitorFor(topBar.screen) === QSH.Hyprland.focusedMonitor
+    on_IsActiveChanged: opened = _isActive
+
     placeholderText: "Rechercher dans le presse-papier..."
     emptyText: "Presse-papier vide"
 

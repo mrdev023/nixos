@@ -9,7 +9,9 @@ import "../singletons"
 PickerPanel {
     id: root
 
-    pickerOpened: Launcher.opened && QSH.Hyprland.monitorFor(topBar.screen) === QSH.Hyprland.focusedMonitor
+    property bool _isActive: Launcher.opened && QSH.Hyprland.monitorFor(topBar.screen) === QSH.Hyprland.focusedMonitor
+    on_IsActiveChanged: opened = _isActive
+
     placeholderText: "Rechercher une application..."
 
     model: QS.ScriptModel {

@@ -8,7 +8,6 @@ import "../../singletons"
 DesktopPopup {
     id: root
 
-    property bool pickerOpened: false
     property string placeholderText: ""
     property string emptyText: ""
     property alias model: _list.model
@@ -19,19 +18,24 @@ DesktopPopup {
     signal itemActivated(var modelData)
 
     position: DesktopPopup.Position.Center
-    opened: pickerOpened
 
-    onFocusLost: closeRequested()
+    onFocusLost: _close()
     onVisibleChanged: {
         if (!visible)
-            closeRequested();
+            _close();
     }
 
-    onPickerOpenedChanged: {
-        if (pickerOpened) {
+    onOpenedChanged: {
+        if (opened) {
             _search.text = "";
             _search.forceActiveFocus();
         }
+    }
+
+    function _close(): void {
+        _search.focus = false;
+        _list.focus = false;
+        closeRequested();
     }
 
     // Single Item wrapper: drives popup size via content (popup = content + gap*6)
@@ -145,7 +149,7 @@ DesktopPopup {
 
                 DesktopText {
                     anchors.centerIn: parent
-                    visible: _list.count === 0 && _search.text === "" && root.pickerOpened && root.emptyText !== ""
+                    visible: _list.count === 0 && _search.text === "" && root.opened && root.emptyText !== ""
                     text: root.emptyText
                     variant: DesktopText.Variant.Subtitle
                     color: Colors.base03
