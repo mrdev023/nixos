@@ -43,6 +43,15 @@ in
       extraPackages = with pkgs; [ glsl_analyzer ];
     })
 
+    (mkIf (cfgHasLanguage "java") {
+      extraPackages = with pkgs; [ jdt-language-server ];
+      userSettings.lsp.jdtls.binary.path = getExe pkgs.jdt-language-server;
+    })
+    (mkIf (cfgHasLanguage "kotlin") {
+      extraPackages = with pkgs; [ kotlin-language-server ];
+      userSettings.lsp.kotlin-language-server.binary.path = getExe pkgs.kotlin-language-server;
+    })
+
     # System
     (mkIf (cfgHasLanguage "c_cpp") {
       extraPackages = with pkgs; [ clang-tools ];
@@ -64,6 +73,7 @@ in
       ];
       userSettings.lsp.rust-analyzer.binary.path = getExe pkgs.rust-analyzer;
     })
+
     # Autres
     (mkIf (cfgHasLanguage "zig") {
       extraPackages = with pkgs; [
