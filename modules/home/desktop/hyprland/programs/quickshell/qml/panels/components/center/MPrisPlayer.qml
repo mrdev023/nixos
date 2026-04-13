@@ -62,8 +62,8 @@ Item {
 
             DesktopButton {
                 buttonText: "󰒮"
-                enabled: PlayerManager.hasPrevPlayer
-                onClicked: PlayerManager.prevPlayer()
+                enabled: PlayerManager.hasPreviousPlayer
+                onClicked: PlayerManager.previousPlayer()
             }
 
             DesktopText {

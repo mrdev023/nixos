@@ -63,4 +63,34 @@ QtObject {
         name: "mic_mute_toggle"
         onPressed: AudioManager.micMuteToggle()
     }
+
+    property var _playerPrev: QSH.GlobalShortcut {
+        name: "player_previous"
+        onPressed: {
+            if (!PlayerManager.player)
+                return;
+            if (PlayerManager.player.canGoPrevious)
+                PlayerManager.player.previous();
+        }
+    }
+
+    property var _playerNext: QSH.GlobalShortcut {
+        name: "player_next"
+        onPressed: {
+            if (!PlayerManager.player)
+                return;
+            if (PlayerManager.player.canGoNext)
+                PlayerManager.player.next();
+        }
+    }
+
+    property var _playerToggle: QSH.GlobalShortcut {
+        name: "player_toggle"
+        onPressed: {
+            if (!PlayerManager.player)
+                return;
+            if (PlayerManager.player.canTogglePlaying)
+                PlayerManager.player.togglePlaying();
+        }
+    }
 }

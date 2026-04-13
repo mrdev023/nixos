@@ -15,7 +15,7 @@ Singleton {
     property int _playerCount: players.length
 
     readonly property QSSM.MprisPlayer player: players.length > 0 ? players[Math.min(_playerIndex, players.length - 1)] : null
-    readonly property bool hasPrevPlayer: root._playerIndex > 0
+    readonly property bool hasPreviousPlayer: root._playerIndex > 0
     readonly property bool hasNextPlayer: root._playerIndex < root.players.length - 1
 
     onPlayersChanged: {
@@ -24,7 +24,7 @@ Singleton {
         _playerCount = players.length;
     }
 
-    function prevPlayer(): void {
+    function previousPlayer(): void {
         root._playerIndex--;
     }
 

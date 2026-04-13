@@ -254,15 +254,14 @@ in
 
           bindl =
             let
-              player = (import ./scripts/player.nix args);
               backlight = (import ./scripts/backlight.nix args);
             in
             [
               # Media player controls
-              ", XF86AudioPlay, exec, ${player.play}"
-              ", XF86AudioPause, exec, ${player.pause}"
-              ", XF86AudioPrev, exec, ${player.previous}"
-              ", XF86AudioNext, exec, ${player.next}"
+              ", XF86AudioPlay, global, quickshell:player_toggle"
+              ", XF86AudioPause, global, quickshell:player_toggle"
+              ", XF86AudioPrev, global, quickshell:player_previous"
+              ", XF86AudioNext, global, quickshell:player_next"
 
               # Screen brightness controls
               ", XF86MonBrightnessUp, exec, ${backlight.inc}"
