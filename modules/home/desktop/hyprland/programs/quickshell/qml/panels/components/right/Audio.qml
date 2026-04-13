@@ -29,12 +29,12 @@ RightBarItem {
     iconText: kind === Audio.Sink ? _iconSink() : _iconSource()
 
     onTapped: detailsWindow.opened = !detailsWindow.opened
-    onMiddleTapped: root.node.audio.muted = !root.node.audio.muted
+    onMiddleTapped: AudioManager.muteToggle(root.node)
     onWheeled: delta => {
         if (delta > 0)
-            root.volumeUp();
+            AudioManager.volumeUp(root.node);
         else
-            root.volumeDown();
+            AudioManager.volumeDown(root.node);
     }
 
     DesktopPopup {
@@ -127,37 +127,6 @@ RightBarItem {
                 onTriggered: indicator.opened = false
             }
         }
-    }
-
-    QSH.GlobalShortcut {
-        name: "volume_up"
-        onPressed: {
-            if (root.kind !== Audio.Sink)
-                return;
-            root.volumeUp();
-        }
-    }
-
-    QSH.GlobalShortcut {
-        name: "volume_down"
-        onPressed: {
-            if (root.kind !== Audio.Sink)
-                return;
-            root.volumeDown();
-        }
-    }
-
-    function volumeUp(): void {
-        if (root.node.audio.muted) {
-            root.node.audio.muted = false;
-        } else {
-            let newValue = root.node.audio.volume + 0.05;
-            root.node.audio.volume = Math.min(newValue, 1.0);
-        }
-    }
-
-    function volumeDown(): void {
-        root.node.audio.volume -= 0.05;
     }
 
     function _iconSink(): string {

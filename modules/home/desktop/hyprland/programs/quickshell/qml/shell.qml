@@ -17,16 +17,20 @@ QtObject {
     property var _launcherToggle: QSH.GlobalShortcut {
         name: "launcher_toggle"
         onPressed: {
-            if (Launcher.opened) Launcher.close();
-            else Launcher.open();
+            if (Launcher.opened)
+                Launcher.close();
+            else
+                Launcher.open();
         }
     }
 
     property var _clipboardToggle: QSH.GlobalShortcut {
         name: "clipboard_toggle"
         onPressed: {
-            if (Clipboard.opened) Clipboard.close();
-            else Clipboard.open();
+            if (Clipboard.opened)
+                Clipboard.close();
+            else
+                Clipboard.open();
         }
     }
 
@@ -38,5 +42,25 @@ QtObject {
     property var _sessionLock: QSH.GlobalShortcut {
         name: "session_lock"
         onPressed: SessionLock.lock()
+    }
+
+    property var _audioUp: QSH.GlobalShortcut {
+        name: "audio_up"
+        onPressed: AudioManager.audioUp()
+    }
+
+    property var _audioDown: QSH.GlobalShortcut {
+        name: "audio_down"
+        onPressed: AudioManager.audioDown()
+    }
+
+    property var _audioMuteToggle: QSH.GlobalShortcut {
+        name: "audio_mute_toggle"
+        onPressed: AudioManager.audioMuteToggle()
+    }
+
+    property var _micMuteToggle: QSH.GlobalShortcut {
+        name: "mic_mute_toggle"
+        onPressed: AudioManager.micMuteToggle()
     }
 }

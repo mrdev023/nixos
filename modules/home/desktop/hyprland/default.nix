@@ -246,20 +246,18 @@ in
             "$mainMod CTRL_L, j, resizeactive, 0 -50"
             "$mainMod CTRL_L, k, resizeactive, 0 50"
 
-            ", XF86AudioRaiseVolume, global, quickshell:volume_up"
-            ", XF86AudioLowerVolume, global, quickshell:volume_down"
+            ", XF86AudioRaiseVolume, global, quickshell:audio_up"
+            ", XF86AudioLowerVolume, global, quickshell:audio_down"
+            ", XF86AudioMute, global, quickshell:audio_mute_toggle"
+            ", XF86AudioMicMute, global, quickshell:mic_mute_toggle"
           ];
 
           bindl =
             let
-              volume = (import ./scripts/volume.nix args);
               player = (import ./scripts/player.nix args);
               backlight = (import ./scripts/backlight.nix args);
             in
             [
-              ", XF86AudioMute, exec, ${volume.toggleMute}"
-              # ", XF86AudioMicMute, exec, ${toggleMute}"
-
               # Media player controls
               ", XF86AudioPlay, exec, ${player.play}"
               ", XF86AudioPause, exec, ${player.pause}"
