@@ -34,15 +34,35 @@ in
         wl-clipboard
       ];
 
+      services.gnome-keyring = {
+        enable = true;
+        components = [
+          "pkcs11"
+          "secrets"
+        ];
+      };
+
       xdg.portal = {
         enable = true;
         extraPortals = with pkgs; [
-          kdePackages.xdg-desktop-portal-kde
+          xdg-desktop-portal-hyprland
+          xdg-desktop-portal-gtk
         ];
         xdgOpenUsePortal = true;
-        configPackages = [ config.wayland.windowManager.hyprland.package ];
-        config.hyprland = {
-          default = [ "hyprland" ];
+        configPackages = [ config.wayland.windowManager.hyprland.finalPackage ];
+        config = {
+          hyprland = {
+            default = [
+              "hyprland"
+              "gtk"
+            ];
+
+            "org.freedesktop.impl.portal.FileChooser" = [ "gtk" ];
+            "org.freedesktop.impl.portal.Screenshot" = [ "hyprland" ];
+            "org.freedesktop.impl.portal.ScreenCast" = [ "hyprland" ];
+          };
+
+          common.default = [ "gtk" ];
         };
       };
 
