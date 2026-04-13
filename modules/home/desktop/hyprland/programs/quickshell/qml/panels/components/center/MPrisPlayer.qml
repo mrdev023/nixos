@@ -8,23 +8,7 @@ import "../../../singletons"
 Item {
     id: root
 
-    property var _players: {
-        const players = [...QSSM.Mpris.players.values];
-        return players.sort((a, b) => playerScore(b) - playerScore(a));
-    }
-
-    property int _playerIndex: 0
-    property int _playerCount: 0
-
-    Component.onCompleted: _playerCount = _players.length
-
-    on_PlayersChanged: {
-        if (_players.length < _playerCount)
-            _playerIndex = 0;
-        _playerCount = _players.length;
-    }
-
-    readonly property QSSM.MprisPlayer _player: _players.length > 0 ? _players[Math.min(_playerIndex, _players.length - 1)] : null
+    readonly property QSSM.MprisPlayer _player: PlayerManager.player
 
     implicitWidth: _row.implicitWidth
     implicitHeight: _row.implicitHeight
@@ -74,12 +58,12 @@ Item {
         QQL.RowLayout {
             QQL.Layout.fillWidth: true
             QQL.Layout.preferredWidth: 280
-            visible: root._players.length > 1
+            visible: PlayerManager.players.length > 1
 
             DesktopButton {
                 buttonText: "󰒮"
-                enabled: root._playerIndex > 0
-                onClicked: root._playerIndex--
+                enabled: PlayerManager.hasPrevPlayer
+                onClicked: PlayerManager.prevPlayer()
             }
 
             DesktopText {
@@ -93,8 +77,8 @@ Item {
 
             DesktopButton {
                 buttonText: "󰒭"
-                enabled: root._playerIndex < root._players.length - 1
-                onClicked: root._playerIndex++
+                enabled: PlayerManager.hasNextPlayer
+                onClicked: PlayerManager.nextPlayer()
             }
         }
 
