@@ -22,15 +22,14 @@ PickerPanel {
     }
 
     onCloseRequested: Clipboard.close()
-    onSearchUpdated: text => Clipboard.searchText = text
     onItemActivated: data => Clipboard.select(data)
 
     function _matchesSearch(line: string): bool {
-        if (Clipboard.searchText === "")
+        if (root.searchText === "")
             return true;
 
         const tabIdx = line.indexOf('\t');
         const content = tabIdx >= 0 ? line.substring(tabIdx + 1) : line;
-        return content.toLowerCase().includes(Clipboard.searchText.toLowerCase());
+        return content.toLowerCase().includes(root.searchText.toLowerCase());
     }
 }

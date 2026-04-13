@@ -12,10 +12,10 @@ DesktopPopup {
     property string placeholderText: ""
     property string emptyText: ""
     property alias model: _list.model
+    property alias searchText: _search.text
     property Component delegate
 
     signal closeRequested
-    signal searchUpdated(string text)
     signal itemActivated(var modelData)
 
     position: DesktopPopup.Position.Center
@@ -28,8 +28,10 @@ DesktopPopup {
     }
 
     onPickerOpenedChanged: {
-        if (pickerOpened)
+        if (pickerOpened) {
+            _search.text = "";
             _search.forceActiveFocus();
+        }
     }
 
     // Single Item wrapper: drives popup size via content (popup = content + gap*6)
@@ -46,8 +48,6 @@ DesktopPopup {
 
                 QQL.Layout.fillWidth: true
                 placeholderText: root.placeholderText
-
-                onTextChanged: root.searchUpdated(text)
 
                 Keys.onEscapePressed: root.closeRequested()
                 Keys.onDownPressed: {

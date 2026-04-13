@@ -6,12 +6,10 @@ Singleton {
     id: root
 
     property bool opened: false
-    property string searchText: ""
 
     function open(): void {
         // Must close Clipboard to avoid broke it
         Clipboard.close();
-        searchText = "";
         opened = true;
     }
 

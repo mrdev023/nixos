@@ -7,13 +7,11 @@ Singleton {
     id: root
 
     property bool opened: false
-    property string searchText: ""
     property list<string> entries: []
 
     function open(): void {
         // Must close Launcher to avoid broke it
         Launcher.close();
-        searchText = "";
         entries = [];
         _listProcess.running = true;
         opened = true;

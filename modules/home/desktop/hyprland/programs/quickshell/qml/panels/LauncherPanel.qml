@@ -15,7 +15,7 @@ PickerPanel {
     model: QS.ScriptModel {
         id: _appModel
         values: QS.DesktopEntries.applications.values.filter(root._matchesSearch).sort((a, b) => {
-            if (Launcher.searchText === "")
+            if (root.searchText === "")
                 return a.name.localeCompare(b.name);
             return root._appScore(b) - root._appScore(a);
         })
@@ -26,7 +26,6 @@ PickerPanel {
     }
 
     onCloseRequested: Launcher.close()
-    onSearchUpdated: text => Launcher.searchText = text
     onItemActivated: data => {
         data.execute();
         Launcher.close();
@@ -71,7 +70,7 @@ PickerPanel {
 
     // Best fuzzy score across name, genericName and keywords.
     function _appScore(app: QS.DesktopEntry): int {
-        const q = Launcher.searchText;
+        const q = root.searchText;
         let best = _fuzzyScore(app.name, q);
 
         if (app.genericName !== "")
@@ -84,7 +83,7 @@ PickerPanel {
     }
 
     function _matchesSearch(app: QS.DesktopEntry): bool {
-        if (Launcher.searchText === "")
+        if (root.searchText === "")
             return true;
 
         return _appScore(app) >= 0;
