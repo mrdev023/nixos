@@ -290,21 +290,6 @@ in
               float = "on";
             }
             {
-              name = "set-pavucontrol-to-float";
-              "match:initial_class" = "org.pulseaudio.pavucontrol";
-              float = "on";
-            }
-            {
-              name = "set-overskride-to-float";
-              "match:initial_class" = "io.github.kaii_lb.Overskride";
-              float = "on";
-            }
-            {
-              name = "set-nmtui-to-float";
-              "match:initial_title" = "nmtui";
-              float = "on";
-            }
-            {
               name = "set_decoration_for_pinned_window";
               "match:pin" = true;
               border_size = general.border_size * 2;
@@ -313,6 +298,17 @@ in
               name = "focus_bitwarden_when_requested";
               "match:initial_class" = "Bitwarden";
               focus_on_activate = "on";
+            }
+            {
+              name = "set-zen-bitwarden-extension-to-float";
+              "match:class" = "zen-beta";
+              "match:title" = ".*Bitwarden.*";
+              float = "on";
+            }
+            {
+              name = "set-screencapture-portal-to-float";
+              "match:initial_title" = "Select what to share";
+              float = "on";
             }
           ];
         };

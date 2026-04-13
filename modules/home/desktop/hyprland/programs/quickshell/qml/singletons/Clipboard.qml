@@ -12,7 +12,7 @@ Singleton {
 
     function open(): void {
         // Must close Launcher to avoid broke it
-        Launcher.opened = false;
+        Launcher.close();
         searchText = "";
         entries = [];
         _listProcess.running = true;

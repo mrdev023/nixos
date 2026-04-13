@@ -10,7 +10,7 @@ Singleton {
 
     function open(): void {
         // Must close Clipboard to avoid broke it
-        Clipboard.opened = false;
+        Clipboard.close();
         searchText = "";
         opened = true;
     }
