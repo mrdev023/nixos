@@ -11,6 +11,8 @@ Singleton {
     property list<string> entries: []
 
     function open(): void {
+        // Must close Launcher to avoid broke it
+        Launcher.opened = false;
         searchText = "";
         entries = [];
         _listProcess.running = true;

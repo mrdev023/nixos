@@ -14,13 +14,11 @@ PickerPanel {
 
     model: QS.ScriptModel {
         id: _appModel
-        values: QS.DesktopEntries.applications.values
-            .filter(root._matchesSearch)
-            .sort((a, b) => {
-                if (Launcher.searchText === "")
-                    return a.name.localeCompare(b.name);
-                return root._appScore(b) - root._appScore(a);
-            })
+        values: QS.DesktopEntries.applications.values.filter(root._matchesSearch).sort((a, b) => {
+            if (Launcher.searchText === "")
+                return a.name.localeCompare(b.name);
+            return root._appScore(b) - root._appScore(a);
+        })
     }
 
     delegate: Component {
@@ -32,14 +30,6 @@ PickerPanel {
     onItemActivated: data => {
         data.execute();
         Launcher.close();
-    }
-
-    Connections {
-        target: Launcher
-        function onOpenedChanged(): void {
-            if (Launcher.opened)
-                root.focusSearch();
-        }
     }
 
     // Returns a fuzzy match score for `str` against `query`.
@@ -56,8 +46,9 @@ PickerPanel {
                 // Bonus: start of string
                 if (si === 0)
                     score += 10;
+                else
                 // Bonus: word boundary (preceded by separator)
-                else if (" -_.".includes(s[si - 1]))
+                if (" -_.".includes(s[si - 1]))
                     score += 8;
                 // Bonus: consecutive chars
                 score += consecutive * 4;

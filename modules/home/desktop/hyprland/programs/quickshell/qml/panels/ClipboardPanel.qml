@@ -25,14 +25,6 @@ PickerPanel {
     onSearchUpdated: text => Clipboard.searchText = text
     onItemActivated: data => Clipboard.select(data)
 
-    Connections {
-        target: Clipboard
-        function onOpenedChanged(): void {
-            if (Clipboard.opened)
-                root.focusSearch();
-        }
-    }
-
     function _matchesSearch(line: string): bool {
         if (Clipboard.searchText === "")
             return true;

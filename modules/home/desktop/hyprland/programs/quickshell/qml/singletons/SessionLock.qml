@@ -2,11 +2,11 @@ pragma Singleton
 
 import QtQuick
 import QtQuick.Effects
-import Quickshell
+import Quickshell as QS
 import Quickshell.Services.Pam
 import Quickshell.Wayland as QSW
 
-Singleton {
+QS.Singleton {
     id: root
 
     property var _wlLock: QSW.WlSessionLock {
@@ -14,6 +14,11 @@ Singleton {
 
         QSW.WlSessionLockSurface {
             id: surface
+
+            QS.SystemClock {
+                id: systemClock
+                precision: QS.SystemClock.Seconds
+            }
 
             property bool _unlockInProgress: false
             property bool _authError: false
@@ -26,16 +31,17 @@ Singleton {
                 configDirectory: "/etc/pam.d"
                 config: "login"
 
-                onPamMessage: if (responseRequired) respond(surface._password)
+                onPamMessage: if (responseRequired)
+                    respond(surface._password)
 
-                onCompleted: function(result) {
-                    surface._unlockInProgress = false
+                onCompleted: function (result) {
+                    surface._unlockInProgress = false;
                     if (result === PamResult.Success) {
-                        wlLock.locked = false
+                        wlLock.locked = false;
                     } else {
-                        surface._authError = true
-                        _passwordField.text = ""
-                        _passwordField.forceActiveFocus()
+                        surface._authError = true;
+                        _passwordField.text = "";
+                        _passwordField.forceActiveFocus();
                     }
                 }
             }
@@ -64,7 +70,7 @@ Singleton {
                 anchors.horizontalCenter: parent.horizontalCenter
                 anchors.verticalCenter: parent.verticalCenter
                 anchors.verticalCenterOffset: -300
-                text: Qt.formatTime(new Date(), "HH:mm")
+                text: Qt.formatTime(systemClock.date, "HH:mm")
                 color: Colors.base05
                 font.family: Fonts.sansSerif
                 font.pixelSize: 120
@@ -76,7 +82,7 @@ Singleton {
                 anchors.horizontalCenter: parent.horizontalCenter
                 anchors.verticalCenter: parent.verticalCenter
                 anchors.verticalCenterOffset: -200
-                text: Qt.formatDate(new Date(), "dddd dd MMMM")
+                text: Qt.formatDate(systemClock.date, "dddd dd MMMM")
                 color: Colors.base05
                 font.family: Fonts.sansSerif
                 font.pixelSize: 32
@@ -87,8 +93,8 @@ Singleton {
                 running: wlLock.locked
                 repeat: true
                 onTriggered: {
-                    _time.text = Qt.formatTime(new Date(), "HH:mm")
-                    _date.text = Qt.formatDate(new Date(), "dddd dd MMMM")
+                    _time.text = Qt.formatTime(new Date(), "HH:mm");
+                    _date.text = Qt.formatDate(new Date(), "dddd dd MMMM");
                 }
             }
 
@@ -116,14 +122,15 @@ Singleton {
                     verticalAlignment: TextInput.AlignVCenter
 
                     onTextChanged: {
-                        surface._password = text
-                        if (text.length > 0) surface._authError = false
+                        surface._password = text;
+                        if (text.length > 0)
+                            surface._authError = false;
                     }
 
                     Keys.onReturnPressed: {
                         if (text.length > 0 && !surface._unlockInProgress) {
-                            surface._unlockInProgress = true
-                            _pam.start()
+                            surface._unlockInProgress = true;
+                            _pam.start();
                         }
                     }
                 }
@@ -141,16 +148,16 @@ Singleton {
             }
 
             onVisibleChanged: if (visible) {
-                _password = ""
-                _authError = false
-                _unlockInProgress = false
-                _passwordField.text = ""
-                _passwordField.forceActiveFocus()
+                _password = "";
+                _authError = false;
+                _unlockInProgress = false;
+                _passwordField.text = "";
+                _passwordField.forceActiveFocus();
             }
         }
     }
 
     function lock() {
-        wlLock.locked = true
+        wlLock.locked = true;
     }
 }

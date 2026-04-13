@@ -9,6 +9,8 @@ Singleton {
     property string searchText: ""
 
     function open(): void {
+        // Must close Clipboard to avoid broke it
+        Clipboard.opened = false;
         searchText = "";
         opened = true;
     }

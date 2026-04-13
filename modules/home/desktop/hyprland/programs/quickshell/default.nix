@@ -10,6 +10,7 @@
       cliphist
       wl-clipboard
       libnotify
+      qt6.qtsvg
     ];
     file.".config/quickshell/colors.json".source = config.stylix.generated.json;
     file.".config/quickshell/variables.json".text = builtins.toJSON (
