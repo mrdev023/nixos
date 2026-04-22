@@ -123,7 +123,7 @@ RightBarItem {
                 case "pairing":
                     return "Appairage...";
                 case "disconnected":
-                    return "Déconnecté";
+                    return "Se connecter";
                 case "connecting":
                     return "Connexion...";
                 case "connected":
