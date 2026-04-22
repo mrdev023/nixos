@@ -3,6 +3,7 @@
 {
   imports = [
     ./chromium.nix
+    ./distrobox.nix
     ./assistant-code
     ./difftastic.nix
     ./kitty.nix

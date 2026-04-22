@@ -69,8 +69,6 @@
       waydroid.enable = true;
     };
 
-    services = {
-      distrobox.enable = true;
-    };
+    services.docker.enable = true;
   };
 }

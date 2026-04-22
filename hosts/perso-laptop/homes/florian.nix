@@ -21,7 +21,10 @@
 
   wayland.windowManager.hyprland.enable = true;
 
-  modules.home.profiles = [ "shell" ];
+  modules.home = {
+    profiles = [ "shell" ];
+    programs.distrobox.enable = true;
+  };
 
   home.sessionVariables.NH_FLAKE = "${config.home.homeDirectory}/Projets/Perso/nixos";
 }

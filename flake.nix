@@ -194,6 +194,10 @@
           name = "kdedev-home";
           system = "x86_64-linux";
         };
+        "florian@kdedev" = customHomeManagerConfiguration {
+          name = "kdedev-distrobox";
+          system = "x86_64-linux";
+        };
       };
     }
     #####################################################################

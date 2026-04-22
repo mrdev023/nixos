@@ -30,7 +30,10 @@ in
 
   wayland.windowManager.hyprland.enable = true;
 
-  modules.home.profiles = [ "shell" ];
+  modules.home = {
+    profiles = [ "shell" ];
+    programs.distrobox.enable = true;
+  };
 
   wayland.windowManager.hyprland.settings.monitor = [
     "DP-1, 5120x1440@240, 0x0, 1, vrr, 1, bitdepth, 10, cm, hdr, sdrbrightness, 1.3, sdrsaturation, 0.97"

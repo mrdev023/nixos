@@ -51,9 +51,7 @@
       waydroid.enable = true;
     };
 
-    services = {
-      distrobox.enable = true;
-    };
+    services.docker.enable = true;
   };
 
   networking.interfaces.enp17s0.wakeOnLan.enable = true;
