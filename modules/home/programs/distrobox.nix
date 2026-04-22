@@ -43,14 +43,7 @@ in
   };
 
   config = mkIf cfg.enable {
-    home.packages = [
-      (pkgs.distrobox.overrideAttrs (old: {
-        postInstall = (old.postInstall or "") + ''
-          substituteInPlace $out/bin/distrobox-enter \
-            --replace-fail 'set -- "--pty" "$@"' ':'
-        '';
-      }))
-    ];
+    home.packages = [ pkgs.distrobox ];
 
     xdg.configFile."distrobox/kdedev_init_hook.sh" = {
       executable = true;
