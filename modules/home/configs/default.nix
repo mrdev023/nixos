@@ -3,5 +3,6 @@
 {
   imports = [
     ./monado.nix
+    ./distrobox
   ];
 }

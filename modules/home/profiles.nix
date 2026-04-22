@@ -1,7 +1,8 @@
 {
   config,
-  pkgs,
+  inputs,
   lib,
+  pkgs,
   ...
 }:
 
@@ -82,6 +83,12 @@ in
 
     # Profile for minimal usable home manager configuration on non NixOS
     (mkIf (elem "hm_only" cfg.profiles) {
+      targets.genericLinux.enable = true;
+      targets.genericLinux.nixGL = {
+        packages = inputs.nixgl.packages;
+        defaultWrapper = "mesa";
+      };
+
       services = {
         gpg-agent = {
           enable = true;
