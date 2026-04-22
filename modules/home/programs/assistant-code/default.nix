@@ -25,15 +25,15 @@ let
     };
 in
 {
-  home.packages = [ pkgs.mcp-nixos ];
+  # home.packages = [ pkgs.mcp-nixos ];
   programs.mcp = {
     enable = true;
 
     servers = {
-      nixos = {
-        command = "mcp-nixos";
-        type = "stdio";
-      };
+      # nixos = {
+      #   command = "mcp-nixos";
+      #   type = "stdio";
+      # };
     };
   };
 
