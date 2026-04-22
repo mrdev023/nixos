@@ -151,7 +151,7 @@ in
                 name = "typescript-language-server";
                 except-features = [ "format" ];
               }
-              "biome"
+              { name = "biome"; }
             ];
             auto-format = true;
           }
@@ -162,8 +162,8 @@ in
                 name = "typescript-language-server";
                 except-features = [ "format" ];
               }
-              "tailwindcss-ls"
-              "biome"
+              { name = "tailwindcss-ls"; }
+              { name = "biome"; }
             ];
             formatter = {
               command = "biome";
@@ -184,8 +184,8 @@ in
                 name = "typescript-language-server";
                 except-features = [ "format" ];
               }
-              "tailwindcss-ls"
-              "biome"
+              { name = "tailwindcss-ls"; }
+              { name = "biome"; }
             ];
             formatter = {
               command = "biome";
@@ -206,7 +206,7 @@ in
                 name = "typescript-language-server";
                 except-features = [ "format" ];
               }
-              "biome"
+              { name = "biome"; }
             ];
             formatter = {
               command = "biome";

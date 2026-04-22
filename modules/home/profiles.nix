@@ -29,7 +29,7 @@ in
       programs = {
         # Assistant code
         claude-code.enable = true;
-        mistral-vibe.enable = true;
+        # mistral-vibe.enable = true;
         opencode.enable = true;
 
         atuin.enable = true;
