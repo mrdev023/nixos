@@ -13,6 +13,8 @@ export XDG_DATA_DIRS="$HOME/kde/usr/share:$HOME/.local/share/applications:$HOME/
 export PATH="/usr/local/sbin:/usr/local/bin:/usr/bin:/var/lib/flatpak/exports/bin:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl:$HOME/.nix-profile/bin:$HOME/.local/bin"
 export COLORTERM=truecolor
 export TERM=xterm-256color
+export QML2_IMPORT_PATH=/usr/lib/qt6/qml:/usr/lib/qt/qml
+export QT_PLUGIN_PATH=/usr/lib/qt6/plugins:/usr/lib/qt/plugins
 
 # WAYLAND_DISPLAY is removed by distrobox
 #   On hyprland, display is wayland-1 and on KDE wayland-0
