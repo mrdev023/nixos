@@ -52,7 +52,6 @@
     apps = {
       appimage.enable = true;
       flatpak.enable = true;
-      lutris.enable = true;
       steam.enable = true;
     };
 

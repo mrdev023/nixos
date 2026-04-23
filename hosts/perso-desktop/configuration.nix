@@ -33,7 +33,6 @@
       flatpak.enable = true;
       steam.enable = true;
       qemu.enable = true;
-      lutris.enable = true;
     };
 
     boot.plymouth.enable = true;
