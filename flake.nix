@@ -120,16 +120,17 @@
               stylix.nixosModules.stylix
 
               (
-                { lib, pkgs, ... }:
+                {
+                  lib,
+                  pkgs,
+                  ...
+                }:
                 {
                   nixpkgs.overlays = overlays;
                   home-manager.useGlobalPkgs = true;
                   home-manager.useUserPackages = true;
                   home-manager.extraSpecialArgs = extraSpecialArgs;
-                  home-manager.sharedModules = home-modules ++ [
-                    # Disable overlays for NixOS
-                    { stylix.overlays.enable = false; }
-                  ];
+                  home-manager.sharedModules = home-modules;
                   home-manager.backupCommand = lib.getExe pkgs.trash-cli;
                 }
               )

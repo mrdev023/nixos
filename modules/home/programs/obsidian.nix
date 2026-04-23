@@ -1,5 +1,8 @@
-{ ... }:
+{ lib, options, ... }:
 
+with lib;
 {
-  config.stylix.targets.obsidian.vaultNames = [ "perso_obsidian_vault" ];
+  config = optionalAttrs (options ? stylix) {
+    stylix.targets.obsidian.vaultNames = [ "perso_obsidian_vault" ];
+  };
 }

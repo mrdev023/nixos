@@ -2,12 +2,13 @@
   config,
   pkgs,
   lib,
+  options,
   ...
 }:
 
 with lib;
 let
-  cfgStylix = config.stylix;
+  stylixEnabled = (options ? stylix) && config.stylix.enable;
 
   utils = import ./utils.nix { inherit config lib; };
   inherit (utils) cfgHasLanguage cfgHasAnyOfLanguages;
@@ -41,7 +42,7 @@ in
       };
     }
 
-    (mkIf (!cfgStylix.enable) {
+    (mkIf (!stylixEnabled) {
       settings.theme = "tokyonight";
     })
 

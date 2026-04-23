@@ -2,6 +2,7 @@
   config,
   pkgs,
   lib,
+  options,
   ...
 }@args:
 
@@ -15,7 +16,7 @@ in
     {
       assertions = [
         {
-          assertion = cfg.enable -> config.stylix.enable;
+          assertion = cfg.enable -> (options ? stylix) && config.stylix.enable;
           message = "Hyprland requires stylix to be enabled too";
         }
       ];
@@ -26,6 +27,9 @@ in
     (import ./programs/quickshell args)
     # (import ./programs/waybar.nix args)
     # (import ./programs/wofi.nix args)
+    (optionalAttrs (options ? stylix) {
+      stylix.targets.hyprland.enable = true; # if autoEnable is set to false
+    })
     {
       programs.kitty.enable = mkDefault true;
 

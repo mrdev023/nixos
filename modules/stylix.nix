@@ -1,8 +1,14 @@
-{ pkgs, lib, ... }:
+{
+  pkgs,
+  lib,
+  ...
+}:
 
 with lib;
 {
   stylix = {
+    # TODO: Enable by DE
+    # autoEnable = mkDefault false;
     polarity = mkDefault "dark";
     fonts = {
       serif = {
