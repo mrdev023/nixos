@@ -21,12 +21,8 @@ in
         }
       ];
     }
-    # (import ./programs/dunst.nix args)
-    # (import ./programs/hyprlock.nix args)
     (import ./programs/hyprpaper.nix args)
     (import ./programs/quickshell args)
-    # (import ./programs/waybar.nix args)
-    # (import ./programs/wofi.nix args)
     (optionalAttrs (options ? stylix) {
       stylix.targets.hyprland.enable = true; # if autoEnable is set to false
     })
@@ -36,6 +32,7 @@ in
       home.packages = with pkgs; [
         # Required by clipboard script and hyprpicker
         wl-clipboard
+        cliphist # For clipboard history
       ];
 
       services.gnome-keyring = {
@@ -83,13 +80,9 @@ in
         settings = rec {
           "$mainMod" = "SUPER";
 
-          exec-once =
-            let
-              clipboard = import ./scripts/clipboard.nix args;
-            in
-            [
-              clipboard.watch
-            ];
+          exec-once = [
+            "wl-paste --watch cliphist store"
+          ];
 
           env = [
             "XCURSOR_SIZE,24"

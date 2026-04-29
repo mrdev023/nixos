@@ -51,6 +51,7 @@
     boot.plymouth.enable = true;
 
     desktop.hyprland.enable = true;
+    desktop.plasma.enable = true;
 
     hardware = {
       audio.pipewire.enable = true;
