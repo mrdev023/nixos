@@ -21,6 +21,7 @@ in
   programs = {
     obsidian.enable = true;
     vesktop.enable = true;
+    discord.enable = true; # Vesktop have a bug with screenshare
     spicetify.enable = true;
     zen-browser.enable = true;
     zed-editor.enable = true;
