@@ -41,6 +41,15 @@
     "fr_FR.UTF-8/UTF-8"
   ];
 
+  fonts = {
+    enableDefaultPackages = true;
+    packages = with pkgs; [
+      noto-fonts # General Unicode
+      noto-fonts-cjk-sans # Support CJK (chinois, japonais, coréen)
+      roboto # Police moderne, souvent utilisée par GTK
+    ];
+  };
+
   # Enable also the profiles + GC Cleaning
   modules.system.apps.nh.enable = true;
 
