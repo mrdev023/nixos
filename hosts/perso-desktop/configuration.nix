@@ -22,10 +22,10 @@
 
   services.udev.packages = [ pkgs.wooting-udev-rules ];
 
-  stylix = {
-    enable = true;
-    image = ../../assets/backgrounds/ultra_wide.jpg;
-  };
+  # stylix = {
+  #   enable = true;
+  #   image = ../../assets/backgrounds/ultra_wide.jpg;
+  # };
 
   modules.system = {
     apps = {
@@ -37,7 +37,7 @@
 
     boot.plymouth.enable = true;
 
-    desktop.hyprland.enable = true;
+    # desktop.hyprland.enable = true;
     desktop.plasma.enable = true;
 
     hardware = {

@@ -29,7 +29,7 @@ in
 
   services.flatpak.enable = true;
 
-  wayland.windowManager.hyprland.enable = true;
+  # wayland.windowManager.hyprland.enable = true;
 
   modules.home = {
     profiles = [ "shell" ];

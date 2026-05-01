@@ -24,10 +24,10 @@
 
   services.udev.packages = [ pkgs.wooting-udev-rules ];
 
-  stylix = {
-    enable = true;
-    image = ../../assets/backgrounds/4k.jpg;
-  };
+  # stylix = {
+  #   enable = true;
+  #   image = ../../assets/backgrounds/4k.jpg;
+  # };
 
   hardware.nvidia.prime = {
     offload = {
@@ -50,7 +50,7 @@
 
     boot.plymouth.enable = true;
 
-    desktop.hyprland.enable = true;
+    # desktop.hyprland.enable = true;
     desktop.plasma.enable = true;
 
     hardware = {
