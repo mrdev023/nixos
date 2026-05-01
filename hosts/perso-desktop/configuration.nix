@@ -38,6 +38,7 @@
     boot.plymouth.enable = true;
 
     desktop.hyprland.enable = true;
+    desktop.plasma.enable = true;
 
     hardware = {
       bluetooth.enable = true;
