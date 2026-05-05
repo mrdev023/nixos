@@ -20,7 +20,18 @@ in
         };
         helix_mode = true;
         terminal.shell.program = "zsh";
-        load_direnv = "shell_hook";
+        load_direnv = "direct";
+        inlay_hints.enabled = true;
+        theme = {
+          mode = "system";
+          light = "One Light";
+          dark = "One Dark";
+        };
+        icon_theme = {
+          mode = "system";
+          light = "Zed (Default)";
+          dark = "Zed (Default)";
+        };
       };
     }
 
