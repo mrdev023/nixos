@@ -23,11 +23,6 @@
   services.udev.packages = [ pkgs.wooting-udev-rules ];
   services.ollama.enable = true;
 
-  # stylix = {
-  #   enable = true;
-  #   image = ../../assets/backgrounds/ultra_wide.jpg;
-  # };
-
   modules.system = {
     apps = {
       appimage.enable = true;
@@ -38,7 +33,6 @@
 
     boot.plymouth.enable = true;
 
-    # desktop.hyprland.enable = true;
     desktop.plasma.enable = true;
 
     hardware = {
@@ -49,7 +43,6 @@
       printing.enable = true;
       secure-boot.enable = true;
       steering-wheel.enable = true;
-      waydroid.enable = true;
     };
 
     services.docker.enable = true;

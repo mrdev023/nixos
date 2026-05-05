@@ -43,11 +43,6 @@
     nvidiaBusId = "PCI:1:0:0";
   };
 
-  # stylix = {
-  #   enable = true;
-  #   image = ../../assets/backgrounds/4k.jpg;
-  # };
-
   modules.system = {
     apps = {
       appimage.enable = true;
@@ -57,7 +52,6 @@
 
     boot.plymouth.enable = true;
 
-    # desktop.hyprland.enable = true;
     desktop.plasma.enable = true;
 
     hardware = {
