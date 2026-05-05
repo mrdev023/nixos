@@ -22,6 +22,11 @@
         user = "git";
         identityFile = "~/.ssh/kde_ssh.pub";
       };
+      "github.com" = {
+        port = 22;
+        user = "git";
+        identityFile = "~/.ssh/github_ssh.pub";
+      };
     };
   };
 }
