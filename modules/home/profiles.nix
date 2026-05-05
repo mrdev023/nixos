@@ -28,11 +28,6 @@ in
     # Install all default tools to work only from shell
     (mkIf (elem "shell" cfg.profiles) {
       programs = {
-        # Assistant code
-        claude-code.enable = true;
-        # mistral-vibe.enable = true;
-        opencode.enable = true;
-
         atuin.enable = true;
         difftastic.enable = true;
         direnv.enable = true;
