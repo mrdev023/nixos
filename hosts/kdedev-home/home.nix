@@ -12,6 +12,11 @@
   home = {
     username = "florian";
     homeDirectory = "/home/florian";
+    file.".ssh/authorized_keys" = {
+      text = ''
+        ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIA5smB5CIE9qvUecEExV6A1wpzkN96d9RMMmfMejYZvm
+      '';
+    };
   };
 
   modules.home = {
