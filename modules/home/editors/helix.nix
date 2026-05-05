@@ -252,6 +252,7 @@ in
           config.settings.java = {
             maven.downloadSources = true;
             eclipse.downloadSources = true;
+            contentProvider.preferred = "fernflower";
           };
         };
         language = [

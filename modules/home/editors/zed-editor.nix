@@ -65,6 +65,7 @@ in
         settings.initialization_options.settings.java = {
           maven.downloadSources = true;
           eclipse.downloadSources = true;
+          contentProvider.preferred = "fernflower";
         };
       };
     })
