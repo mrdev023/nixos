@@ -60,7 +60,13 @@ in
     (mkIf (cfgHasLanguage "java") {
       extensions = [ "java" ];
       extraPackages = with pkgs; [ jdt-language-server ];
-      userSettings.lsp.jdtls.binary.path = getExe pkgs.jdt-language-server;
+      userSettings.lsp.jdtls = {
+        binary.path = getExe pkgs.jdt-language-server;
+        settings.initialization_options.settings.java = {
+          maven.downloadSources = true;
+          eclipse.downloadSources = true;
+        };
+      };
     })
     (mkIf (cfgHasLanguage "kotlin") {
       extraPackages = with pkgs; [ kotlin-language-server ];

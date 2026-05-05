@@ -246,6 +246,22 @@ in
     })
     (mkIf (cfgHasLanguage "java") {
       extraPackages = with pkgs; [ jdt-language-server ];
+      languages = {
+        language-server.jdtls = {
+          command = getExe pkgs.jdt-language-server;
+          config.settings.java = {
+            maven.downloadSources = true;
+            eclipse.downloadSources = true;
+          };
+        };
+        language = [
+          {
+            name = "java";
+            language-servers = [ "jdtls" ];
+            auto-format = true;
+          }
+        ];
+      };
     })
     (mkIf (cfgHasLanguage "kotlin") {
       extraPackages = with pkgs; [ kotlin-language-server ];
