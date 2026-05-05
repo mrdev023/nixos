@@ -47,6 +47,7 @@
       noto-fonts # General Unicode
       noto-fonts-cjk-sans # Support CJK (chinois, japonais, coréen)
       roboto # Police moderne, souvent utilisée par GTK
+      nerd-fonts.fira-code # Pour les emojis dans le terminal comme zsh + les TUIs
     ];
   };
 
