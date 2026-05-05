@@ -47,6 +47,7 @@ in
     })
 
     (mkIf (cfgHasLanguage "java") {
+      extensions = [ "java" ];
       extraPackages = with pkgs; [ jdt-language-server ];
       userSettings.lsp.jdtls.binary.path = getExe pkgs.jdt-language-server;
     })
