@@ -21,6 +21,7 @@
   networking.hostName = "nixos-desktop-perso"; # Define your hostname.
 
   services.udev.packages = [ pkgs.wooting-udev-rules ];
+  services.ollama.enable = true;
 
   # stylix = {
   #   enable = true;
