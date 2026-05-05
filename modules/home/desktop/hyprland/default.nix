@@ -2,7 +2,6 @@
   config,
   pkgs,
   lib,
-  options,
   ...
 }@args:
 
@@ -13,19 +12,8 @@ let
 in
 {
   config = mkIf cfg.enable (mkMerge [
-    {
-      assertions = [
-        {
-          assertion = cfg.enable -> (options ? stylix) && config.stylix.enable;
-          message = "Hyprland requires stylix to be enabled too";
-        }
-      ];
-    }
     (import ./programs/hyprpaper.nix args)
     (import ./programs/quickshell args)
-    (optionalAttrs (options ? stylix) {
-      stylix.targets.hyprland.enable = true; # if autoEnable is set to false
-    })
     {
       programs.kitty.enable = mkDefault true;
 

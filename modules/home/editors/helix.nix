@@ -2,14 +2,11 @@
   config,
   pkgs,
   lib,
-  options,
   ...
 }:
 
 with lib;
 let
-  stylixEnabled = (options ? stylix) && config.stylix.enable;
-
   utils = import ./utils.nix { inherit config lib; };
   inherit (utils) cfgHasLanguage cfgHasAnyOfLanguages;
 in
@@ -17,6 +14,7 @@ in
   config.programs.helix = mkMerge [
     {
       settings = {
+        theme = "tokyonight";
         editor = {
           bufferline = "always";
           line-number = "relative";
@@ -41,10 +39,6 @@ in
         };
       };
     }
-
-    (mkIf (!stylixEnabled) {
-      settings.theme = "tokyonight";
-    })
 
     (mkIf
       (cfgHasAnyOfLanguages [

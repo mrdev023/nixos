@@ -5,8 +5,6 @@
 }:
 with lib;
 let
-  cfgStylix = config.stylix;
-
   utils = import ./utils.nix { inherit config lib; };
   inherit (utils) cfgHasLanguage;
 in
@@ -147,11 +145,11 @@ in
       statusline = {
         lualine = {
           enable = true;
-        }
-        // mkIf (!cfgStylix.enable) { theme = "catppuccin"; };
+          theme = "catppuccin";
+        };
       };
 
-      theme = mkIf (!cfgStylix.enable) {
+      theme = {
         enable = true;
         name = "catppuccin";
         style = "mocha";

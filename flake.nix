@@ -54,11 +54,6 @@
 
     nix-citizen.url = "github:LovingMelody/nix-citizen";
 
-    stylix = {
-      url = "github:nix-community/stylix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     zen-browser = {
       url = "github:0xc000022070/zen-browser-flake";
       inputs = {
@@ -79,7 +74,6 @@
       flake-utils,
       home-manager,
       nixpkgs,
-      stylix,
       ...
     }:
     let
@@ -109,7 +103,6 @@
           modules =
             with inputs;
             [
-              ./modules/stylix.nix
               ./hosts/${name}/configuration.nix
               ./hosts/${name}/home.nix
 
@@ -117,7 +110,6 @@
               lanzaboote.nixosModules.lanzaboote
               disko.nixosModules.disko
               agenix.nixosModules.default
-              stylix.nixosModules.stylix
 
               (
                 {
@@ -152,8 +144,6 @@
           inherit pkgs;
           modules = home-modules ++ [
             { nix.package = pkgs.nix; }
-            stylix.homeModules.stylix
-            ./modules/stylix.nix
             ./hosts/${name}/home.nix
           ];
 
