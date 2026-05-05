@@ -353,7 +353,37 @@ in
 
     # System
     (mkIf (cfgHasLanguage "c_cpp") {
-      extraPackages = with pkgs; [ clang-tools ];
+      extraPackages = with pkgs; [
+        clang-tools
+        cmake-language-server
+        gersemi
+      ];
+      languages.language = [
+        {
+          name = "c";
+          formatter = {
+            command = "clang-format";
+            args = [ "--style=file" ];
+          };
+          auto-format = true;
+        }
+        {
+          name = "cpp";
+          formatter = {
+            command = "clang-format";
+            args = [ "--style=file" ];
+          };
+          auto-format = true;
+        }
+        {
+          name = "cmake";
+          formatter = {
+            command = "gersemi";
+            args = [ "-" ];
+          };
+          auto-format = true;
+        }
+      ];
     })
     (mkIf (cfgHasLanguage "qml") {
       extraPackages = with pkgs.kdePackages; [

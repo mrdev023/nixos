@@ -58,7 +58,47 @@ in
 
     # System
     (mkIf (cfgHasLanguage "c_cpp") {
-      extraPackages = with pkgs; [ clang-tools ];
+      extensions = [ "neocmake" ];
+      extraPackages = with pkgs; [
+        clang-tools
+        cmake-language-server
+        gersemi
+      ];
+      userSettings.languages = {
+        "C" = {
+          formatter = {
+            external = {
+              command = "clang-format";
+              arguments = [
+                "--style=file"
+                "--assume-filename={buffer_path}"
+              ];
+            };
+          };
+          format_on_save = "on";
+        };
+        "C++" = {
+          formatter = {
+            external = {
+              command = "clang-format";
+              arguments = [
+                "--style=file"
+                "--assume-filename={buffer_path}"
+              ];
+            };
+          };
+          format_on_save = "on";
+        };
+        "CMake" = {
+          formatter = {
+            external = {
+              command = "gersemi";
+              arguments = [ "-" ];
+            };
+          };
+          format_on_save = "on";
+        };
+      };
     })
     (mkIf (cfgHasLanguage "qml") {
       extensions = [ "qml" ];
