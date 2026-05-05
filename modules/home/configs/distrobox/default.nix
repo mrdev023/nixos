@@ -14,6 +14,7 @@ in
   };
 
   config = mkIf cfg.enable {
+    modules.home.configs.kdedev.enable = mkDefault true;
     home.file."copy_polkit.sh" = {
       executable = true;
       source = ./files/copy_polkit.sh;
@@ -21,9 +22,6 @@ in
 
     xdg.configFile."kdedev/env.sh".source = ./files/env.sh;
     xdg.configFile."kdedev/setup.sh".source = ./files/setup.sh;
-
-    home.file."envs/kde.sh".source = ./files/envs/kde.sh;
-    home.file."envs/kde_plasma.sh".source = ./files/envs/kde_plasma.sh;
 
     programs.zsh.initContent = ''
       source "$HOME/.config/kdedev/env.sh"
