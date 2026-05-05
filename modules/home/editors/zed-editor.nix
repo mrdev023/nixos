@@ -14,7 +14,10 @@ in
   config.programs.zed-editor = mkMerge [
     {
       userSettings = {
-        telemetry.metrics = false;
+        telemetry = {
+          diagnostics = false;
+          metrics = false;
+        };
         helix_mode = true;
         terminal.shell.program = "zsh";
         load_direnv = "shell_hook";
