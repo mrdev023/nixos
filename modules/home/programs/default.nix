@@ -12,6 +12,7 @@
     ./jujutsu.nix
     ./lazygit.nix
     ./spicetify.nix
+    ./ssh.nix
     ./superfile.nix
     ./obsidian.nix
     ./zen-browser.nix

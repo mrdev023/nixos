@@ -41,6 +41,7 @@ in
         git.enable = true;
         jujutsu.enable = true;
         superfile.enable = true;
+        ssh.enable = true;
         zoxide.enable = true;
         zsh.enable = true;
       };
