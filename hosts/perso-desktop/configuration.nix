@@ -43,8 +43,6 @@
       secure-boot.enable = true;
       steering-wheel.enable = true;
     };
-
-    services.docker.enable = true;
   };
 
   networking.interfaces.enp17s0.wakeOnLan.enable = true;
