@@ -32,6 +32,7 @@ in
           light = "Zed (Default)";
           dark = "Zed (Default)";
         };
+        edit_predictions.mode = "subtle";
       };
     }
 
