@@ -48,13 +48,6 @@
   };
 
   networking.interfaces.enp17s0.wakeOnLan.enable = true;
-  services.openssh = {
-    enable = true;
-    settings = {
-      PermitRootLogin = "no";
-      PasswordAuthentication = false;
-    };
-  };
 
   environment.systemPackages = with pkgs; [
     lsfg-vk
